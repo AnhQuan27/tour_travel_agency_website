@@ -1,0 +1,138 @@
+:root {
+    --white-color: #fff;
+    --black-color: #000;
+    --text-color: #f2f2f2;
+    --main-color: #0066cc;
+    --red-color: #f32013;
+}
+
+* {
+    box-sizing: inherit;   
+}
+
+body {
+    margin: 0;
+}
+
+html {
+    font-size: 62.5%;
+    line-height: 1.6rem;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    box-sizing: border-box;
+}
+
+.grid {
+    width: 1200px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.grid__full-width {
+    width: 100%;
+}
+
+.grid__row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.container__wrap {
+    margin-left: 8.3rem;
+    margin-right: 8.3rem;
+}
+
+.disable {
+    display: none !important;
+}
+
+/* Button */
+
+.button {
+    border: .2rem solid var(--main-color);
+    transition: background-color ease-in-out .25s;
+    cursor: pointer;
+}
+
+
+.button-main-color {
+    color: var(--text-dark);
+    background-color: var(--main-color);
+}
+
+.button-main-color:hover {
+    background-color: #0150a0 !important;
+    border: .2rem solid #0150a0 !important;
+}
+
+.button-return:hover {
+    background-color: rgba(0, 102, 204, .1);
+}
+
+/* End of button */
+
+/* Modal */
+.modal {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    animation: fade-in linear .1s;
+}
+
+
+.modal__overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal__body {
+    --grow-from: 0.5;
+    --grow-to: 1;
+    background-color: var(--white-color);
+    border-radius: .5rem;
+    margin: auto;
+    z-index: 1000;
+    animation: grow linear .25s;
+}
+/* End of Modal */
+
+/* Keyframes */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;;
+    }
+}
+
+@keyframes grow {
+    from {
+        transform: scale(var(--grow-from));
+    }
+    to {
+        transform: scale(var(--grow-to));
+    }
+}
+
+@keyframes shrink {
+    from {
+        transform: scale(var(--grow-from));
+    }
+    to {
+        transform: scale(var(--grow-to));
+    }
+}
+
+
+@media (max-width: 1366px) {
+    html {
+        font-size: 57%;
+    }
+}
+
+/* End of Keyframes */
