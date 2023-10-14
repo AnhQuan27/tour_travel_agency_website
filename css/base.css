@@ -2,8 +2,10 @@
     --white-color: #fff;
     --black-color: #000;
     --text-color: #f2f2f2;
-    --main-color: #0066cc;
+    /* --main-color: #00B2FF; */
+    --main-color: #0066FF;
     --red-color: #f32013;
+    --green-color: #77dd77;
 }
 
 * {
@@ -49,23 +51,45 @@ html {
 
 .button {
     border: .2rem solid var(--main-color);
+    border-radius: 1.8rem;
     transition: background-color ease-in-out .25s;
     cursor: pointer;
 }
 
+.button--red {
+    color: var(--white-color) !important;
+    background-color: var(--red-color);
+}
 
-.button-main-color {
-    color: var(--text-dark);
+.button--main {
+    color: var(--white-color) !important;
     background-color: var(--main-color);
 }
 
-.button-main-color:hover {
+.button--main:hover {
     background-color: #0150a0 !important;
     border: .2rem solid #0150a0 !important;
 }
 
-.button-return:hover {
-    background-color: rgba(0, 102, 204, .1);
+.button--return:hover {
+    background-color: rgba(43, 144, 244, 0.1);
+}
+
+.button--black {
+    border: none !important;
+    background-color: var(--black-color);
+    color: var(--white-color) !important;
+    transition: all .25s linear;
+}
+
+.button--green {
+    border: none !important;
+    background-color: var(--green-color);
+    color: var(--black-color) !important;
+}
+
+.button--black:hover {
+    color: #c4c4c4 !important;
 }
 
 /* End of button */
