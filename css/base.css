@@ -59,6 +59,7 @@ html {
 .button--red {
     color: var(--white-color) !important;
     background-color: var(--red-color);
+    border: none !important;
 }
 
 .button--main {
@@ -71,8 +72,8 @@ html {
     border: .2rem solid #0150a0 !important;
 }
 
-.button--return:hover {
-    background-color: rgba(43, 144, 244, 0.1);
+.button--black:hover {
+    background-color: rgba(0, 0, 0, 0.9);
 }
 
 .button--black {
@@ -103,6 +104,7 @@ html {
     bottom: 0;
     left: 0;
     animation: fade-in linear .1s;
+    z-index: 999 !important;
 }
 
 

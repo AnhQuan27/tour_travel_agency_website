@@ -1006,3 +1006,180 @@ input[type="radio"] {
     padding: 1rem 2rem;
 }
 /* End of Tours */
+
+/* Login */
+
+.login.body, .register.body {
+    background-color: #e9ebee;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white-color);
+    padding: 2rem 3rem;
+    padding-bottom: 3.5rem;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: .8rem;
+}
+
+.login-form .grid__row {
+    flex-direction: column;
+}
+
+.login-form input {
+    outline: none;
+    border: none;
+    border-bottom: .2rem solid var(--black-color);
+    height: 3.5rem;
+    width: 27rem;
+    font-size: 1.5rem;
+    transition: all .25s ease-in-out;
+}
+
+.login-form .input {
+    position: relative;
+    margin-top: 3rem;
+    z-index: 1;
+}
+
+.login-form .input:first-of-type {
+    margin-top: 1rem;
+}
+
+.login-form input:focus{
+    border-bottom: .2rem solid var(--main-color);
+}
+
+.login-form input:focus + i {
+    color: var(--main-color);
+    transition: color .25s ease-in-out;
+}
+
+.login-form .input .fa-solid {
+    position: absolute;
+    right: .3rem;
+    top: 50%;
+    font-size: 1.3rem;
+}
+
+.input__under {
+    justify-content: space-between;
+    flex-direction: row !important;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.input__under a {
+    color: var(--black-color);
+}
+
+.input__under a:hover {
+    color: var(--main-color);
+}
+
+.remember-me {
+    flex-direction: row !important;
+    justify-content: left;
+    align-items: center;
+    margin-top: .3rem;
+}
+
+.remember-me input {
+    width: 1.35rem;
+}
+
+.login-form .button {
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    border: none;
+}
+
+.login-form .button:hover {
+    border: none !important;
+}
+
+.login-form a.button {
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+.login-form .register-link {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-top: 2rem;
+}
+
+.login-form .register-link a {
+    font-weight: 600;
+}
+
+.modal__overlay.grid__row {
+    justify-content: center;
+}
+
+.info-reset {
+    top: 3rem;
+    position: absolute;
+    background-color: var(--white-color);
+    height: 8rem;
+    width: auto;
+    padding: 0 2rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+    border-left: 1rem solid var(--green-color);
+    border-radius: .6rem;
+    animation: slide-in-top .2s linear;
+}
+
+.info-reset .fa-circle-check {
+    font-size: 2.8rem;
+    margin: auto;
+    margin-right: 1.6rem;
+}
+
+.reset__text {
+    height: fit-content;
+    margin: auto;
+}
+
+.reset__text h3 {
+    margin: .4rem 0;
+}
+
+.info-reset .fa-xmark {
+    position: absolute;
+    cursor: pointer;
+    font-size: 1.7rem;
+    top: 1rem;
+    right: 1rem;
+    border-radius: 50%;
+    padding: .2rem .45rem;
+    text-align: center;
+}
+
+.info-reset .fa-xmark:hover {
+    background-color: rgba(0, 0, 0, .2);
+    color: var(--white-color);
+}
+
+@keyframes slide-in-top {
+    from {
+        top: -10rem;
+    } to {
+        top: 3rem;
+    }
+}
+
+@keyframes slide-out-top {
+    from {
+        top: 3rem;
+    } to {
+        top: -10rem;
+    }
+}
+/* End of Login */

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot password</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="modal disable">
+        <div class="modal__overlay grid__row">
+            <div class="info-reset grid__row">
+                <i class="fa-solid fa-circle-check"></i>
+                <div class="reset__text">
+                    <h3>Success</h3>
+                    <span>We have sent you an email, please check your inbox!</span>
+                </div>
+                <i class="fa-solid fa-xmark" id="close-modal"></i>
+            </div>
+        </div>
+    </div>
+    <!-- Body -->
+    <div class="login body grid__row">
+        <div class="login-form grid__row">
+            <div class="website-logo">
+                <h1>Forgot password</h1>
+            </div>
+            <form action="post" class="grid__row">
+                <div class="input-account input">
+                    <input type="text" name="account" placeholder="Enter your email" class="account">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+
+                <button class="button button--black" id="forgot">Send me new password</button>
+                <a href="../home.html" class="button button--main">Home page</a>
+                <div class="register-link">
+                    <span>Already have an account?</span>
+                    <a href="./login.html">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- End of Body -->
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__nav grid__row grid__full-width">
+            <p>
+                <i class="fa-regular fa-copyright"></i>
+                <span>Travel Agency</span>
+            </p>
+            <a href="../home.html" class="logo">LOGO</a>
+            <ul class="nav grid__row">
+                <a href="home.html">
+                    <li>Home</li>
+                </a>
+                <a href="../tours.html">
+                    <li>Tours</li>
+                </a>
+                <a href="../community.html">
+                    <li>Community</li>
+                </a>
+                <a href="../about.html">
+                    <li>About us</li>
+                </a>
+                <a href="../faqs.html">
+                    <li>FAQs</li>
+                </a>
+            </ul>
+        </div>
+
+        <div class="footer__icon">
+            <a href="facebook.com">
+                <i class="fa-brands fa-facebook"></i>
+            </a>
+
+            <a href="instagram.com">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+
+            <a href="mailto:">
+                <i class="fa-regular fa-envelope"></i>
+            </a>
+
+            <a href="tel:">
+                <i class="fa-solid fa-square-phone"></i>
+            </a>
+        </div>
+
+    </footer>
+    <!-- End of Footer -->
+    <script src="../js/main.js"></script>
+    <script>
+        function showModal() {
+            const modal = document.querySelector('.modal');
+            const forgot = document.getElementById('forgot');
+            forgot.addEventListener('click', function (event) {
+                event.preventDefault();
+            modal.classList.remove('disable');
+            });
+        }
+        
+        function closeModal() {
+            const close = document.getElementById('close-modal');
+            const modal = document.querySelector('.modal'); // Thêm dòng này để lấy tham chiếu đến phần tử modal
+            close.addEventListener('click', function (event) {
+                modal.classList.add('disable');
+            });
+        }
+      
+        showModal();
+        closeModal();
+    </script>
+</body>
+</html>
