@@ -12,9 +12,9 @@
 <body>
     <div class="modal disable">
         <div class="modal__overlay grid__row">
-            <div class="info-reset grid__row">
+            <div class="toast-mess toast-mess--success slide-in-top grid__row">
                 <i class="fa-solid fa-circle-check"></i>
-                <div class="reset__text">
+                <div class="toast-mess__text">
                     <h3>Success</h3>
                     <span>We have sent you an email, please check your inbox!</span>
                 </div>
@@ -94,23 +94,6 @@
     <!-- End of Footer -->
     <script src="../js/main.js"></script>
     <script>
-        function showModal() {
-            const modal = document.querySelector('.modal');
-            const forgot = document.getElementById('forgot');
-            forgot.addEventListener('click', function (event) {
-                event.preventDefault();
-            modal.classList.remove('disable');
-            });
-        }
-        
-        function closeModal() {
-            const close = document.getElementById('close-modal');
-            const modal = document.querySelector('.modal'); // Thêm dòng này để lấy tham chiếu đến phần tử modal
-            close.addEventListener('click', function (event) {
-                modal.classList.add('disable');
-            });
-        }
-      
         showModal();
         closeModal();
     </script>

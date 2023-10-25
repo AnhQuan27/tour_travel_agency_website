@@ -1,55 +1,92 @@
-const swiper = new Swiper('.swiper', {
-    loop: true,
-    speed: 900,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
+function swiper() {
+  const swiper = new Swiper('.swiper', {
+      loop: true,
+      speed: 900,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+}
+function countNumberOfTraveler() {
+  const numTravelersInput = document.querySelector('.num-travelers');
+  const plus = document.querySelector(".plus");
+  const minus = document.querySelector(".minus");
+
+  plus.addEventListener('click', plusTravelers);
+  minus.addEventListener('click', minusTravelers);
+
+  function plusTravelers() {
+    let input = parseInt(numTravelersInput.value);
+    input++;
+    updateInputAndCalculate(input);
+  }
+
+  function minusTravelers() {
+    let input = parseInt(numTravelersInput.value);
+    if (input <= 1) {
+      input = 1;
+    } else {
+      input--;
+    }
+    updateInputAndCalculate(input);
+  }
+
+  function updateInputAndCalculate(input) {
+    numTravelersInput.value = input;
+    printTotalPrice();
+    getNumTravelers();
+  }
+
+  function totalPrice() {
+    let unitPrice = parseFloat(document.getElementById('unit_price').innerHTML);
+    return unitPrice * parseFloat(numTravelersInput.value);
+  }
+
+  function printTotalPrice() {
+    document.getElementById('total_price').innerHTML = totalPrice();
+  }
+
+  function getNumTravelers() {
+    document.getElementById('num_travelers').innerHTML = numTravelersInput.value;
+  }
+
+  updateInputAndCalculate(parseInt(numTravelersInput.value));
+}
+
+function toastMessageSuccess(title) {
+  const toastMess = document.querySelector('.toast-mess');
+  const h3 = toastMess.querySelector('h3');
+  const icon = toastMess.querySelector('#icon');
+  icon.classList.add('fa-circle-check')
+  return h3.innerHTML = title;
+}
+
+// 
+
+function closeToastMessage() {
+  const close = document.getElementById('close-modal');
+  const toastMess = document.querySelector('.toast-mess');
+  let timer;
+
+  close.addEventListener('click', function (event) {
+    toastMess.classList.add('disable');
   });
 
-const plus = document.querySelector(".plus");
-const minus = document.querySelector(".minus");
-const numTravelersInput = document.querySelector('.num-travelers');
+  toastMess.addEventListener('mouseenter', function (event) {
+    // Hủy timer nếu có
+    if (timer) {
+      clearTimeout(timer);
+    }
+  });
 
-function plusTravelers() {
-  var input = numTravelersInput.value;
-  input++;
-  numTravelersInput.value = input;
-  printTotalPrice();
-  getNumTravelers();
+  toastMess.addEventListener('mouseleave', function (event) {
+    // Khởi tạo timer
+    timer = setTimeout(function () {
+      toastMess.classList.add('disable');
+    }, 2000);
+  });
 }
-
-function minusTravelers() {
-  var input = numTravelersInput.value;
-  if(input <= 1) {
-    input = 1;
-  } else {
-    input--;
-    numTravelersInput.value = input;
-  }
-  printTotalPrice();
-  getNumTravelers();
-}
-
-plus.addEventListener('click', plusTravelers);
-minus.addEventListener('click', minusTravelers);
-
-function totalPrice() {
-  let totalPrice = document.getElementById('unit_price').innerHTML * numTravelersInput.value;
-  return totalPrice;
-}
-
-function printTotalPrice() {
-  document.getElementById('total_price').innerHTML = totalPrice();
-}
-
-printTotalPrice();
-
-function getNumTravelers() {
-  document.getElementById('num_travelers').innerHTML = numTravelersInput.value;
-}
-
-getNumTravelers();
 
 function showModal() {
   const modal = document.querySelector('.modal');
@@ -60,7 +97,125 @@ function showModal() {
   });
 }
 
-showModal();
+function closeModal() {
+  const close = document.getElementById('close-modal');
+  const modal = document.querySelector('.modal'); // Thêm dòng này để lấy tham chiếu đến phần tử modal
+  close.addEventListener('click', function (event) {
+      modal.classList.add('disable');
+  });
+}
+
+function isValidName(name) {
+  const nameRegex = /^[\w'\-,.][^0-9_!¡?÷?¿\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}|\w{2,}$/;
+  return nameRegex.test(name);
+}
+
+function isValidEmail(email) {
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  return emailRegex.test(email);
+}
+
+function isValidPhone(phone) {
+  const phoneRegex = /^[0|+][1-9][0-9]{8,10}$/;
+  return phoneRegex.test(phone);
+}
+
+function isValidBirthDay(birthDay) {
+  const birthDate = new Date(birthDay);
+  const currentDate = new Date();
+  const eighteenYearsAgo = new Date();
+  eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
+
+  return (
+    !isNaN(birthDate) && // Kiểm tra xem ngày nhập có hợp lệ
+    birthDate <= currentDate && // Kiểm tra ngày sinh không lớn hơn ngày hiện tại
+    birthDate <= eighteenYearsAgo // Kiểm tra tuổi phải lớn hơn hoặc bằng 18
+  );
+}
+
+function toastMessageError() {
+  const toastMess = document.querySelector('.toast-mess');
+  toastMess.querySelector('h3').innerHTML = 'Fail';
+  toastMess.classList.remove('disable');
+  // const icon = toastMess.querySelector('#icon');
+  toastMess.querySelector('#icon').classList.add('fa-circle-xmark')
+}
+
+function validateBooking() {
+  const toastMess = document.querySelector('.toast-mess');
+
+  const form = document.querySelector('form');
+  const firstNameInput = document.getElementById('first');
+  const lastNameInput = document.getElementById('last');
+  const emailInput = document.getElementById('email');
+  const phoneInput = document.getElementById('phone');
+  const birthDayInput = document.getElementById('day-of-birth');
+  const genderMaleInput = document.querySelector('input[name="gender"][value="Male"]');
+  const genderFemaleInput = document.querySelector('input[name="gender"][value="Female"]');
+
+  form.addEventListener('submit', function(event) {
+    // Reset errors
+    firstNameInput.classList.remove('error');
+    lastNameInput.classList.remove('error');
+    emailInput.classList.remove('error');
+    phoneInput.classList.remove('error');
+    birthDayInput.classList.remove('error');
+    genderMaleInput.classList.remove('error');
+    genderFemaleInput.classList.remove('error');
+
+    let hasError = false; 
+
+    if (!genderMaleInput.checked && !genderFemaleInput.checked) {
+      toastMessageError();
+      toastMess.querySelector('span').innerHTML = `You haven't filled out gender!`;
+      hasError = true;
+    }
+
+    if (!isValidBirthDay(birthDayInput.value)) {
+      birthDayInput.classList.add('error');
+      toastMessageError();
+      toastMess.querySelector('span').innerHTML = 'Check your birthday and try again!';
+      hasError = true;
+    }
+
+    if (!isValidPhone(phoneInput.value)) {
+      phoneInput.classList.add('error');
+      toastMessageError();
+      toastMess.querySelector('span').innerHTML = 'Check your phone number and try again!';
+      hasError = true;
+    }
+
+    if (!isValidEmail(emailInput.value)) {
+      emailInput.classList.add('error');
+      toastMessageError();
+      toastMess.querySelector('span').innerHTML = 'Check your email address and try again!';
+      hasError = true;
+    }
+
+    if (!isValidName(lastNameInput.value)) {
+      lastNameInput.classList.add('error');
+      toastMessageError();
+      toastMess.querySelector('span').innerHTML = 'Check your last name and try again!';
+      hasError = true;
+    }
+
+    if (!isValidName(firstNameInput.value)) {
+      firstNameInput.classList.add('error');
+      toastMessageError();
+      toastMess.querySelector('span').innerHTML = 'Check your first name and try again!';
+      hasError = true;
+    }
+
+    // Ngăn chặn việc gửi biểu mẫu nếu có lỗi
+    if (hasError) {
+      event.preventDefault();
+    } else {
+
+    }
+  });
+}
+
+
 
 // function setRememberMe() {
 //   const rememberMeCheckbox = document.getElementById('remember_me');

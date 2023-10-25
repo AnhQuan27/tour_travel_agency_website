@@ -47,6 +47,9 @@ html {
     display: none !important;
 }
 
+.error {
+    border: 0.1rem solid var(--red-color) !important;
+}
 /* Button */
 
 .button {
@@ -54,6 +57,10 @@ html {
     border-radius: 1.8rem;
     transition: background-color ease-in-out .25s;
     cursor: pointer;
+}
+
+.disabled-button {
+    cursor: not-allowed;
 }
 
 .button--red {
@@ -127,7 +134,108 @@ html {
 }
 /* End of Modal */
 
+/* Toast mess */
+
+.slide-in-top {
+    position: absolute;
+    top: 3rem;
+    animation: slide-in-top linear .2s ;
+}
+
+.slide-in-right {
+    position: fixed;
+    top: 3rem;
+    right: 3rem;
+    animation: slide-in-right ease .2s;
+}
+
+.toast-mess {
+    background-color: var(--white-color);
+    height: 8rem;
+    width: auto;
+    padding: 0 2rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+    border-radius: .6rem;
+}
+
+.toast-mess--success {
+    border: 1px solid var(--green-color);
+    border-left: 1rem solid var(--green-color);
+}
+
+.toast-mess--error {
+    border: 1px solid var(--red-color);
+    border-left: 1rem solid var(--red-color);
+}
+
+.toast-mess--error .fa-circle-xmark {
+    color: var(--red-color);
+}
+
+.toast-mess .fa-circle-check, .toast-mess .fa-circle-xmark {
+    font-size: 2.8rem;
+    margin: auto;
+    margin-right: 1.6rem;
+}
+
+.toast-mess__text {
+    height: fit-content;
+    margin: auto;
+}
+
+.toast-mess__text h3 {
+    margin: .4rem 0;
+}
+
+.toast-mess .fa-xmark {
+    position: absolute;
+    cursor: pointer;
+    font-size: 1.7rem;
+    top: 1rem;
+    right: 1rem;
+    border-radius: 50%;
+    padding: .2rem .45rem;
+    text-align: center;
+}
+
+.toast-mess .fa-xmark:hover {
+    background-color: rgba(0, 0, 0, .2);
+    color: var(--white-color);
+}
+
+/* End of Toast mess */
+
 /* Keyframes */
+
+@keyframes slide-in-top {
+    from {
+        opacity: 0;
+        top: -10rem;
+    } to {
+        opacity: 1;
+        top: 3rem;
+    }
+}
+
+
+@keyframes slide-in-right {
+    from {
+        opacity: 0;
+        right: -10rem;
+    } to {
+        opacity: 1;
+        right: 3rem;
+    }
+}
+
+
+@keyframes fade-out {
+    to {
+        opacity: 0;
+    }
+}
+
 @keyframes fade-in {
     from {
         opacity: 0;

@@ -944,6 +944,7 @@ a:visited {
     left: 1.5rem;
     top: -.8rem;
     background-color: var(--white-color);
+    z-index: 99;
 }
 
 .tour-detail-booking .detail input {
@@ -1122,64 +1123,4 @@ input[type="radio"] {
     justify-content: center;
 }
 
-.info-reset {
-    top: 3rem;
-    position: absolute;
-    background-color: var(--white-color);
-    height: 8rem;
-    width: auto;
-    padding: 0 2rem;
-    font-size: 1.3rem;
-    font-weight: 500;
-    border-left: 1rem solid var(--green-color);
-    border-radius: .6rem;
-    animation: slide-in-top .2s linear;
-}
-
-.info-reset .fa-circle-check {
-    font-size: 2.8rem;
-    margin: auto;
-    margin-right: 1.6rem;
-}
-
-.reset__text {
-    height: fit-content;
-    margin: auto;
-}
-
-.reset__text h3 {
-    margin: .4rem 0;
-}
-
-.info-reset .fa-xmark {
-    position: absolute;
-    cursor: pointer;
-    font-size: 1.7rem;
-    top: 1rem;
-    right: 1rem;
-    border-radius: 50%;
-    padding: .2rem .45rem;
-    text-align: center;
-}
-
-.info-reset .fa-xmark:hover {
-    background-color: rgba(0, 0, 0, .2);
-    color: var(--white-color);
-}
-
-@keyframes slide-in-top {
-    from {
-        top: -10rem;
-    } to {
-        top: 3rem;
-    }
-}
-
-@keyframes slide-out-top {
-    from {
-        top: 3rem;
-    } to {
-        top: -10rem;
-    }
-}
 /* End of Login */

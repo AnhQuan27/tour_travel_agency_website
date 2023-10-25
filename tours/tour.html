@@ -12,7 +12,17 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>    
 </head>
 <body>
+    <div class="toast-mess toast-mess--error slide-in-right grid__row disable">
+        <i class="fa-solid" id="icon"></i>
+        <div class="toast-mess__text">
+            <h3></h3>
+            <span></span>
+        </div>
+        <i class="fa-solid fa-xmark" id="close-modal"></i>
+    </div>
+
     <!-- Header -->
+
     <div class="container__wrap">
         <header class="header grid__row grid__full-width">
             <a href="home.html" class="logo">
@@ -162,7 +172,7 @@
                     </div>
                 </div>
             </div>
-            <form action="" method="post">
+            <form action="" method="">
                 <div class="tour-number-booking tour-ticket-box">
                     <span class="number-count">1</span>
                     <span class="title">How many are traveling?</span>
@@ -191,35 +201,35 @@
                             <div class="input-detail">
                                 <div class="first-name">
                                     <label>First name*</label>
-                                    <input type="text" name="firstName" id="first">
+                                    <input type="text" name="firstName" id="first" class="">
                                 </div>
                             </div>
     
                             <div class="input-detail">
                                 <div class="last-name">
                                     <label>Last name*</label>
-                                    <input type="text" name="lastName" id="last">
+                                    <input type="text" name="lastName" id="last" class="">
                                 </div>
                             </div>
     
                             <div class="input-detail">
                                 <div class="email">
                                     <label>Email*</label>
-                                    <input type="text" name="email" id="email">
+                                    <input type="text" name="email" id="email" class="">
                                 </div>
                             </div>
     
                             <div class="input-detail">
                                 <div class="phone">
                                     <label>Phone*</label>
-                                    <input type="text" name="phone" id="phone">
+                                    <input type="text" name="phone" id="phone" class="">
                                 </div>
                             </div>
     
                             <div class="input-detail">
                                 <div class="day-of-birth">
                                     <label>Day of birth*</label>
-                                    <input type="date" name="birthDay" id="day-of-birth">
+                                    <input type="date" name="birthDay" id="day-of-birth" class="">
                                 </div>
                             </div>
     
@@ -229,11 +239,11 @@
                                         <h2>Gender*</h2>
                                         <div class="gender-male grid__row">
                                             <label for="">Male</label>
-                                            <input type="radio" name="gender" value="Male">
+                                            <input type="radio" name="gender" value="Male" class="">
                                         </div>
                                         <div class="gender-female grid__row">
                                             <label for="">Female</label>
-                                            <input type="radio" name="gender" value="Female">
+                                            <input type="radio" name="gender" value="Female" class="">
                                         </div>
                                     </div>
                                 </div>
@@ -245,7 +255,7 @@
                             <span class="total-price money" id="total_price"></span>
                             <i class="fa-solid fa-dollar-sign"></i>
                             <p>per Traveler</p>
-                            <button class="button--main button">Book <span id="num_travelers" style="margin: 0;"></span> space</button>
+                            <button class="button--main button" id="booking-button">Book <span id="num_travelers" style="margin: 0;"></span> space</button>
                         </div>
                     </div>
                 </div>
@@ -303,5 +313,12 @@
     </footer>
     <!-- End of Footer -->
     <script src="../js/main.js"></script>
+    <script>
+        countNumberOfTraveler();
+        swiper();
+        validateBooking();
+        closeToastMessage();
+    </script>
+    
 </body>
 </html>
