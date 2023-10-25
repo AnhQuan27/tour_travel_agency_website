@@ -81,7 +81,6 @@ function closeToastMessage() {
   });
 
   toastMess.addEventListener('mouseleave', function (event) {
-    // Khởi tạo timer
     timer = setTimeout(function () {
       toastMess.classList.add('disable');
     }, 2000);
@@ -91,17 +90,20 @@ function closeToastMessage() {
 function showModal() {
   const modal = document.querySelector('.modal');
   const forgot = document.getElementById('forgot');
+  
   forgot.addEventListener('click', function (event) {
       event.preventDefault();
-  modal.classList.remove('disable');
+      modal.classList.remove('disable');
   });
 }
 
 function closeModal() {
+  const form = document.querySelector('form');
   const close = document.getElementById('close-modal');
-  const modal = document.querySelector('.modal'); // Thêm dòng này để lấy tham chiếu đến phần tử modal
+  const modal = document.querySelector('.modal');
   close.addEventListener('click', function (event) {
       modal.classList.add('disable');
+      form.submit();
   });
 }
 
