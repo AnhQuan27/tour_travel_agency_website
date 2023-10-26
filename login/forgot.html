@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="modal disable">
+    <!-- <div class="modal disable">
         <div class="modal__overlay grid__row">
             <div class="toast-mess toast-mess--success slide-in-top grid__row">
                 <i class="fa-solid fa-circle-check"></i>
@@ -21,14 +21,14 @@
                 <i class="fa-solid fa-xmark" id="close-modal"></i>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Body -->
     <div class="login body grid__row">
         <div class="login-form grid__row">
             <div class="website-logo">
                 <h1>Forgot password</h1>
             </div>
-            <form action="" class="grid__row">
+            <form action="" class="grid__row" id="myForm">
                 <div class="input-account input">
                     <input type="text" name="account" placeholder="Enter your email" class="account">
                     <i class="fa-solid fa-envelope"></i>
@@ -93,9 +93,11 @@
     </footer>
     <!-- End of Footer -->
     <script src="../js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        showModal();
-        closeModal();
+        // showModal();
+        // closeModal();
+        formConfirm();
     </script>
 </body>
 </html>

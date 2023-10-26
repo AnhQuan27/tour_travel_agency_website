@@ -87,23 +87,79 @@ function closeToastMessage() {
   });
 }
 
+function formConfirm() {
+  const myForm = document.getElementById('myForm');
+
+  myForm.addEventListener('submit', function(event) {
+    event.preventDefault(); 
+
+    Swal.fire({
+      title: 'Success!',
+      text: 'We have sent you an email, please check your inbox!',
+      icon: 'success',
+      confirmButtonText: 'Done',
+    }).then(() => {
+      myForm.submit();
+    });
+  });
+}
+
+function submitUserChange() {
+  const myForm = document.querySelector('#user-setting-form');
+  myForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Success!',
+      text: 'Your information has just been updated',
+      icon: 'success',
+    }).then(() => {
+      myForm.submit();
+    });
+  });
+}
+
+function deleteAccountUser() {
+  const buttonDelete = document.querySelector('#delete-account');
+  const email = document.querySelector('.user-setting .user-email');
+  buttonDelete.addEventListener('click', function(event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Warning!',
+      text: `This action will delete email ${email.innerHTML}`,
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonColor: '#000',
+      confirmButtonText: 'Confirm',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if(result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          `Account ${email.innerHTML} has been deleted`,
+          'success',
+        )
+      }
+    });
+  });
+}
+
 function showModal() {
+  const form = document.querySelector('form');
   const modal = document.querySelector('.modal');
   const forgot = document.getElementById('forgot');
   
   forgot.addEventListener('click', function (event) {
       event.preventDefault();
       modal.classList.remove('disable');
+      form.submit();
   });
 }
 
 function closeModal() {
-  const form = document.querySelector('form');
   const close = document.getElementById('close-modal');
   const modal = document.querySelector('.modal');
   close.addEventListener('click', function (event) {
       modal.classList.add('disable');
-      form.submit();
   });
 }
 

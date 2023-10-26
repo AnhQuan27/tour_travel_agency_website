@@ -50,6 +50,24 @@ html {
 .error {
     border: 0.1rem solid var(--red-color) !important;
 }
+
+.swal2-success {
+    color: var(--green-color) !important;
+    border-color: var(--green-color) !important;
+}
+
+.swal2-warning {
+    color: var(--red-color) !important;
+    border-color: var(--red-color) !important;
+}
+
+button.swal2-confirm {
+    background-color: var(--green-color) !important;
+}
+
+button.swal2-confirm:focus {
+    box-shadow: none !important;
+}
 /* Button */
 
 .button {
@@ -67,6 +85,10 @@ html {
     color: var(--white-color) !important;
     background-color: var(--red-color);
     border: none !important;
+}
+
+.button--red:hover {
+    background-color: rgba(243, 32, 19,.8) !important;
 }
 
 .button--main {

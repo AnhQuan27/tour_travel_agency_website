@@ -55,6 +55,16 @@ a:visited {
     margin-left: 3rem;
 }
 
+.logout-item {
+    gap: 0 .7rem;
+    align-items: center;
+    cursor: pointer;
+}
+
+.logout-item * {
+    color: var(--red-color) !important;
+}
+
 .active {
     border: .2rem solid var(--main-color);
     border-radius: 1.8rem;
@@ -1124,3 +1134,81 @@ input[type="radio"] {
 }
 
 /* End of Login */
+
+/* User setting */
+
+.user-setting {
+    height: 88vh;
+}
+
+.user-header {
+    margin-bottom: 3rem;
+}
+
+.user-header h1 {
+    text-align: center;
+    padding-top: 4rem;
+    margin-bottom: 3rem;
+    font-size: 3rem;
+}
+
+.user-header p {
+    font-weight: 600;
+    margin: 0;
+}
+
+.user-header .greeting {
+    font-size: 2rem;
+    margin-bottom: .5rem;
+}
+
+.user-header .user-email {
+    font-size: 1.3rem;
+    color: rgba(0, 0, 0, .55);
+}
+
+.user-data {
+    /* justify-content: space-between; */
+    gap: 5rem 20rem;
+}
+
+.user-data .input {
+    position: relative;
+}
+
+.user-data label{
+    position: absolute;
+    background-color: var(--white-color);
+    top: -.8rem;
+    left: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.user-data input {
+    width: 50rem;
+    font-size: 1.5rem;
+    padding: 1rem .8rem;
+    border-radius: 1rem;
+    border: .2rem solid #c1c1c1;
+    outline: none;
+    background-color: transparent;
+}
+
+.user-data i {
+    position: absolute;
+    top: 40%;
+    right: 1rem;
+    font-size: 1.35rem;
+}
+
+.user-data .user-form-btn {
+    justify-content: space-between;
+    width: 30rem;
+}
+
+.user-data .user-form-btn .button {
+    padding: 1rem 3rem;
+    font-size: 1.3rem;
+}
+
+/* End of User setting */
