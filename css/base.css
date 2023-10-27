@@ -56,9 +56,14 @@ html {
     border-color: var(--green-color) !important;
 }
 
-.swal2-warning {
+.swal2-warning, .swal2-error {
     color: var(--red-color) !important;
     border-color: var(--red-color) !important;
+}
+
+/* swal2-error */
+div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line] {
+    background-color: var(--red-color) !important;
 }
 
 button.swal2-confirm {

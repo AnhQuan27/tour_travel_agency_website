@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>User setting</title>
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -71,44 +71,58 @@
                 <div class="user-header">
                     <h1>Account setting</h1>
                     <p class="greeting">Hello User0001</p>
-                    <p class="user-email">Email: user0001@email.com</p>
+                    <p class="user-email">Email: <span>user0001@email.com</span></p>
                 </div>
                 <form action="" class="user-data grid__row" id="user-setting-form">
                     <div class="input input-f-name">
-                        <label for="f_name">Your first name</label>
-                        <input type="text" name="f_name" class="f-name">
+                        <label for="first">Your first name</label>
+                        <input type="text" name="f_name" class="f-name" id="first">
                         <i class="fa-solid fa-user"></i>
                     </div>
 
                     <div class="input input-l-name">
-                        <label for="l_name">Your last name</label>
-                        <input type="text" name="l_name" class="l-name">
+                        <label for="last">Your last name</label>
+                        <input type="text" name="l_name" class="l-name" id="last">
                         <i class="fa-solid fa-user"></i>
                     </div>
 
                     <div class="input input-email">
                         <label for="email">Your email address</label>
-                        <input type="text" name="email" class="email">
+                        <input type="text" name="email" class="email" id="email">
                         <i class="fa-solid fa-envelope"></i>
                     </div>
 
                     <div class="input input-phone">
                         <label for="phone">Your phone number</label>
-                        <input type="text" name="phone" class="phone">
+                        <input type="text" name="phone" class="phone" id="phone">
                         <i class="fa-solid fa-phone"></i>
                     </div>
                     
                     <div class="input input-address">
                         <label for="address">Your address</label>
-                        <input type="text" name="address" class="address">
+                        <input type="text" name="address" class="address" id="address">
                         <i class="fa-solid fa-location-dot"></i>
+                    </div>
+
+                    <div class="input input-birthday">
+                        <label for="day-of-birth">Your birthday</label>
+                        <input type="date" name="birthday" class="birthday" id="day-of-birth">
+                    </div>
+
+                    <div class="input input-gender grid__row">
+                        <label>Your gender</label>
+                        <input type="radio" name="gender" class="gender" value="Male">
+                        <span>Male</span>
+                        <input type="radio" name="gender" class="gender" value="Female">
+                        <span>Female</span>
                     </div>
 
                     <div class="input input-password">
                         <label for="password">Your password</label>
-                        <input type="text" name="password" class="password">
+                        <input type="text" name="password" class="password" id="password">
                         <i class="fa-solid fa-key"></i>
                     </div>
+                    
                     <div class="user-form-btn grid__row">
                         <button class="button button--black">Save change</button>
                         <a href="#" class="button button--red" id="delete-account">Delete account</a>
@@ -168,7 +182,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
        deleteAccountUser();
-       submitUserChange();
+       validateUserInfo();
+    //    submitUserChange();
     </script>
 </body>
 </html>

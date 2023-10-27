@@ -1174,6 +1174,7 @@ input[type="radio"] {
 
 .user-data .input {
     position: relative;
+    width: 50rem;
 }
 
 .user-data label{
@@ -1186,12 +1187,32 @@ input[type="radio"] {
 
 .user-data input {
     width: 50rem;
+    height: auto;
     font-size: 1.5rem;
     padding: 1rem .8rem;
     border-radius: 1rem;
     border: .2rem solid #c1c1c1;
     outline: none;
     background-color: transparent;
+}
+
+.user-data input.input-gender {
+    gap: 0 1rem;
+    max-width: 50rem;
+    align-items: center;
+}
+
+.user-data .input-gender span {
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.user-data input[type=radio] {
+    width: 1.3rem;
+    margin: 0 11.9rem;
+    margin-right: 0;
+    position: relative;
+    display: inline-block;
 }
 
 .user-data i {

@@ -62,8 +62,6 @@ function toastMessageSuccess(title) {
   return h3.innerHTML = title;
 }
 
-// 
-
 function closeToastMessage() {
   const close = document.getElementById('close-modal');
   const toastMess = document.querySelector('.toast-mess');
@@ -89,10 +87,8 @@ function closeToastMessage() {
 
 function formConfirm() {
   const myForm = document.getElementById('myForm');
-
   myForm.addEventListener('submit', function(event) {
     event.preventDefault(); 
-
     Swal.fire({
       title: 'Success!',
       text: 'We have sent you an email, please check your inbox!',
@@ -104,28 +100,34 @@ function formConfirm() {
   });
 }
 
-function submitUserChange() {
-  const myForm = document.querySelector('#user-setting-form');
-  myForm.addEventListener('submit', function(event) {
+function swalError(text) {
+  Swal.fire({
+    title: 'Error!',
+    text: `${text}`,
+    icon: 'error',
+  });
+}
+
+function submitSuccess(text,myForm) {
+  // note: event hasn't been declared
     event.preventDefault();
     Swal.fire({
       title: 'Success!',
-      text: 'Your information has just been updated',
+      text: `${text}`,
       icon: 'success',
     }).then(() => {
       myForm.submit();
     });
-  });
 }
 
 function deleteAccountUser() {
   const buttonDelete = document.querySelector('#delete-account');
-  const email = document.querySelector('.user-setting .user-email');
+  const email = document.querySelector('.user-setting .user-email span');
   buttonDelete.addEventListener('click', function(event) {
     event.preventDefault();
     Swal.fire({
       title: 'Warning!',
-      text: `This action will delete email ${email.innerHTML}`,
+      text: `This action will delete account ${email.innerHTML}`,
       icon: 'warning',
       showCancelButton: true,
       cancelButtonColor: '#000',
@@ -189,6 +191,11 @@ function isValidBirthDay(birthDay) {
     birthDate <= currentDate && // Kiểm tra ngày sinh không lớn hơn ngày hiện tại
     birthDate <= eighteenYearsAgo // Kiểm tra tuổi phải lớn hơn hoặc bằng 18
   );
+}
+
+function isValidPassword(password) {
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/;
+  return passwordRegex.test(password);
 }
 
 function toastMessageError() {
@@ -267,12 +274,89 @@ function validateBooking() {
     // Ngăn chặn việc gửi biểu mẫu nếu có lỗi
     if (hasError) {
       event.preventDefault();
-    } else {
-
     }
   });
 }
 
+function validateUserInfo() {
+  const myForm = document.querySelector('form');
+  const firstNameInput = document.getElementById('first');
+  const lastNameInput = document.getElementById('last');
+  const emailInput = document.getElementById('email');
+  const phoneInput = document.getElementById('phone');
+  const birthDayInput = document.getElementById('day-of-birth');
+  const genderMaleInput = document.querySelector('input[name="gender"][value="Male"]');
+  const genderFemaleInput = document.querySelector('input[name="gender"][value="Female"]');
+  const passwordInput = document.getElementById('password');
+
+  myForm.addEventListener('submit', function(event) {
+    firstNameInput.classList.remove('error');
+    lastNameInput.classList.remove('error');
+    emailInput.classList.remove('error');
+    phoneInput.classList.remove('error');
+    birthDayInput.classList.remove('error');
+    genderMaleInput.classList.remove('error');
+    genderFemaleInput.classList.remove('error');
+    passwordInput.classList.remove('error');
+
+    let hasError = false;
+
+    if(!isValidPassword(passwordInput.value)) {
+      const text = 'Check your password and try again';
+      passwordInput.classList.add('error');
+      swalError(text);
+      hasError = true;
+    }
+
+    if(!genderMaleInput.checked && !genderFemaleInput.checked) {
+      const text = `You haven't fill your gender, please try again`
+      swalError(text);
+      hasError = true;
+    }
+
+    if (!isValidBirthDay(birthDayInput.value)) {
+      const text = 'Check your birthday and try again';
+      birthDayInput.classList.add('error');
+      swalError(text);
+      hasError = true;
+    }
+
+    if (!isValidPhone(phoneInput.value)) {
+      const text = 'Check your phone number and try again';
+      phoneInput.classList.add('error');
+      swalError(text);
+      hasError = true;
+    }
+
+    if (!isValidEmail(emailInput.value)) {
+      const text = 'Check your email address and try again';
+      emailInput.classList.add('error');
+      swalError(text);
+      hasError = true;
+    }
+
+    if (!isValidName(lastNameInput.value)) {
+      const text = 'Check your last name and try again';
+      lastNameInput.classList.add('error');
+      swalError(text);
+      hasError = true;
+    }
+
+    if (!isValidName(firstNameInput.value)) {
+      const text = 'Check your first name and try again';
+      firstNameInput.classList.add('error');
+      swalError(text);
+      hasError = true;
+    }
+
+    if (hasError) {
+      event.preventDefault();
+    } else if (hasError == false) {
+      const text = 'Your information has just been updated';
+      submitSuccess(text,myForm);
+    }
+  });
+}
 
 
 // function setRememberMe() {
