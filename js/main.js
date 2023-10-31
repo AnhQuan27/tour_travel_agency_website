@@ -8,6 +8,7 @@ function swiper() {
       },
     });
 }
+
 function countNumberOfTraveler() {
   const numTravelersInput = document.querySelector('.num-travelers');
   const plus = document.querySelector(".plus");
@@ -120,6 +121,33 @@ function submitSuccess(text,myForm) {
     });
 }
 
+function detailSubmit(type) {
+  const myForm = document.querySelector('form');
+  const text = `Successfully updated ${type} information`;
+  myForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Do you want to save the changes?',
+      icon: 'info',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        submitSuccess(text,myForm);
+      } else if (result.isDenied) {
+        Swal.fire({
+          text: 'Changes are not saved',
+          icon: 'error'
+        })
+      }
+    })
+
+
+  })
+}
+
 function deleteAccountUser() {
   const buttonDelete = document.querySelector('#delete-account');
   const email = document.querySelector('.user-setting .user-email span');
@@ -160,8 +188,24 @@ function showModal() {
 function closeModal() {
   const close = document.getElementById('close-modal');
   const modal = document.querySelector('.modal');
-  close.addEventListener('click', function (event) {
-      modal.classList.add('disable');
+  const disable = document.querySelector('.disable');
+  close.addEventListener('click', function () {
+    modal.classList.add('disable');
+  });
+}
+
+function showIframeTour() {
+  const penIcons = document.querySelectorAll('.fa-pen');
+  const modal = document.querySelector('.modal');
+  const iframe = document.querySelector('iframe');
+  
+  penIcons.forEach(function(penIcon) {
+    penIcon.addEventListener('click', function() {
+          const tourId = penIcon.getAttribute('id');
+          iframe.src = `./tours/tour.html?id=${tourId}`;
+          //  
+          modal.classList.remove('disable');
+      });
   });
 }
 
@@ -357,7 +401,6 @@ function validateUserInfo() {
     }
   });
 }
-
 
 // function setRememberMe() {
 //   const rememberMeCheckbox = document.getElementById('remember_me');

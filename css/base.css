@@ -73,6 +73,7 @@ button.swal2-confirm {
 button.swal2-confirm:focus {
     box-shadow: none !important;
 }
+
 /* Button */
 
 .button {
@@ -123,11 +124,24 @@ button.swal2-confirm:focus {
     color: var(--black-color) !important;
 }
 
+.button--green:hover {
+    background-color: rgba(119, 221, 119,.8) !important;
+}
+
 .button--black:hover {
     color: #c4c4c4 !important;
 }
 
 /* End of button */
+
+.border-none {
+    border: none !important;
+}
+
+.border-none:hover {
+    border: none !important;
+}
+
 
 /* Modal */
 .modal {
