@@ -402,6 +402,42 @@ function validateUserInfo() {
   });
 }
 
+function getOrderStatus() {
+  const statusArr = document.querySelectorAll('.o_status');
+  const statusIcon = document.querySelectorAll('.payment-check i');
+  statusArr.forEach((status, index) => {
+    if(status.innerHTML == 'Paid') {
+      status.classList.add('paid');
+      statusIcon[index].classList.add('fa-check');
+    } else if(status.innerHTML == 'Unpaid') {
+      status.classList.add('unpaid');
+      statusIcon[index].classList.add('fa-cart-shopping');
+    }
+  });
+}
+
+function deleteConfirm(text) {
+  const deleteButton = document.querySelector('.fa-trash');
+  deleteButton.addEventListener('click', function() {
+    Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire( {
+        title: 'Deleted!',
+        text: `${text} has been deleted`,
+        icon: 'success',
+      }
+      )
+    }
+  });
+  });
+}
+
 // function setRememberMe() {
 //   const rememberMeCheckbox = document.getElementById('remember_me');
 //   const username = document.getElementById('account').value;

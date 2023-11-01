@@ -12,17 +12,6 @@
 </head>
 <body>
 
-    <div class="modal disable">
-        <div class="modal__overlay d-flex justify-content-center align-items-center">
-            <div class="modal__body">
-
-                <i class="fa-solid fa-xmark" id="close-modal"></i>
-                <iframe src="./tours/tour.html" frameborder="0">
-                </iframe>
-            </div>
-        </div>
-    </div>
-
     <header class="navbar sticky-top flex-md-nowrap p-0 border-bottom border-2">
         <a href="admin.html" class="navbar-brand px-3 me-0">Travel agency</a>
         <div class="avatar-box d-flex align-items-center">
@@ -310,9 +299,9 @@
     </div>
     <script src="../js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        closeModal();
-        showIframe();
+        deleteConfirm('Customer');
     </script>
 </body>
 </html>
