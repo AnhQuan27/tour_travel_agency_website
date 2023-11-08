@@ -150,8 +150,73 @@ class Supplier extends Connection {
                 supplier_phone = :phone,
                 supplier_email = :email,
                 supplier_address = :c_address,
-                supplier_note = :note
+                supplier_note = :note,
+                supplier_file = :s_file
                 WHERE supplier_id = :id";
+        $update = $this->prepareSQL($sql);
+        $update->execute($data);
+    }
+    
+    public function deleteData($data) {
+        $sql = "DELETE FROM supplier WHERE supplier_file = :s_file";
+    }
+
+}
+
+class Order extends Connection {
+    public function getData() {
+        $sql = "SELECT * FROM `order` o
+                JOIN tour t ON t.tour_ID = o.tour_ID
+                JOIN invoice i ON i.order_ID = o.order_ID
+                JOIN customer c ON c.customer_ID = o.customer_ID";
+        $select = $this->prepareSQL($sql);
+        $select->execute();
+        return $select->fetchAll();
+    }
+
+    public function getEachData($data) {
+        $sql = "SELECT * FROM `order` o
+                JOIN tour t ON t.tour_ID = o.tour_ID
+                JOIN invoice i ON i.order_ID = o.order_ID
+                JOIN customer c ON c.customer_ID = o.customer_ID
+                WHERE o.order_ID = :o_id";
+        $select = $this->prepareSQL($sql);
+        $select->execute($data);
+        return $select->fetchAll();
+    }
+
+    public function getEachDataWhereInvoiceID($data) {
+        $sql = "SELECT * FROM `order` o
+                JOIN tour t ON t.tour_ID = o.tour_ID
+                JOIN invoice i ON i.order_ID = o.order_ID
+                JOIN customer c ON c.customer_ID = o.customer_ID
+                WHERE i.invoice_ID = :i_id";
+        $select = $this->prepareSQL($sql);
+        $select->execute($data);
+        return $select->fetchAll();
+    }
+
+    public function updateData($data) {
+        $sql = "UPDATE `order` SET
+                order_time = :o_time,
+                order_phone = :phone,
+                order_email = :email,
+                order_number = :o_number,
+                order_note = :note
+                WHERE order_ID = :id";
+        $update = $this->prepareSQL($sql);
+        $update->execute($data);
+    }
+}
+
+class Invoice extends Connection {
+    public function updateData($data) {
+        $sql = "UPDATE `invoice` SET
+        invoice_status = :check_status,
+        invoice_method =:method,
+        invoice_note = :note,
+        order_ID = :o_id
+        WHERE invoice_id = :id";
         $update = $this->prepareSQL($sql);
         $update->execute($data);
     }
@@ -191,6 +256,24 @@ class Search extends Connection {
                 OR supplier_address like :search
                 OR supplier_email like :search
                 OR supplier_phone like :search";
+        $select = $this->prepareSQL($sql);
+        $select->execute([':search' => '%'. $search .'%']);
+        return $select->fetchAll();
+    }
+
+    public function orderSearch($search) {
+        $sql = "SELECT * FROM `order` o 
+                JOIN tour t ON o.tour_ID = t.tour_ID 
+                JOIN invoice i ON i.order_ID = o.order_ID
+                JOIN customer c ON c.customer_ID = o.customer_ID
+                WHERE o.order_ID LIKE :search
+                OR t.tour_name like :search
+                OR c.customer_first_name like :search
+                OR c.customer_last_name like :search
+                OR c.customer_phone like :search
+                OR c.customer_email like :search
+                OR o.order_time like :search
+                OR i.invoice_status like :search";
         $select = $this->prepareSQL($sql);
         $select->execute([':search' => '%'. $search .'%']);
         return $select->fetchAll();

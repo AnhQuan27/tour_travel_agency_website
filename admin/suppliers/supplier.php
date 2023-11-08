@@ -11,7 +11,7 @@ $value = $supplier->getEachData($data)['0'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supplier name</title>
+    <title><?php echo $value['supplier_name'] ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -109,18 +109,29 @@ $value = $supplier->getEachData($data)['0'];
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                           <li class="breadcrumb-item"><a href="../suppliers.html">Suppliers list</a></li>
-                          <li class="breadcrumb-item active" aria-current="page">Supplier name</li>
+                          <li class="breadcrumb-item active" aria-current="page">Supplier: <?php echo $value['supplier_name'] ?></li>
                         </ol>
                     </nav>
                 </div>
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="detail flex-column d-flex align-items-center">
-                        <form method="post" class="d-flex flex-wrap justify-content-between">
+                        <form method="post" enctype="multipart/form-data" class="d-flex flex-wrap justify-content-between">
+                            
+                            <div class="input">
+                                <label for="id" class="readonly">Supplier ID</label>
+                                <input type="text" readonly id="id " class="rounded w-4" value="<?php echo $value['supplier_ID'] ?>">
+                            </div>
+
+                            <div class="input">
+                                <label for="a_id ">Account ID</label>
+                                <input type="text" id="a_id " class="rounded w-4" name="a_id" value="<?php echo $value['account_ID'] ?>">
+                            </div>
+
                             <div class="input">
                                 <label for="s_name">Supplier name</label>
                                 <input type="text" id="s_name" class="rounded w-8" name="s_name" value="<?php echo $value['supplier_name'] ?>">
                             </div>
-                            
+
                             <div class="input">
                                 <label for="address ">Address</label>
                                 <input type="text" id="address " class="rounded w-8" name="address" value="<?php echo $value['supplier_address'] ?>">
@@ -149,6 +160,10 @@ $value = $supplier->getEachData($data)['0'];
                                 </label>
                                 <input type="file" name="file" id="file">
                             </div> 
+
+                            <div class="input w-8">
+                                <a download href="./file/<?php echo $value['supplier_file']?>" style='text-decoration: underline; font-weight: 500'><?php echo $value['supplier_file']?></a>
+                            </div> 
                             
                             <div class="button-row">
                                 <button class="btn button--main border-none rounded" name="submit">Save</button>
@@ -166,8 +181,30 @@ $value = $supplier->getEachData($data)['0'];
                                 'phone' => $_POST['phone'],
                                 'note' => $_POST['note']
                             ];
+                            if(isset($_FILES['file'])) {
+                                $extension = array('pdf'); 
+                                $fileName = $_FILES['file']['name'];
+                                $fileNameTmp = $_FILES['file']['tmp_name'];
+                                $file_data = $value['supplier_file'];
+                                
+                                $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+                                if(in_array($ext, $extension)) {
+                                    if(!file_exists('./file/' .$fileName)) {
+                                        move_uploaded_file($fileNameTmp, './file/'.$fileName);
+                                        $file_data = $fileName;
+                                    } else {
+                                        $fileName = str_replace('.','-', basename($fileName, $ext));
+                                        $newFileName = $fileName.time().".".$ext;
+                                        move_uploaded_file($fileNameTmp, './file/'.$newFileName);
+                                        $file_data = $newFileName;
+                                    }
+                                }
+                                $data['s_file'] = $file_data;
+                            }
+
                             $supplier->updateData($data);
                         }
+
                         ?>
                     </div>
                 </div>
