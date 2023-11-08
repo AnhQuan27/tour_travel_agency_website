@@ -300,7 +300,19 @@ input[type='file'] {
     color: var(--red-color) !important;
 }
 
-.payment .form-select {
+.form-select {
     height: 3rem;
     font-size: 1.3rem;
+}
+
+.view-images {
+    margin-top: 2rem;
+}
+
+.view-images img {
+    height: 20rem;
+    object-fit: cover;
+    object-position: bottom center;
+    border-radius: .5rem;
+    overflow: hidden;
 }

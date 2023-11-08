@@ -9,6 +9,19 @@ function swiper() {
     });
 }
 
+function swiperPagination() {
+  var swiper = new Swiper('.mySwiper', {
+    slidesPerView: 2,
+    spaceBetween: 100,
+    // loop: true,
+    centeredSlides: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+}
+
 function countNumberOfTraveler() {
   const numTravelersInput = document.querySelector('.num-travelers');
   const plus = document.querySelector(".plus");
@@ -135,7 +148,14 @@ function detailSubmit(type) {
       denyButtonText: `Don't save`,
     }).then((result) => {
       if (result.isConfirmed) {
-        submitSuccess(text,myForm);
+        event.preventDefault();
+        Swal.fire({
+          title: 'Success!',
+          text: `${text}`,
+          icon: 'success',
+        }).then(() => {
+          myForm.submit();
+        });
       } else if (result.isDenied) {
         Swal.fire({
           text: 'Changes are not saved',
@@ -436,6 +456,19 @@ function deleteConfirm(text) {
     }
   });
   });
+}
+
+// Hiển thị ngày và thời gian hiện tại
+function getNow() {
+  var currentDate = new Date();
+  var day = currentDate.getDate();
+  var month = currentDate.getMonth() + 1;
+  var year = currentDate.getFullYear();
+  var hours = currentDate.getHours();
+  var minutes = currentDate.getMinutes();
+  var seconds = currentDate.getSeconds();
+  const now = document.getElementById('order-time');
+  now.value = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
 }
 
 // function setRememberMe() {

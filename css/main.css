@@ -597,7 +597,8 @@ a:visited {
 }
 
 .tour__card-items {
-    justify-content: space-between;
+    justify-content: space-around;
+    gap: 0 3rem;
 }
 
 .card-item {
