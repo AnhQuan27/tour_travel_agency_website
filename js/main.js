@@ -437,8 +437,9 @@ function getOrderStatus() {
 }
 
 function deleteConfirm(text) {
-  const deleteButton = document.querySelector('.fa-trash');
-  deleteButton.addEventListener('click', function() {
+  const deleteButton = document.querySelector('.delete');
+  deleteButton.addEventListener('click', function(event) {
+    event.preventDefault();
     Swal.fire({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
@@ -447,12 +448,12 @@ function deleteConfirm(text) {
     confirmButtonText: 'Yes, delete it!'
   }).then((result) => {
     if (result.isConfirmed) {
-      Swal.fire( {
+      Swal.fire({
         title: 'Deleted!',
         text: `${text} has been deleted`,
         icon: 'success',
-      }
-      )
+      })
+      window.open(`${deleteButton.href}`);
     }
   });
   });

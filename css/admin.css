@@ -11,6 +11,10 @@ header.navbar {
     text-decoration: none;
 }
 
+.container-fluid a .fa-check {
+    color: var(--green-color);
+}
+
 .nav {
     --bs-nav-link-padding-x: 2rem;
     --bs-nav-link-padding-y: 1rem;
@@ -143,6 +147,10 @@ header.navbar {
     cursor: pointer;
 }
 
+.dataTables_length {
+    margin-bottom: 2rem !important;
+}
+
 .table th {
     text-align: center !important;
 }
@@ -170,6 +178,45 @@ header.navbar {
     vertical-align: middle;
     height: 100%;
 }
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border: .1rem solid #cecece !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: rgba(217, 217, 217, 0.39) !important;
+    color: var(--main-color) !important;
+    border: none;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: var(--main-color) !important;
+    color: var(--white-color) !important;
+    border: none !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: var(--white-color) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    background-color: inherit !important;
+    color: var(--black-color) !important;
+    border: .1rem solid var(--white-color) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+    color: var(--black-color) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:active {
+    box-shadow: none;
+}
+
+.dataTables_paginate {
+    margin-bottom: 1rem !important;
+}
+
 
 .modal {
     z-index: 1055 !important;
@@ -316,3 +363,4 @@ input[type='file'] {
     border-radius: .5rem;
     overflow: hidden;
 }
+

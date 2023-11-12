@@ -64,6 +64,12 @@ class Tour extends Connection {
         $update = $this->prepareSQL($sql);
         $update->execute($data);
     }
+
+    public function deleteData($data) {
+        $sql = "DELETE FROM tour WHERE tour_ID = :id";
+        $delete = $this->prepareSQL($sql);
+        $delete->execute($data);
+    }
 }
 
 class TourImage extends Connection {
@@ -89,9 +95,19 @@ class TourImage extends Connection {
     }
 
     public function deleteData($data) {
-        $sql = "DELETE FROM tour_image WHERE tour_ID = :t_id";
+        $sql = "DELETE FROM tour_image WHERE tour_ID = :id";
         $delete = $this->prepareSQL($sql);
         $delete->execute($data);
+    }
+
+    public function getDataWhereTourID($data) {
+        $sql = "SELECT * FROM tour t
+                JOIN supplier s ON s.supplier_ID = t.supplier_ID
+                JOIN tour_image tm ON tm.tour_ID = t.tour_ID
+                JOIN `order` o ON o.tour_ID = t.tour_ID";
+        $select = $this->prepareSQL($sql);
+        $select->execute($data);
+        return $select->fetchAll();
     }
 }
 
@@ -127,6 +143,12 @@ class Customer extends Connection {
         $update = $this->prepareSQL($sql);
         $update->execute($data);
     }
+
+    public function deleteData($data) {
+        $sql = "DELETE FROM customer WHERE customer_ID = :id";
+        $delete = $this->prepareSQL($sql);
+        $delete->execute($data);
+    }
 }
 
 class Supplier extends Connection {
@@ -144,6 +166,16 @@ class Supplier extends Connection {
         return $select->fetchAll();
     }
 
+    // public function getDataJoinTourSupplierOrderImage($data) {
+    //     $sql = "SELECT * FROM tour t
+    //             JOIN supplier s ON s.supplier_ID = t.supplier_ID
+    //             JOIN tour_image tm ON tm.tour_ID = t.tour_ID
+    //             JOIN `order` o ON o.tour_ID = t.tour_ID";
+    //     $select = $this->prepareSQL($sql);
+    //     $select->execute();
+    //     return $select->fetchAll();
+    // }
+
     public function updateData($data) {
         $sql = "UPDATE supplier SET
                 supplier_name = :s_name,
@@ -156,11 +188,12 @@ class Supplier extends Connection {
         $update = $this->prepareSQL($sql);
         $update->execute($data);
     }
-    
-    public function deleteData($data) {
-        $sql = "DELETE FROM supplier WHERE supplier_file = :s_file";
-    }
 
+    public function deleteData($data) {
+        $sql = "DELETE FROM supplier WHERE supplier_ID = :id";
+        $delete = $this->prepareSQL($sql);
+        $delete->execute($data);
+    }
 }
 
 class Order extends Connection {
@@ -180,6 +213,17 @@ class Order extends Connection {
                 JOIN invoice i ON i.order_ID = o.order_ID
                 JOIN customer c ON c.customer_ID = o.customer_ID
                 WHERE o.order_ID = :o_id";
+        $select = $this->prepareSQL($sql);
+        $select->execute($data);
+        return $select->fetchAll();
+    }
+
+    public function getDataWhereCustomerID($data) {
+        $sql = "SELECT * FROM `order` o
+                JOIN tour t ON t.tour_ID = o.tour_ID
+                JOIN invoice i ON i.order_ID = o.order_ID
+                JOIN customer c ON c.customer_ID = o.customer_ID
+                WHERE c.customer_ID = :id";
         $select = $this->prepareSQL($sql);
         $select->execute($data);
         return $select->fetchAll();
@@ -207,6 +251,18 @@ class Order extends Connection {
         $update = $this->prepareSQL($sql);
         $update->execute($data);
     }
+
+    public function deleteData($data) {
+        $sql = "DELETE FROM `order` WHERE order_ID = :id";
+        $delete = $this->prepareSQL($sql);
+        $delete->execute($data);
+    }
+
+    public function deleteDataWhereCustomerID($data) {
+        $sql = "DELETE FROM `order` WHERE customer_ID = :id";
+        $delete = $this->prepareSQL($sql);
+        $delete->execute($data);
+    }
 }
 
 class Invoice extends Connection {
@@ -215,21 +271,130 @@ class Invoice extends Connection {
         invoice_status = :check_status,
         invoice_method =:method,
         invoice_note = :note,
+        invoice_img_check = :invoice_img_check,
         order_ID = :o_id
         WHERE invoice_id = :id";
         $update = $this->prepareSQL($sql);
         $update->execute($data);
     }
+
+    public function deleteData($data) {
+        $sql = "DELETE FROM invoice WHERE invoice_ID = :id";
+        $delete = $this->prepareSQL($sql);
+        $delete->execute($data);
+    }
+
+    public function deleteDataWhereOrderID($data) {
+        $sql = "DELETE FROM invoice WHERE order_ID = :id";
+        $delete = $this->prepareSQL($sql);
+        $delete->execute($data);
+    }
+}
+
+class Account extends Connection {
+    public function getDataJoinCustomer() {
+        $sql = "SELECT account.account_ID,
+                account.account_role AS `role`,
+                CONCAT(customer.customer_first_name, ' ', customer.customer_last_name) AS full_name,
+                account.account_username AS username,
+                customer.customer_phone AS phone,
+                customer.customer_email AS email
+                FROM account
+                INNER JOIN customer ON account.account_ID = customer.account_ID
+                ORDER BY `role` ASC";
+        $select = $this->prepareSQL($sql);
+        $select->execute();
+        return $select->fetchAll();
+    }
+
+    public function getDataJoinSupplier() {
+        $sql = "SELECT account.account_ID,
+                account.account_role AS `role`,
+                supplier.supplier_name AS full_name,
+                account.account_username AS username,
+                supplier.supplier_phone AS phone,
+                supplier.supplier_email AS email
+                FROM account
+                INNER JOIN supplier ON account.account_ID = supplier.account_ID
+                ORDER BY `role` ASC";
+        $select = $this->prepareSQL($sql);
+        $select->execute();
+        return $select->fetchAll();
+    }
+
+    public function getDataJoinStaff() {
+        $sql = "SELECT account.account_ID,
+                account.account_role AS `role`,
+                CONCAT (staff.staff_first_name, ' ', staff.staff_last_name)AS full_name,
+                account.account_username AS username,
+                staff.staff_phone AS phone,
+                staff.staff_email AS email
+                FROM account
+                INNER JOIN staff ON account.account_ID = staff.account_ID
+                ORDER BY `role` ASC";
+        $select = $this->prepareSQL($sql);
+        $select->execute();  
+        return $select->fetchAll();
+    }
+
+    public function getData(){
+        $sql = "SELECT * FROM account ORDER BY account_role";
+        $select = $this->prepareSQL($sql);
+        $select->execute();
+        return $select->fetchAll();
+    }
+
+    public function getEachData($data){
+        $sql = "SELECT 
+                    a.*,
+                    s.supplier_name,
+                    c.customer_first_name,
+                    c.customer_last_name,
+                    st.staff_first_name,
+                    st.staff_last_name
+                FROM account a
+                LEFT JOIN supplier s ON a.account_ID = s.account_ID
+                LEFT JOIN customer c ON a.account_ID = c.account_ID
+                LEFT JOIN staff st ON a.account_ID = st.account_ID
+                WHERE a.account_ID = :id";
+        $select = $this->prepareSQL($sql);
+        $select->execute($data);
+        return $select->fetchAll();
+    }
+
+    public function deleteData($data) {
+        $sql = "DELETE FROM account WHERE account_ID = :id";
+        $delete = $this->prepareSQL($sql);
+        $delete->execute($data);
+    }
 }
 
 class Search extends Connection {
+
+    public function accountSearch($search){
+        $sql = "SELECT * FROM account a
+                JOIN staff st ON st.account_ID = a.account_ID
+                JOIN customer c ON c.account_ID = a.account_ID
+                JOIN supplier s ON s.account_ID = a.account_ID
+                WHERE a.account_ID LIKE :search
+                OR a.account_username LIKE :search
+                OR c.customer_phone LIKE :search
+                OR st.staff_phone LIKE :search
+                OR s.supplier_phone LIKE :search
+                OR c.customer_email LIKE :search
+                OR st.staff_email LIKE :search
+                OR s.supplier_email LIKE :search";
+        $select = $this->prepareSQL($sql);
+        $select->execute([':search' => '%'. $search .'%']);
+        return $select->fetchAll();
+    }
     public function tourSearch($search) {
         $sql = "SELECT * FROM tour 
                 WHERE tour_ID LIKE :search
-                OR tour_name like :search
-                OR tour_start like :search
-                OR tour_price like :search
-                OR tour_number like :search";
+                OR tour_name LIKE :search
+                OR tour_start LIKE :search
+                OR tour_price LIKE :search
+                OR tour_number LIKE :search";
         $select = $this->prepareSQL($sql);
         $select->execute([':search' => '%'. $search .'%']);
         return $select->fetchAll();
@@ -238,12 +403,12 @@ class Search extends Connection {
     public function customerSearch($search) {
         $sql = "SELECT * FROM customer 
                 WHERE customer_ID LIKE :search
-                OR customer_first_name like :search
-                OR customer_last_name like :search
-                OR customer_gender like :search
-                OR customer_birthday like :search
-                OR customer_email like :search
-                OR customer_phone like :search";
+                OR customer_first_name LIKE :search
+                OR customer_last_name LIKE :search
+                OR customer_gender LIKE :search
+                OR customer_birthday LIKE :search
+                OR customer_email LIKE :search
+                OR customer_phone LIKE :search";
         $select = $this->prepareSQL($sql);
         $select->execute([':search' => '%'. $search .'%']);
         return $select->fetchAll();
@@ -252,10 +417,10 @@ class Search extends Connection {
     public function supplierSearch($search) {
         $sql = "SELECT * FROM supplier 
                 WHERE supplier_ID LIKE :search
-                OR supplier_name like :search
-                OR supplier_address like :search
-                OR supplier_email like :search
-                OR supplier_phone like :search";
+                OR supplier_name LIKE :search
+                OR supplier_address LIKE :search
+                OR supplier_email LIKE :search
+                OR supplier_phone LIKE :search";
         $select = $this->prepareSQL($sql);
         $select->execute([':search' => '%'. $search .'%']);
         return $select->fetchAll();
@@ -267,13 +432,13 @@ class Search extends Connection {
                 JOIN invoice i ON i.order_ID = o.order_ID
                 JOIN customer c ON c.customer_ID = o.customer_ID
                 WHERE o.order_ID LIKE :search
-                OR t.tour_name like :search
-                OR c.customer_first_name like :search
-                OR c.customer_last_name like :search
-                OR c.customer_phone like :search
-                OR c.customer_email like :search
-                OR o.order_time like :search
-                OR i.invoice_status like :search";
+                OR t.tour_name LIKE :search
+                OR c.customer_first_name LIKE :search
+                OR c.customer_last_name LIKE :search
+                OR c.customer_phone LIKE :search
+                OR c.customer_email LIKE :search
+                OR o.order_time LIKE :search
+                OR i.invoice_status LIKE :search";
         $select = $this->prepareSQL($sql);
         $select->execute([':search' => '%'. $search .'%']);
         return $select->fetchAll();

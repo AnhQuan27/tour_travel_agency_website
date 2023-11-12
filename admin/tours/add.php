@@ -15,7 +15,7 @@
 </head>
 <body>
     <header class="navbar sticky-top flex-md-nowrap p-0 border-bottom border-2">
-        <a href="admin.html" class="navbar-brand px-3 me-0">Travel agency</a>
+        <a href="admin.php" class="navbar-brand px-3 me-0">Travel agency</a>
         <div class="avatar-box d-flex align-items-center">
             <span>User001</span>
             <img src="../../img/user-img.png" alt="" class="avatar">
@@ -33,56 +33,56 @@
                 </li> -->
                 
                 <li class="nav__item">
-                    <a href="../dashboard.html" class="nav-link">
+                    <a href="../dashboard.php" class="nav-link">
                         <i class="fa-solid fa-chart-simple"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="../tours.html" class="nav-link active">
+                    <a href="../tours.php" class="nav-link active">
                         <i class="fa-solid fa-boxes-stacked"></i>
                         <span>Tours</span>
                     </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="../customers.html" class="nav-link">
+                    <a href="../customers.php" class="nav-link">
                         <i class="fa-solid fa-users"></i>
                         <span>Customers</span>
                     </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="../suppliers.html" class="nav-link">
+                    <a href="../suppliers.php" class="nav-link">
                         <i class="fa-solid fa-boxes-packing"></i>
                         <span>Suppliers</span>
                     </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="../orders.html" class="nav-link">
+                    <a href="../orders.php" class="nav-link">
                         <i class="fa-regular fa-file-lines"></i>
                         <span>Orders</span>
                     </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="../support.html" class="nav-link">
+                    <a href="../support.php" class="nav-link">
                         <i class="fa-solid fa-headset"></i>
                         <span>Support Customers</span>
                     </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="../users.html" class="nav-link">
+                    <a href="../users.php" class="nav-link">
                         <i class="fa-solid fa-user"></i>
                         <span>Users</span>
                     </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="../account.html" class="nav-link">
+                    <a href="../account.php" class="nav-link">
                         <i class="fa-solid fa-gear"></i>
                         <span>Your account</span>
                     </a>
@@ -103,7 +103,7 @@
                 <div class="heading-action d-flex justify-content-between align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                          <li class="breadcrumb-item"><a href="../tours.html">Tours list</a></li>
+                          <li class="breadcrumb-item"><a href="../tours.php">Tours list</a></li>
                           <li class="breadcrumb-item active" aria-current="page">Add tour</li>
                         </ol>
                     </nav>
@@ -181,7 +181,7 @@
                             </div>
                             <div class="button-row">
                                 <button name="create_tour" type="submit" class="btn button--main border-none rounded">Save</button>
-                                <a href="../tours.html" class="btn btn-secondary rounded border-none">Go back</a>
+                                <a href="../tours.php" class="btn btn-secondary rounded border-none">Go back</a>
                             </div>
                         </form>
                         <?php

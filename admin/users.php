@@ -8,19 +8,19 @@ if(isset($_GET['search'])) {
 
     $searching = new Search();
 
-    $customers = $searching->customerSearch($search);
+    $accounts = $searching->accountSearch($search);
 } else {
-    $customer = new Customer();
-    $customers = $customer->getData();
+    $account = new Account();
+    // $accounts = $account->getData();
+    $accounts = array_merge($account->getDataJoinStaff(), $account->getDataJoinSupplier(), $account->getDataJoinCustomer());
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customers</title>
+    <title>Users</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
@@ -30,7 +30,6 @@ if(isset($_GET['search'])) {
     <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
-
     <header class="navbar sticky-top flex-md-nowrap p-0 border-bottom border-2">
         <a href="admin.php" class="navbar-brand px-3 me-0">Travel agency</a>
         <div class="avatar-box d-flex align-items-center">
@@ -64,7 +63,7 @@ if(isset($_GET['search'])) {
                 </li>
 
                 <li class="nav__item">
-                    <a href="./customers.php" class="nav-link active">
+                    <a href="./customers.php" class="nav-link">
                         <i class="fa-solid fa-users"></i>
                         <span>Customers</span>
                     </a>
@@ -92,7 +91,7 @@ if(isset($_GET['search'])) {
                 </li>
 
                 <li class="nav__item">
-                    <a href="./users.php" class="nav-link">
+                    <a href="./users.php" class="nav-link active">
                         <i class="fa-solid fa-user"></i>
                         <span>Users</span>
                     </a>
@@ -116,7 +115,7 @@ if(isset($_GET['search'])) {
         </div>
         <div class="content me-4">
             <div class="content__heading">
-                <h1 class="heading-title mb-3">Customers list</h1>
+                <h1 class="heading-title mb-3">Users list</h1>
                 <div class="heading-action d-flex justify-content-between align-items-center">
                     <div class="heading__button">
                         <a href="#" class="button button--green rounded export-xlsx">
@@ -125,7 +124,7 @@ if(isset($_GET['search'])) {
                         </a>
                     </div>
                     <form method="get">
-                        <div class="search-box">
+                        <div class="search-box disable">
                             <i class="fa-solid fa-search"></i>
                             <input class="rounded" value="<?php echo $search ?>" type="search" name="search" id="search" placeholder="Search..." >
                         </div>
@@ -133,39 +132,39 @@ if(isset($_GET['search'])) {
                 </div>
             </div>
             <div class="content__body mt-5">
-                <table id="myTable" class="table table-striped table-bordered">
+                <table id="myTable" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Full name</th>
-                            <th>Gender</th>
-                            <th>Birthday</th>
+                            <th>Account</th>
                             <th>Phone number</th>
                             <th>Email</th>
+                            <th>Role</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($customers as $customer): ?>
+                        <?php foreach($accounts as $account) : ?>
                         <tr>
-                            <td><?php echo $customer['customer_ID']?></td>
-                            <td><?php echo $customer['customer_first_name'] . " " . $customer['customer_last_name']?></td>
-                            <td><?php echo $customer['customer_gender']?></td>
-                            <td><?php echo $customer['customer_birthday']?></td>
-                            <td><?php echo $customer['customer_phone']?></td>
-                            <td><?php echo $customer['customer_email']?></td>
+                            <td><?php echo $account['account_ID']?></td>
+                            <td class="w-4"><?php echo $account['full_name']?></td>
+                            <td><?php echo $account['username']?></td>
+                            <td><?php echo $account['phone']?></td>
+                            <td><?php echo $account['email']?></td>
+                            <td><?php echo $account['role']?></td>
                             <td>
-                                <div class="d-flex justify-content-evenly">
-                                    <a href="./customers/customer.php?id=<?php echo $customer['customer_ID']?>">
+                                <div class="d-flex justify-content-evenly align-items-center">
+                                    <a href="./users/user.php?id=<?php echo $account['account_ID']?>">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
-                                    <a href="./process/delete.php?from=customers&id=<?php echo $customer['customer_ID']?>" class="delete">
+                                    <a href="./process/delete.php?from=accounts&id=<?php echo $account['account_ID']?>" class="delete">
                                         <i class="fa-solid fa-trash"></i>
                                     </a>
                                 </div>
                             </td>
                         </tr>
-                        <?php endforeach; ?>
+                        <?php endforeach ?>
                     </tbody>
 
                 </table>
@@ -175,13 +174,12 @@ if(isset($_GET['search'])) {
     <script src="../js/main.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // deleteConfirm('Customer');
+        // deleteConfirm('Order');
         new DataTable('#myTable', {
-            searching:false,
-            info: false
+           info: false
         });
     </script>
 </body>

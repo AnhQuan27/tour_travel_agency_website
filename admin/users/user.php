@@ -1,17 +1,18 @@
+
 <?php
 require_once '../process/query.php';
-$supplier = new Supplier();
+$account = new Account();
 $data = [
     'id' => $_GET['id']
 ];
-$value = $supplier->getEachData($data)['0'];
+$value = $account->getEachData($data)['0'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $value['supplier_name'] ?></title>
+    <title>User <?php echo $value['account_ID'] ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -59,7 +60,7 @@ $value = $supplier->getEachData($data)['0'];
                 </li>
 
                 <li class="nav__item">
-                    <a href="../suppliers.php" class="nav-link active">
+                    <a href="../suppliers.php" class="nav-link">
                         <i class="fa-solid fa-boxes-packing"></i>
                         <span>Suppliers</span>
                     </a>
@@ -80,7 +81,7 @@ $value = $supplier->getEachData($data)['0'];
                 </li>
 
                 <li class="nav__item">
-                    <a href="../users.php" class="nav-link">
+                    <a href="../users.php" class="nav-link active">
                         <i class="fa-solid fa-user"></i>
                         <span>Users</span>
                     </a>
@@ -108,103 +109,80 @@ $value = $supplier->getEachData($data)['0'];
                 <div class="heading-action d-flex justify-content-between align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                          <li class="breadcrumb-item"><a href="../suppliers.php">Suppliers list</a></li>
-                          <li class="breadcrumb-item active" aria-current="page">Supplier: <?php echo $value['supplier_name'] ?></li>
+                          <li class="breadcrumb-item"><a href="../users.php">Users list</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">User:</li>
                         </ol>
                     </nav>
                 </div>
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="detail flex-column d-flex align-items-center">
-                        <form method="post" enctype="multipart/form-data" class="d-flex flex-wrap justify-content-between">
+                        <form method="post" class="d-flex flex-wrap justify-content-between">
                             
+                            <?php if($value['account_role'] != 3) : ?>
+                                <div class="input">
+                                    <label for="f_name" class="readonly" >User first name</label>
+                                    <input type="text" readonly id="f_name" class="rounded w-4" name="f_name" value="<?php if(isset($value['staff_first_name'])) {echo $value['staff_first_name'];} else {echo $value['customer_first_name'];}?>">
+                                </div>
+                                
+                                <div class="input">
+                                    <label for="l_name" class="readonly" >User last name</label>
+                                    <input type="text" readonly id="l_name" class="rounded w-4" name="l_name" value="<?php if(isset($value['staff_last_name'])) {echo $value['staff_last_name'];} else {echo $value['customer_last_name'];}?>">
+                                </div>
+                            <?php endif ?>
+
+                            <?php if($value['account_role'] == 3) : ?>
+                                
+                                <div class="input">
+                                    <label for="s_name" class="readonly" >Supplier name</label>
+                                    <input type="text" readonly id="s_name" class="rounded w-8" name="s_name" value="<?php echo $value['supplier_name'] ?>">
+                                </div>
+                            <?php endif ?>
+
+
                             <div class="input">
-                                <label for="id" class="readonly">Supplier ID</label>
-                                <input type="text" readonly id="id " class="rounded w-4" value="<?php echo $value['supplier_ID'] ?>">
+                                <label for="id" class="readonly">Account ID</label>
+                                <input type="text" readonly name="id" id="id" class="rounded w-4" value="<?php echo $value['account_ID'] ?>">
                             </div>
 
                             <div class="input">
-                                <label for="a_id ">Account ID</label>
-                                <input type="text" id="a_id " class="rounded w-4" name="a_id" value="<?php echo $value['account_ID'] ?>">
+                                <label for="user_name" class="readonly">User name</label>
+                                <input type="text" name="user_name" readonly id="user_name" class="rounded w-4" value="<?php echo $value['account_username'] ?>">
                             </div>
 
                             <div class="input">
-                                <label for="s_name">Supplier name</label>
-                                <input type="text" id="s_name" class="rounded w-8" name="s_name" value="<?php echo $value['supplier_name'] ?>">
+                                <label for="password">Password</label>
+                                <input type="text" id="password" class="rounded w-4" name="password" value="<?php echo $value['account_password'] ?>">
                             </div>
 
                             <div class="input">
-                                <label for="address ">Address</label>
-                                <input type="text" id="address " class="rounded w-8" name="address" value="<?php echo $value['supplier_address'] ?>">
+                                <label for="role">Role</label>
+                                <select name="role" class="form-select rounded w-4">
+                                    <option <?php if($value['account_role'] == 0) { echo 'selected';}?> value="0">0</option>
+                                    <option <?php if($value['account_role'] == 1) { echo 'selected';}?> value="1">1</option>
+                                    <option <?php if($value['account_role'] == 2) { echo 'selected';}?> value="2">2</option>
+                                    <option <?php if($value['account_role'] == 3) { echo 'selected';}?> value="3">3</option>
+                                    <option <?php if($value['account_role'] == 4) { echo 'selected';}?> value="4">4</option>
+                                </select>
                             </div>
 
-                            <div class="input">
-                                <label for="email">Email</label>
-                                <input type="text" id="email" class="rounded w-4" name="email" value="<?php echo $value['supplier_email'] ?>">
-                            </div>
-                            
-                            <div class="input">
-                                <label for="phone">Phone</label>
-                                <input type="text" id="phone" class="rounded w-4" name="phone" value="<?php echo $value['supplier_phone'] ?>">
-                            </div>
-                             
-                            <div class="input">
-                                <label for="note" class="readonly">Note</label>
-                                <textarea id="note" class="rounded w-8" name="note"><?php echo $value['supplier_note'] ?></textarea>
-                            </div> 
-
-                            <div class="input w-8">
-                                <label for="" class="readonly">Attach file</label>
-                                <label for="file" class="custom-file-upload readonly btn button--green w-25 d-flex align-items-center justify-content-center gap-3">
-                                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                                    Choose File
-                                </label>
-                                <input type="file" name="file" id="file">
-                            </div> 
-
-                            <div class="input w-8">
-                                <a download href="./file/<?php echo $value['supplier_file']?>" style='text-decoration: underline; font-weight: 500'><?php echo $value['supplier_file']?></a>
-                            </div> 
-                            
                             <div class="button-row">
-                                <button class="btn button--main border-none rounded" name="submit">Save</button>
-                                <a href="../suppliers.php" class="btn btn-secondary rounded border-none">Go back</a>
+                                <button name="submit" class="btn button--main border-none rounded">Save</button>
+                                <a href="../users.php" class="btn btn-secondary rounded border-none">Go back</a>
                             </div>
                         </form>
                         <?php
-                        if(isset($_POST['submit'])){
-                            $supplier = new Supplier();
+                        if(isset($_POST['submit'])) {
+                            $order = new Order();
                             $data = [
                                 'id' => $_GET['id'],
-                                's_name' => $_POST['s_name'],
-                                'c_address' => $_POST['address'],
-                                'email' => $_POST['email'],
+                                'o_time' => $_POST['o_time'],
                                 'phone' => $_POST['phone'],
+                                'email' => $_POST['email'],
+                                'o_number' => $_POST['number'],
                                 'note' => $_POST['note']
                             ];
-                            if(isset($_FILES['file'])) {
-                                $extension = array('pdf'); 
-                                $fileName = $_FILES['file']['name'];
-                                $fileNameTmp = $_FILES['file']['tmp_name'];
-                                $file_data = $value['supplier_file'];
-                                
-                                $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-                                if(in_array($ext, $extension)) {
-                                    if(!file_exists('./file/' .$fileName)) {
-                                        move_uploaded_file($fileNameTmp, './file/'.$fileName);
-                                        $file_data = $fileName;
-                                    } else {
-                                        $fileName = str_replace('.','-', basename($fileName, $ext));
-                                        $newFileName = $fileName.time().".".$ext;
-                                        move_uploaded_file($fileNameTmp, './file/'.$newFileName);
-                                        $file_data = $newFileName;
-                                    }
-                                }
-                                $data['s_file'] = $file_data;
-                            }
-
-                            $supplier->updateData($data);
+                            $order->updateData($data);
                         }
-
                         ?>
                     </div>
                 </div>
@@ -217,7 +195,7 @@ $value = $supplier->getEachData($data)['0'];
     <script src="../../js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // detailSubmit('supplier');
+        // detailSubmit('order');
     </script>
 </body>
 </html>

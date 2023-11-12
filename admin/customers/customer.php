@@ -20,7 +20,7 @@ $value = $customer->getEachData($data)['0'];
 </head>
 <body>
     <header class="navbar sticky-top flex-md-nowrap p-0 border-bottom border-2">
-        <a href="admin.html" class="navbar-brand px-3 me-0">Travel agency</a>
+        <a href="../admin.php" class="navbar-brand px-3 me-0">Travel agency</a>
         <div class="avatar-box d-flex align-items-center">
             <span>User001</span>
             <img src="../../img/user-img.png" alt="" class="avatar">
@@ -38,56 +38,56 @@ $value = $customer->getEachData($data)['0'];
                 </li> -->
                 
                 <li class="nav__item">
-                    <a href="../dashboard.html" class="nav-link">
+                    <a href="../dashboard.php" class="nav-link">
                         <i class="fa-solid fa-chart-simple"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="../tours.html" class="nav-link">
+                    <a href="../tours.php" class="nav-link">
                         <i class="fa-solid fa-boxes-stacked"></i>
                         <span>Tours</span>
                     </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="../customers.html" class="nav-link  active">
+                    <a href="../customers.php" class="nav-link  active">
                         <i class="fa-solid fa-users"></i>
                         <span>Customers</span>
                     </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="../suppliers.html" class="nav-link">
+                    <a href="../suppliers.php" class="nav-link">
                         <i class="fa-solid fa-boxes-packing"></i>
                         <span>Suppliers</span>
                     </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="../orders.html" class="nav-link">
+                    <a href="../orders.php" class="nav-link">
                         <i class="fa-regular fa-file-lines"></i>
                         <span>Orders</span>
                     </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="../support.html" class="nav-link">
+                    <a href="../support.php" class="nav-link">
                         <i class="fa-solid fa-headset"></i>
                         <span>Support Customers</span>
                     </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="../users.html" class="nav-link">
+                    <a href="../users.php" class="nav-link">
                         <i class="fa-solid fa-user"></i>
                         <span>Users</span>
                     </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="../account.html" class="nav-link">
+                    <a href="../account.php" class="nav-link">
                         <i class="fa-solid fa-gear"></i>
                         <span>Your account</span>
                     </a>
@@ -108,11 +108,12 @@ $value = $customer->getEachData($data)['0'];
                 <div class="heading-action d-flex justify-content-between align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                          <li class="breadcrumb-item"><a href="../customers.html">Customers list</a></li>
+                          <li class="breadcrumb-item"><a href="../customers.php">Customers list</a></li>
                           <li class="breadcrumb-item active" aria-current="page">Customer: <?php echo $value['customer_first_name']?> <?php echo $value['customer_last_name']?></li>
                         </ol>
                     </nav>
                 </div>
+                <hr>
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="detail flex-column d-flex align-items-center">
                         <form method="post" class="d-flex flex-wrap justify-content-between">
@@ -197,13 +198,43 @@ $value = $customer->getEachData($data)['0'];
                 </div>
             </div>
             <div class="content__body mt-5">
-                
+                <h1 class="heading-title mb-3">Booking history</h1>
+                <hr>
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <td>Tour ID</td>
+                        <td>Tour name</td>
+                        <td>Number</td>
+                        <td>Total price</td>
+                        <td>Payment method</td>
+                        <td>Time</td>
+                        <td>Status</td>
+                    </tr>
+                    <?php
+                    $order = new Order();
+                    $data = [
+                        'id' => $_GET['id']
+                    ];
+                    $orders = $order->getDataWhereCustomerID($data);
+                    foreach($orders as $order) :?>
+                    <tr>
+                        <td><?php echo $order['tour_ID']?></td>
+                        <td><?php echo $order['tour_name']?></td>
+                        <td><?php echo $order['order_number']?></td>
+                        <td><?php echo $order['tour_price'] * $order['order_number']?></td>
+                        <td><?php echo $order['invoice_method']?></td>
+                        <td><?php echo $order['order_time']?></td>
+                        <td class="o_status"><?php echo $order['invoice_status']?></td>
+                    </tr>
+                    <?php endforeach ?>
+                </table>
             </div>
         </div>
     </div>
     <script src="../../js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        getOrderStatus();
         // detailSubmit('customer');
     </script>
 </body>
