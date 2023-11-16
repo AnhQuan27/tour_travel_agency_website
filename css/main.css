@@ -329,6 +329,7 @@ a:visited {
 
 .card__describe {
     position: absolute;
+    width: 100%;
     height: auto;
     background-color: rgba(255, 255, 255,.1);
     backdrop-filter: blur(.5rem);
@@ -943,6 +944,46 @@ a:visited {
     justify-content: space-between;
 }
 
+.tour-detail-booking .invoice {
+    justify-content: space-between;
+}
+
+.tour-detail-booking .qr_code {
+    margin: 2rem 5rem 0;
+    padding-left: 3.5rem;
+    border-left: 0.1rem solid #c1c1c1;
+}
+
+.tour-detail-booking .invoice-detail {
+    margin-top: 2rem;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tour-detail-booking .invoice-detail div span:first-child {
+    font-weight: 700;
+} 
+
+.tour-detail-booking .invoice-detail span{
+    font-size: 1.4rem;
+}
+
+.tour-detail-booking .invoice img {
+    width: 20rem;
+    height: auto;
+}
+
+.detail label:not(.readonly)::after{
+    content: "*";
+    color: var(--red-color);
+    margin-right: 1rem;
+}
+
+.detail input:read-only {
+    /* background-color: #EBEEF1; */
+    background-color: transparent;
+}
+
 .tour-detail-booking .detail .input-detail {
     position: relative;
     width: 34rem;
@@ -1003,6 +1044,29 @@ input[type="radio"] {
     border-left: .1rem solid #c1c1c1;
 }
 
+input[type='file'] {
+    display: none;
+}
+
+.custom-file-upload {
+    display: inline-flex;
+    justify-content: space-around;
+    align-items: center;
+    cursor: pointer;
+    color: var(--white-color) !important;
+    width: 13rem;
+    height: 3.5rem;
+    border-radius: 2rem;
+}
+
+.custom-file-upload i {
+    margin: 0;
+}
+
+.button-confirm {
+    padding: .5rem  1.3rem;
+    padding-bottom: .9rem;
+}
 
 .button-booking h2 {
     margin: 0;
@@ -1023,7 +1087,7 @@ input[type="radio"] {
 
 .login.body, .register.body {
     background-color: #e9ebee;
-    height: 100vh;
+    height: 135vh;
     justify-content: center;
     align-items: center;
 }

@@ -1,3 +1,7 @@
+<?php
+require_once './admin/process/query.php';
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +28,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="tours.html" class="nav-link">Tours</a>
+                    <a href="tours.php" class="nav-link">Tours</a>
                 </li>
 
                 <li class="nav-item">
@@ -38,29 +42,39 @@
                 <li class="nav-item">
                     <a href="faqs.html" class="nav-link">FAQs</a>
                 </li>
-
-                <li class="nav-item">
-                    <a href="./login/login.html" class="button button--main">Login</a>
-                </li>
-                
-                <li class="nav-item">
-                    <a href="./login/register.html" class="button button--return">Register</a>
-                </li>
-
-                <!-- <li class="nav-item">
-                    <a href="./user.html" class="nav-link">
-                        <i class="fa-solid fa-circle-user"></i>
-                        <span>User0001</span>
+                <?php 
+                    if(isset($_SESSION['account_role'])) {
+                ?>
+                    <li class="nav-item">
+                        <a href="<?php
+                        if($_SESSION['account_role'] > 3) {
+                            echo './user.php';
+                        } else {
+                            echo './admin/tours.php';
+                        }
+                        ?>" class="nav-link">
+                            <i class="fa-solid fa-circle-user"></i>
+                        <span><?php echo $_SESSION['account_username'] ?></span>
                     </a>
                 </li>
-
+                
                 <li class="nav-item logout-item grid__row">
-                    <a href="#" class="">
+                    <a href="./admin/process/logout.php" class="">
                         Logout
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </a>
-                </li> -->
-
+                </li>
+                <?php
+                } else { 
+                ?>
+                <li class="nav-item">
+                    <a href="./login/login.php" class="button button--main">Login</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="./login/register.php" class="button button--return">Register</a>
+                </li>
+                <?php } ?>
             </ul>   
         </header>
         <!-- End of Header -->
@@ -394,7 +408,7 @@
                     <a href="home.html">
                         <li>Home</li>
                     </a>
-                    <a href="tours.html">
+                    <a href="tours.php">
                         <li>Tours</li>
                     </a>
                     <a href="community.html">

@@ -1,6 +1,9 @@
 <?php
 require_once '../admin/process/query.php';
 
+$login = new Login();
+$login->checkAdminLogin();
+
 
 $search = '';
 if(isset($_GET['search'])) {

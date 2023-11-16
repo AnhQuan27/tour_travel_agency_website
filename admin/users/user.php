@@ -1,6 +1,10 @@
 
 <?php
 require_once '../process/query.php';
+
+$login = new Login();
+$login->checkAdminLogin();
+
 $account = new Account();
 $data = [
     'id' => $_GET['id']

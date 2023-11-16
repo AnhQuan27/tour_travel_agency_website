@@ -1,6 +1,9 @@
-
 <?php
 require_once '../process/query.php';
+
+$login = new Login();
+$login->checkAdminLogin();
+
 $order = new Order();
 $data = [
     'o_id' => $_GET['id']

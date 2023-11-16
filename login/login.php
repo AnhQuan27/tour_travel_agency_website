@@ -1,3 +1,10 @@
+<?php 
+require_once '../admin/process/query.php'; 
+session_start();
+if(isset($_SESSION['account_role'])) {
+    header('location: ../home.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +23,7 @@
                 <div class="website-logo">
                     <h1>Login</h1>
                 </div>
-                <form action="post" class="grid__row">
+                <form method="post" class="grid__row">
                     <div class="input-account input">
                         <input type="text" name="account" placeholder="Email" class="account">
                         <i class="fa-solid fa-envelope"></i>
@@ -39,13 +46,36 @@
 
                     </div>
 
-                    <button class="button button--black">Login</button>
+                    <button class="button button--black" name="submit">Login</button>
                     <a href="../home.html" class="button button--main">Home page</a>
                     <div class="register-link">
                         <span>Don't have account?</span>
                         <a href="./register.html">Register</a>
                     </div>
                 </form>
+                <?php
+                if(isset($_POST['submit'])) {
+                    session_start();
+                    $data = [
+                        'account_username' => $_POST['account'],
+                        'account_password' => $_POST['password'],
+                    ];
+
+                    $log = new Login();
+                    $login = $log->login($data)['0'];
+                    // var_dump($login);
+                    if(count($login) > 0) {
+                        $_SESSION['account_username'] = $login['account_username'];
+                        $_SESSION['account_password'] = $login['account_password'];
+                        $_SESSION['account_role'] = $login['account_role'];
+                        $_SESSION['account_ID'] = $login['account_ID'];
+                        header('location:../home.php');
+                        // exit;
+                    } else {
+                        echo '<script>alert("Login failed!");</script>';
+                    }
+                }
+                ?>
             </div>
         </div>
         <!-- End of Body -->
@@ -62,7 +92,7 @@
                     <a href="home.html">
                         <li>Home</li>
                     </a>
-                    <a href="../tours.html">
+                    <a href="../tours.php">
                         <li>Tours</li>
                     </a>
                     <a href="../community.html">

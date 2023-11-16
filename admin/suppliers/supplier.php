@@ -1,5 +1,9 @@
 <?php
 require_once '../process/query.php';
+
+$login = new Login();
+$login->checkAdminLogin();
+
 $supplier = new Supplier();
 $data = [
     'id' => $_GET['id']

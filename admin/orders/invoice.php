@@ -1,5 +1,9 @@
 <?php
 require_once '../process/query.php';
+
+$login = new Login();
+$login->checkAdminLogin();
+
 $order = new Order();
 $data = [
     'i_id' => $_GET['id']
@@ -197,7 +201,7 @@ $value = $order->getEachDataWhereInvoiceID($data)['0'];
                         <?php
                         if(isset($_POST['submit'])) {
                             $invoice = new Invoice();
-                            if(isset($_FILES['image'])) {
+                            if(isset($_FILES['image']) && !empty($_FILES['image']['name'])) {
                                 $extension = array('jpeg','jpg', 'png', 'gif'); 
                                 $fileName = $_FILES['image']['name'];
                                 $fileNameTmp = $_FILES['image']['tmp_name'];

@@ -99,6 +99,14 @@ function closeToastMessage() {
   });
 }
 
+function success(text) {
+  Swal.fire({
+    title: "Good job!",
+    text: `${text}`,
+    icon: "success"
+  });
+}
+
 function formConfirm() {
   const myForm = document.getElementById('myForm');
   myForm.addEventListener('submit', function(event) {
@@ -470,6 +478,26 @@ function getNow() {
   var seconds = currentDate.getSeconds();
   const now = document.getElementById('order-time');
   now.value = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+}
+
+function showInvoice() {
+  const confirmButton = document.getElementById('confirm_button');
+  const invoiceBox = document.querySelector('.invoice-box');
+  confirmButton.addEventListener("click" , function() {
+    invoiceBox.classList.remove('disable')
+    confirmButton.remove();
+    var email = document.getElementById('email');
+    var phone = document.getElementById('phone');
+    var time = document.getElementById('time');
+    var gender = document.querySelector('input[name="gender"]:checked');
+    var o_num = document.getElementById('number');
+
+    document.querySelector('.ur-email').innerHTML = email.value;
+    document.querySelector('.ur-phone').innerHTML = phone.value;
+    document.querySelector('.o-time').innerHTML = time.value;
+    document.querySelector('.ur-gender').innerHTML = gender.value;
+    document.querySelector('.o-num').innerHTML = o_num.value;
+  })
 }
 
 // function setRememberMe() {

@@ -1,3 +1,8 @@
+<?php
+require_once '../admin/process/query.php';
+$login = new Login();
+$login->checkAdminLogin();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

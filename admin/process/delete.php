@@ -7,6 +7,9 @@
     // } else {
 
     // }
+    
+    $login = new Login();
+    $login->checkAdminLogin();
 
     if($_GET['from'] == 'tours') {
         $tour = new Tour();

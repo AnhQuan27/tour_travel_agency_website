@@ -1,5 +1,9 @@
 <?php
 require_once '../process/query.php';
+
+$login = new Login();
+$login->checkAdminLogin();
+
 $tour = new Tour();
 $tour_image = new TourImage();
 $data = [
@@ -201,7 +205,7 @@ $value = $tour->getEachData($data)['0'];
 
                             <div class="input">
                                 <label>Itinerary</label>
-                                <textarea name="itinerary" id="itinerary" class="rounded w-8"><?php echo $value['tour_number']?></textarea>
+                                <textarea name="itinerary" id="itinerary" class="rounded w-8"><?php echo $value['tour_itinerary']?></textarea>
                             </div>
                             <div class="button-row">
                                 <button class="btn button--main border-none rounded" name="submit">Save</button>
@@ -228,10 +232,14 @@ $value = $tour->getEachData($data)['0'];
                             ];
                             $tour->updateData($data);
 
-                            if(isset($_FILES['images'])) {
+                            if(isset($_FILES['images']) && !empty($_FILES['images']['name'][0])) {
                                 $image_id = [
-                                    't_id' => $_GET['t_id'],
+                                    'id' => $_GET['t_id'],
                                 ];
+                                // if(isset($tour_image)) {}
+                                // echo "Can't find image";
+                                // echo "<br>";
+                                // var_dump($_FILES['images']);
                                 $tour_image->deleteData($image_id);
                             }
                             
@@ -247,7 +255,7 @@ $value = $tour->getEachData($data)['0'];
                                         move_uploaded_file($fileNameTmp, '../../tours/img/'.$fileName);
                                         $image_data = [
                                             'images' => $fileName,
-                                            't_id' => $_GET['t_id']
+                                            'id' => $_GET['t_id']
                                         ];
                                     } else {
                                         $fileName = str_replace('.','-', basename($fileName, $ext));
@@ -255,19 +263,21 @@ $value = $tour->getEachData($data)['0'];
                                         move_uploaded_file($fileNameTmp, '../../tours/img/'.$newFileName);
                                         $image_data = [
                                             'images' => $newFileName,
-                                            't_id' => $_GET['t_id']
+                                            'id' => $_GET['t_id']
                                         ];
                                     }
+                                    // echo "<br>";
+
+                                    // var_dump($image_data);
                                     $tour_image->createNewData($image_data);
                                 }
                             }
-                        }
+                        }   
                         ?>
                     </div>
                 </div>
             </div>
             <div class="content__body mt-5">
-                
             </div>
         </div>
     </div>

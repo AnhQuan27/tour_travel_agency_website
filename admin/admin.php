@@ -1,9 +1,14 @@
+<?php
+require_once '../admin/process/query.php';
+$login = new Login();
+$login->checkAdminLogin();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account</title>
+    <title>Admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
@@ -79,7 +84,7 @@
                 </li>
 
                 <li class="nav__item">
-                    <a href="./account.php" class="nav-link active">
+                    <a href="./account.php" class="nav-link">
                         <i class="fa-solid fa-gear"></i>
                         <span>Your account</span>
                     </a>

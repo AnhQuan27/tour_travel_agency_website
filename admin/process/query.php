@@ -60,7 +60,7 @@ class Tour extends Connection {
                 tour_to = :to_location,
                 tour_itinerary = :itinerary,
                 supplier_ID = :supplier
-                where tour_ID = :t_id";
+                WHERE tour_ID = :t_id";
         $update = $this->prepareSQL($sql);
         $update->execute($data);
     }
@@ -74,7 +74,7 @@ class Tour extends Connection {
 
 class TourImage extends Connection {
     public function createNewData($image_data) {
-        $sql = "INSERT INTO tour_image VALUES('', :images, :t_id)";
+        $sql = "INSERT INTO tour_image VALUES('', :images, :id)";
         $create = $this->prepareSQL($sql);
         $create->execute($image_data);
     }
@@ -89,6 +89,13 @@ class TourImage extends Connection {
 
     public function getData($id) {
         $sql = "SELECT * FROM tour_image WHERE tour_ID = $id";
+        $select = $this->prepareSQL($sql);
+        $select->execute();
+        return $select->fetchAll();
+    }
+
+    public function getDataLimit($id) {
+        $sql = "SELECT * FROM tour_image WHERE tour_ID = $id LIMIT 1";
         $select = $this->prepareSQL($sql);
         $select->execute();
         return $select->fetchAll();
@@ -112,9 +119,12 @@ class TourImage extends Connection {
 }
 
 class Customer extends Connection {
-    // public function createNewData($data) {
-    //     $sql = "INSERT INTO customer VALUES(':id')";
-    // }
+    public function createData($data) {
+        $sql = "INSERT INTO customer VALUES(:id, :f_name, :l_name, '', '', :phone, :email, :address, :a_id)";
+        $insert = $this->prepareSQL($sql);
+        $insert->execute($data);
+    } 
+    
     public function getData() {
         $sql = "SELECT * FROM customer";
         $select = $this->prepareSQL($sql);
@@ -197,6 +207,13 @@ class Supplier extends Connection {
 }
 
 class Order extends Connection {
+
+    public function createData($data) {
+        $sql = "INSERT INTO `order` VALUES(:id, :number, :time, :phone, :email, :note, :t_id, :c_id)";
+        $insert = $this->prepareSQL($sql);
+        $insert->execute($data);
+    }
+
     public function getData() {
         $sql = "SELECT * FROM `order` o
                 JOIN tour t ON t.tour_ID = o.tour_ID
@@ -266,6 +283,20 @@ class Order extends Connection {
 }
 
 class Invoice extends Connection {
+
+    public function createData($data){
+        $sql = "INSERT INTO invoice VALUES(:id, :status, :method, :note, :invoice_img_check, :invoice_img_receive, :o_id)";
+        $create = $this->prepareSQL($sql);
+        $create->execute($data);
+    }
+
+    public function getData() {
+        $sql = "SELECT * FROM invoice";
+        $select = $this->prepareSQL($sql);
+        $select->execute();
+        return $select->fetchAll();
+    }
+
     public function updateData($data) {
         $sql = "UPDATE `invoice` SET
         invoice_status = :check_status,
@@ -292,6 +323,12 @@ class Invoice extends Connection {
 }
 
 class Account extends Connection {
+
+    public function createData($data) {
+        $sql = "INSERT INTO account VALUES(:id, :account, :password, :role)";
+        $insert = $this->prepareSQL($sql);
+        $insert->execute($data);
+    }
     public function getDataJoinCustomer() {
         $sql = "SELECT account.account_ID,
                 account.account_role AS `role`,
@@ -357,6 +394,18 @@ class Account extends Connection {
                 LEFT JOIN customer c ON a.account_ID = c.account_ID
                 LEFT JOIN staff st ON a.account_ID = st.account_ID
                 WHERE a.account_ID = :id";
+        $select = $this->prepareSQL($sql);
+        $select->execute($data);
+        return $select->fetchAll();
+    }
+    
+    public function getEachDataLeftJoin($data) {
+        $sql = "SELECT *
+                FROM account a
+                LEFT JOIN customer c ON a.account_ID = c.account_ID
+                LEFT JOIN staff st ON a.account_ID = st.account_ID
+                LEFT JOIN supplier s ON a.account_ID = s.account_ID
+                WHERE a.account_ID = :id;";
         $select = $this->prepareSQL($sql);
         $select->execute($data);
         return $select->fetchAll();
@@ -442,5 +491,34 @@ class Search extends Connection {
         $select = $this->prepareSQL($sql);
         $select->execute([':search' => '%'. $search .'%']);
         return $select->fetchAll();
+    }
+}
+
+class Login extends Connection {
+    public function login($data) {
+        $sql = "SELECT *, a.account_ID FROM account a
+                LEFT JOIN customer c ON a.account_ID = c.account_ID
+                LEFT JOIN staff st ON a.account_ID = st.account_ID
+                LEFT JOIN supplier s ON a.account_ID = s.account_ID
+                WHERE a.account_username = :account_username
+                AND a.account_password = :account_password";
+        $select = $this->prepareSQL($sql);
+        $select->execute($data);
+        return $select->fetchAll();
+    }
+
+    public function checkCustomerLogin() {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+
+    public function checkAdminLogin() {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        } 
+        if (!isset($_SESSION['account_role']) || $_SESSION['account_role'] > 3) {
+            header('location:http://localhost/tour_travel_agency_website/home.php');
+        }
     }
 }

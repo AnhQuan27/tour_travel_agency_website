@@ -1,3 +1,7 @@
+<?php
+require_once '../admin/process/query.php';
+date_default_timezone_set("Asia/Ho_Chi_Minh");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +20,7 @@
                 <div class="website-logo">
                     <h1>Register</h1>
                 </div>
-                <form action="post" class="grid__row">
+                <form method="post" class="grid__row">
                     <div class="input-f-name input">
                         <input type="text" name="f_name" placeholder="First name" class="f-name">
                         <i class="fa-solid fa-user"></i>
@@ -37,9 +41,14 @@
                         <i class="fa-solid fa-location-dot"></i>
                     </div>    
 
-                    <div class="input-account input">
-                        <input type="text" name="account" placeholder="Email" class="account">
+                    <div class="input-email input">
+                        <input type="text" name="email" placeholder="Email" class="email">
                         <i class="fa-solid fa-envelope"></i>
+                    </div>
+
+                    <div class="input-account input">
+                        <input type="text" name="account" placeholder="Username" class="account">
+                        <i class="fa-solid fa-circle-user"></i>
                     </div>
 
                     <div class="input_password input">
@@ -47,13 +56,41 @@
                         <i class="fa-solid fa-lock"></i>
                     </div>
                     
-                    <button class="button button--black">Register</button>
+                    <button class="button button--black" name="submit">Register</button>
                     <a href="../home.html" class="button button--main">Home page</a>
                     <div class="register-link">
                         <span>Already have an account?</span>
                         <a href="./login.html">Login</a>
                     </div>
                 </form>
+                <?php
+                if(isset($_POST['submit'])) {
+                    $account = new Account();
+                    $customer = new Customer();
+                    $account_id = 'acc' . count($account->getData())+1;
+                    $customer_id = 'cus' . count($account->getData())+1;
+                    $dataAccount = [
+                        'id' => $account_id,
+                        'account' => $_POST['account'],
+                        'password' => $_POST['password'],
+                        'role' => 4
+                    ];
+                    $account->createData($dataAccount);
+
+                    $dataCustomer = [
+                        'id' => $customer_id,
+                        'f_name' => $_POST['f_name'],
+                        'l_name' => $_POST['l_name'],
+                        'phone' => $_POST['phone'],
+                        'email' => $_POST['email'],
+                        'address' => $_POST['address'],
+                        'a_id' => $account_id
+                    ];
+                    $customer->createData($dataCustomer);
+                    echo '<script>alert("Success!")</script>';
+                    header('location:../home.html');
+                }
+                ?>
             </div>
         </div>
         <!-- End of Body -->
@@ -70,7 +107,7 @@
                     <a href="home.html">
                         <li>Home</li>
                     </a>
-                    <a href="../tours.html">
+                    <a href="../tours.php">
                         <li>Tours</li>
                     </a>
                     <a href="../community.html">
@@ -105,5 +142,8 @@
 
         </footer>
         <!-- End of Footer -->
+        <script src="../js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>text = 'Registration success!'</script>
 </body>
 </html>

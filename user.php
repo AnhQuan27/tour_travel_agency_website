@@ -1,3 +1,10 @@
+<?php 
+require_once './admin/process/query.php'; 
+session_start();
+if(!isset($_SESSION['account_role'])) {
+    header('location: ./login/login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,11 +27,11 @@
             <ul class="nav grid__row">
 
                 <li class="nav-item">
-                    <a href="home.html" class="nav-link active" aria-current="page">Home</a>
+                    <a href="home.html" class="nav-link" aria-current="page">Home</a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="tours.html" class="nav-link">Tours</a>
+                    <a href="tours.php" class="nav-link">Tours</a>
                 </li>
 
                 <li class="nav-item">
@@ -48,14 +55,14 @@
                 </li> -->
 
                 <li class="nav-item">
-                    <a href="./user.html" class="nav-link">
+                    <a href="./user.html" class="nav-link active">
                         <i class="fa-solid fa-circle-user"></i>
-                        <span>User0001</span>
+                        <span><?php echo $_SESSION['account_username'] ?></span>
                     </a>
                 </li>
 
                 <li class="nav-item logout-item grid__row">
-                    <a href="#" class="">
+                    <a href="./admin/process/logout.php" class="">
                         Logout
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </a>
@@ -65,61 +72,107 @@
         </header>
     </div>
         <!-- End of Header -->
-
+        <?php
+                $account = new Account();
+                $data = [
+                    'id' => $_SESSION['account_ID']
+                ];
+                $value = $account->getEachDataLeftJoin($data)['0'];
+                $role = $_SESSION['account_role']; 
+                ?>
         <div class="user-setting">
             <div class="container__wrap">
                 <div class="user-header">
                     <h1>Account setting</h1>
-                    <p class="greeting">Hello User0001</p>
-                    <p class="user-email">Email: <span>user0001@email.com</span></p>
+                    <p class="greeting">Hello <?php echo $_SESSION['account_username'] ?></p>
+                    <p class="user-email">Email: 
+                        <span><?php if($role == 3) {
+                                        echo $value['supplier_email'];
+                                    } else if($role == 4) {
+                                        echo $value['customer_email'];
+                                    } 
+                                ?>
+                        </span></p>
                 </div>
+                
                 <form action="" class="user-data grid__row" id="user-setting-form">
+                    <?php if($role!=3) : ?>
                     <div class="input input-f-name">
                         <label for="first">Your first name</label>
-                        <input type="text" name="f_name" class="f-name" id="first">
+                        <input type="text" name="f_name" class="f-name" id="first" value="<?php echo $value['customer_first_name']?>">
+
                         <i class="fa-solid fa-user"></i>
                     </div>
 
                     <div class="input input-l-name">
                         <label for="last">Your last name</label>
-                        <input type="text" name="l_name" class="l-name" id="last">
+                        <input type="text" name="l_name" class="l-name" id="last" value="<?php echo $value['customer_last_name']?>">
                         <i class="fa-solid fa-user"></i>
                     </div>
+                    <?php endif; ?>
 
+                    <?php if($role == 3) :?>
+                    <div class="input input-l-name">
+                        <label for="name">Your name</label>
+                        <input type="text" name="name" class="l-name" id="name" value="<?php echo $value['supplier_name']?>">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <?php endif ?>
                     <div class="input input-email">
                         <label for="email">Your email address</label>
-                        <input type="text" name="email" class="email" id="email">
+                        <input type="text" name="email" class="email" id="email" 
+                        value="<?php
+                                if($role == 4 ) {
+                                    echo $value['customer_email'];
+                                } else if($role == 3) {
+                                    echo $value['supplier_email'];
+                                }
+                                ?>">
                         <i class="fa-solid fa-envelope"></i>
                     </div>
 
                     <div class="input input-phone">
                         <label for="phone">Your phone number</label>
-                        <input type="text" name="phone" class="phone" id="phone">
+                        <input type="text" name="phone" class="phone" id="phone" 
+                        value="<?php
+                                if($role == 4 ) {
+                                    echo $value['customer_phone'];
+                                } else if($role == 3) {
+                                    echo $value['supplier_phone'];
+                                }
+                                ?>">
                         <i class="fa-solid fa-phone"></i>
                     </div>
                     
                     <div class="input input-address">
                         <label for="address">Your address</label>
-                        <input type="text" name="address" class="address" id="address">
+                        <input type="text" name="address" class="address" id="address" 
+                        value="<?php
+                                if($role == 4 ) {
+                                    echo $value['customer_address'];
+                                } else if($role == 3) {
+                                    echo $value['supplier_address'];
+                                }
+                                ?>">
                         <i class="fa-solid fa-location-dot"></i>
                     </div>
-
+                    <?php if($_SESSION['account_role'] == 4) : ?>
                     <div class="input input-birthday">
                         <label for="day-of-birth">Your birthday</label>
-                        <input type="date" name="birthday" class="birthday" id="day-of-birth">
+                        <input type="date" name="birthday" class="birthday" id="day-of-birth" value="<?php echo $value['customer_birthday']?>">
                     </div>
-
                     <div class="input input-gender grid__row">
                         <label>Your gender</label>
-                        <input type="radio" name="gender" class="gender" value="Male">
+                        <input type="radio" <?php if($value['customer_gender'] == 'Male') {echo 'checked';}?> name="gender" class="gender" value="Male">
                         <span>Male</span>
-                        <input type="radio" name="gender" class="gender" value="Female">
+                        <input type="radio" <?php if($value['customer_gender'] == 'Female') {echo 'checked';}?>  name="gender" class="gender" value="Female">
                         <span>Female</span>
                     </div>
+                    <?php endif ?>
 
                     <div class="input input-password">
                         <label for="password">Your password</label>
-                        <input type="text" name="password" class="password" id="password">
+                        <input type="text" name="password" class="password" id="password" value="<?php echo $value['account_password']?>">
                         <i class="fa-solid fa-key"></i>
                     </div>
                     
@@ -143,7 +196,7 @@
                     <a href="home.html">
                         <li>Home</li>
                     </a>
-                    <a href="tours.html">
+                    <a href="tours.php">
                         <li>Tours</li>
                     </a>
                     <a href="community.html">
