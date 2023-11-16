@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 12, 2023 lúc 08:32 AM
+-- Thời gian đã tạo: Th10 16, 2023 lúc 02:26 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.2.4
 
@@ -55,7 +55,8 @@ INSERT INTO `account` (`account_ID`, `account_username`, `account_password`, `ac
 ('6', 'user6', '123456', 3),
 ('7', 'user7', '123456', 3),
 ('8', 'user8', '123456', 3),
-('9', 'user9', '123456', 3);
+('9', 'user9', '123456', 3),
+('acc18', 'anhquan0327', 'anhquanAwms', 4);
 
 -- --------------------------------------------------------
 
@@ -85,7 +86,8 @@ INSERT INTO `customer` (`customer_ID`, `customer_first_name`, `customer_last_nam
 ('3', 'Michael', 'Johnson', 'Male', '1982-03-10', '5555555555', 'michael.johnson@email.com', 'Address 3', '12'),
 ('4', 'Emily', 'Brown', 'Female', '1995-12-05', '7777777777', 'emily.brown@email.com', 'Address 4', '13'),
 ('5', 'David', 'Wilson', 'Male', '1988-07-25', '9999999999', 'david.wilson@email.com', 'Address 5', '14'),
-('6', '6', '6', '6', '2023-11-01', '6', '6', '6', '16');
+('6', '6', '6', '6', '2023-11-01', '6', '6', '6', '16'),
+('cus18', 'Nguyen', 'Quan', 'Male', '2002-03-27', '0944116036', 'anhquan0327@gmail.com', 'Cau giay', 'acc18');
 
 -- --------------------------------------------------------
 
@@ -112,7 +114,10 @@ INSERT INTO `invoice` (`invoice_ID`, `invoice_status`, `invoice_method`, `invoic
 ('2', 'Unpaid', 'Banking', 'Banking payment 2', '', '', '2'),
 ('3', 'Paid', 'Banking', 'Banking payment', '', '', '3'),
 ('4', 'Paid', 'Banking', 'Banking payment', '', '', '4'),
-('5', 'Unpaid', 'Cash', 'Cash payment', '', '', '5');
+('5', 'Unpaid', 'Cash', 'Cash payment', '', '', '5'),
+('6', 'Unpaid', '', 'Unpaid', '', '', '6'),
+('invoice7', 'Unpaid', 'Cash', '', '', '', '1700094414'),
+('invoice8', 'Unpaid', 'Banking', '', 'TAL-machu-picchu.jpg', '91425_ed16ee52.jpg', '1700094420');
 
 -- --------------------------------------------------------
 
@@ -137,10 +142,29 @@ CREATE TABLE `order` (
 
 INSERT INTO `order` (`order_ID`, `order_number`, `order_time`, `order_phone`, `order_email`, `order_note`, `tour_ID`, `customer_ID`) VALUES
 ('1', 2, '0000-00-00 00:00:00', '1234567890', 'john.doe@email.com', 'Order Note 1', '1', '1'),
+('1700055352', 1, '2023-11-15 20:35:52', '0944116036', 'anhquan0327@gmail.com', '', '1', 'cus18'),
+('1700058380', 1, '2023-11-15 21:26:20', '0944116036', 'anhquan0327@gmail.com', '', '1', 'cus18'),
+('1700092694', 1, '2023-11-16 06:58:14', '0944116036', 'anhquan0327@gmail.com', '', '1', 'cus18'),
+('1700092717', 1, '2023-11-16 06:58:37', '0944116036', 'anhquan0327@gmail.com', '', '1', 'cus18'),
+('1700094414', 1, '2023-11-16 07:26:54', '0944116036', 'anhquan0327@gmail.com', '', '1', 'cus18'),
+('1700094420', 1, '2023-11-16 07:27:00', '0944116036', 'anhquan0327@gmail.com', '', '1', 'cus18'),
 ('2', 2, '2023-02-10 11:30:00', '9876543210', 'jane.smith@email.com', 'Order Note 2', '2', '2'),
 ('3', 2, '2023-11-10 09:42:17', '1118882777', 'michael.johnson@email.com', 'Order 3', '3', '3'),
 ('4', 4, '2023-04-20 09:45:00', '7777777777', 'emily.brown@email.com', 'Order Note 4', '4', '4'),
-('5', 5, '2023-05-25 08:30:00', '9999999999', 'david.wilson@email.com', 'Order Note 5', '5', '5');
+('5', 5, '2023-05-25 08:30:00', '9999999999', 'david.wilson@email.com', 'Order Note 5', '5', '5'),
+('6', 2, '2023-11-13 07:34:43', '1118882777', 'example@email.com', 'nothing', '1', '6');
+
+--
+-- Bẫy `order`
+--
+DELIMITER $$
+CREATE TRIGGER `update_tour_number` AFTER INSERT ON `order` FOR EACH ROW BEGIN
+  UPDATE tour 
+  SET tour_number = tour_number - NEW.order_number
+  WHERE tour_ID = NEW.tour_ID;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -224,14 +248,14 @@ CREATE TABLE `tour` (
 --
 
 INSERT INTO `tour` (`tour_ID`, `tour_name`, `tour_price`, `tour_transport`, `tour_start`, `tour_end`, `tour_length`, `tour_number`, `tour_from`, `tour_to`, `tour_itinerary`, `supplier_ID`) VALUES
-('1', 'Tour 01', 100, 'Bus', '2023-01-10', '2023-01-20', '10 days', 0, 'Hanoi', 'Ho Chi Minh City', '0', '1'),
-('2', 'Tour 2', 150, 'Train', '2023-02-15', '2023-02-25', '10 days', 0, 'Ho Chi Minh City', 'Da Nang', 'Itinerary 2', '2'),
-('3', 'Tour 3', 120, 'Car', '2023-03-20', '2023-03-30', '10 days', 0, 'Da Nang', 'Ha Noi', 'Itinerary 3', '3'),
-('4', 'Tour 4', 200, 'Flight', '2023-04-25', '2023-05-05', '10 days', 0, 'Ho Chi Minh City', 'Hanoi', 'Itinerary 4', '4'),
-('5', 'Tour 5', 180, 'Boat', '2023-05-30', '2023-06-09', '10 days', 0, 'Ho Chi Minh City', 'Hanoi', 'Itinerary 5', '5'),
-('7', '7', 7, '7', '2023-11-10', '2023-11-19', '7', 7, '87', '8', '7', '3'),
-('8', '81', 8, '8', '2023-11-15', '2023-11-25', '8', 8, '81', '8', '8', '1'),
-('9', '9', 9, '9', '2023-11-14', '2023-11-24', '9', 9, '9', '9', '9', '6');
+('1', 'Tour 1', 100, 'Car, Plane, Train', '2023-01-10', '2023-01-20', '10 days', 11, 'Hanoi', 'Ho Chi Minh City', '1811', '1'),
+('2', 'Tour 2', 150, 'Train, Boat, Plane', '2023-02-15', '2023-02-25', '10 days', 20, 'Ho Chi Minh City', 'Da Nang', 'Itinerary 2', '2'),
+('3', 'Tour 3', 120, 'Car, Train, Boat', '2023-03-20', '2023-03-30', '10 days', 20, 'Da Nang', 'Ha Noi', 'Itinerary 3', '3'),
+('4', 'Tour 4', 200, 'Plane, Train', '2023-04-25', '2023-05-05', '10 days', 20, 'Ho Chi Minh City', 'Hanoi', 'Itinerary 4', '4'),
+('5', 'Tour 5', 180, 'Boat, Plane, Car', '2023-05-30', '2023-06-09', '10 days', 20, 'Ho Chi Minh City', 'Hanoi', 'Itinerary 5', '5'),
+('7', '7', 7, 'Plane, Car', '2023-11-10', '2023-11-19', '7', 7, '87', '8', '7', '3'),
+('8', '81', 8, 'Plane, Boat', '2023-11-15', '2023-11-25', '8', 8, '81', '8', '81', '1'),
+('9', '9', 9, 'Plane, Car', '2023-11-14', '2023-11-24', '9', 9, '9', '9', '9', '6');
 
 -- --------------------------------------------------------
 
@@ -253,8 +277,29 @@ INSERT INTO `tour_image` (`image_ID`, `image_name`, `tour_ID`) VALUES
 (30, 'switzerland.jpg', '7'),
 (31, 'US.jpg', '7'),
 (32, 'Vietnam.jpg', '7'),
-(33, 'Italy.jpeg', '8'),
-(34, 'user-img.png', '8');
+(52, 'phu-quoc-1699949702.png', '1'),
+(53, 'ha-long-bay-1699949702.jpg', '1'),
+(54, 'it-was-an-amazing-experience-1699949730.jpg', '2'),
+(55, 'the-great-pyramid.jpg', '2'),
+(56, '7_wonders_christ.jpg', '2'),
+(57, '35765965.png', '3'),
+(58, 'Taj-Mahal-Agra-India-1699949740.png', '3'),
+(59, 'TAL-machu-picchu-1699949740.jpg', '3'),
+(60, 'new-york.jpg', '4'),
+(61, 'it-was-an-amazing-experience-1699950227.jpg', '4'),
+(62, 'the-great-pyramid-1699950227.jpg', '4'),
+(63, 'hoian.jpg', '5'),
+(64, 'phu-quoc-1699950245.png', '5'),
+(65, 'ha-long-bay-1699950245.jpg', '5'),
+(66, 'the-great-pyramid-1699951158.jpg', '8'),
+(67, '7_wonders_christ-1699951158.jpg', '8'),
+(68, '35765965-1699951158.png', '8'),
+(69, 'Taj-Mahal-Agra-India-1699951158.png', '8'),
+(70, 'TAL-machu-picchu-1699951158.jpg', '8'),
+(71, 'everest.jpg', '9'),
+(72, 'Mongolia-2109x1406.jpg', '9'),
+(73, 'Ancient-Civilizations-of-Latin-America.jpg', '9'),
+(74, 'thailand_phuket_phang_nga_bay.jpg', '9');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -324,7 +369,7 @@ ALTER TABLE `tour_image`
 -- AUTO_INCREMENT cho bảng `tour_image`
 --
 ALTER TABLE `tour_image`
-  MODIFY `image_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `image_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
