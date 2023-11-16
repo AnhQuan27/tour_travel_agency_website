@@ -17,9 +17,16 @@ $login->checkAdminLogin();
 </head>
 <body>
     <header class="navbar sticky-top flex-md-nowrap p-0 border-bottom border-2">
-        <a href="admin.php" class="navbar-brand px-3 me-0">Travel agency</a>
+        <a href="http://localhost/tour_travel_agency_website/home.php" class="navbar-brand px-3 me-0">Travel agency</a>
         <div class="avatar-box d-flex align-items-center">
-            <span>User001</span>
+            <?php
+            $account = new Account();
+            $data = [
+                'id' => $_SESSION['account_ID']
+            ];
+            $value = $account->getEachDataLeftJoin($data)['0'];
+            ?>
+            <span><?php echo $value['staff_first_name'] . ' ' . $value['staff_last_name'] ?></span>
             <img src="../img/user-img.png" alt="" class="avatar">
         </div>
     </header>

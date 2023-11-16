@@ -22,6 +22,7 @@ if(isset($_GET['search'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tours</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
@@ -44,9 +45,16 @@ if(isset($_GET['search'])) {
     </div> -->
 
     <header class="navbar sticky-top flex-md-nowrap p-0 border-bottom border-2">
-        <a href="admin.php" class="navbar-brand px-3 me-0">Travel agency</a>
+        <a href="http://localhost/tour_travel_agency_website/home.php" class="navbar-brand px-3 me-0">Travel agency</a>
         <div class="avatar-box d-flex align-items-center">
-            <span>User001</span>
+            <?php
+            $account = new Account();
+            $data = [
+                'id' => $_SESSION['account_ID']
+            ];
+            $value = $account->getEachDataLeftJoin($data)['0'];
+            ?>
+            <span><?php echo $value['staff_first_name'] . ' ' . $value['staff_last_name'] ?></span>
             <img src="../img/user-img.png" alt="" class="avatar">
         </div>
     </header>
@@ -185,6 +193,7 @@ if(isset($_GET['search'])) {
         </div>
     </div>
     <script src="../js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -192,9 +201,21 @@ if(isset($_GET['search'])) {
     <script>
         // deleteConfirm('Tour');
         new DataTable('#myTable', {
-            searching: false,
+           searching: false,
            info: false
         });
+        // $(document).ready(function () {
+        //     // Khởi tạo Handsontable cho bảng
+        //     // Xử lý sự kiện khi bấm vào nút xuất Excel
+        //     $('#exportExcel').on('click', function () {
+        //         // Lấy dữ liệu từ Handsontable
+        //         var exportData = hot.getData();
+
+        //         // Xuất dữ liệu ra một tệp Excel
+        //         handsontable.dom.triggerDownload('xlsx', 'exported_data');
+        //     });
+        // });
+
     </script>
 </body>
 </html>
