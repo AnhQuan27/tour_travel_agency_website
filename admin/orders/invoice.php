@@ -234,6 +234,15 @@ $value = $order->getEachDataWhereInvoiceID($data)['0'];
                                     'note' => $_POST['note'],
                                     'invoice_img_check' => $file_data
                                 ];
+                            } else {
+                                $data = [
+                                    'id' => $_GET['id'],
+                                    'o_id' => $_POST['o_id'],
+                                    'check_status' => $_POST['check_status'],
+                                    'method' => $_POST['method'],
+                                    'note' => $_POST['note'],
+                                    'invoice_img_check' => ''
+                                ];
                             }
                             // print_r($data);
                             $invoice->updateData($data);
