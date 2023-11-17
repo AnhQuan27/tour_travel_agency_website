@@ -241,8 +241,9 @@ $value = $order->getEachDataWhereInvoiceID($data)['0'];
                                     'check_status' => $_POST['check_status'],
                                     'method' => $_POST['method'],
                                     'note' => $_POST['note'],
-                                    'invoice_img_check' => ''
+                                    'invoice_img_check' => $value['invoice_img_check']
                                 ];
+                                // echo $value['invoice_img_check'] .'1';
                             }
                             // print_r($data);
                             $invoice->updateData($data);
