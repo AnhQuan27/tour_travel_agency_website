@@ -15,12 +15,12 @@
         $tour = new Tour();
         $tour_image = new TourImage();
         $data = [
-            'id' => $_GET['id'],
+            'id' => $_GET['t_id'],
         ];
 
         $tour_image->deleteData($data);
         $tour->deleteData($data);
-        header('Location:../tours.php');
+        // header('Location:../tours.php');
     }
 
     if($_GET['from'] == 'customers') {
