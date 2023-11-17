@@ -164,7 +164,7 @@ if(isset($_GET['search'])) {
                             <td>
                                 <div class="d-flex justify-content-evenly">
                                     <a href="./suppliers/supplier.php?id=<?php echo $supplier['supplier_ID']?>">
-                                        <i class="fa-solid fa-pen"></i>
+                                        <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                     <a href="./process/delete.php?from=suppliers&id=<?php echo $supplier['supplier_ID']?>" class="delete">
                                         <i class="fa-solid fa-trash"></i>

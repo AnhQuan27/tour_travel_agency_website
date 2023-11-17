@@ -522,3 +522,28 @@ class Login extends Connection {
         }
     }
 }
+
+class View extends Connection {
+    public function viewByMonth() {
+        $sql = "SELECT
+                    YEAR(order_time) AS year,
+                    MONTH(order_time) AS month,
+                    COUNT(order_ID) AS order_count,
+                    SUM(tour_price) AS total_revenue,
+                    SUM(order_number) AS total_order_number,
+                    COUNT(DISTINCT customer_ID) AS customer_count
+                FROM
+                    `order`
+                JOIN
+                    `tour` ON `order`.`tour_ID` = `tour`.`tour_ID`
+                GROUP BY
+                    YEAR(order_time),
+                    MONTH(order_time)
+                ORDER BY
+                    YEAR(order_time) ASC,
+                    MONTH(order_time) ASC;";
+        $select = $this->prepareSQL($sql);
+        $select->execute();
+        return $select->fetchAll();
+    }
+}

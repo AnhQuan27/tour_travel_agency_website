@@ -165,7 +165,7 @@ if(isset($_GET['search'])) {
                             <td>
                                 <div class="d-flex justify-content-evenly align-items-center">
                                     <a href="./users/user.php?id=<?php echo $account['account_ID']?>">
-                                        <i class="fa-solid fa-pen"></i>
+                                        <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                     <a href="./process/delete.php?from=accounts&id=<?php echo $account['account_ID']?>" class="delete">
                                         <i class="fa-solid fa-trash"></i>

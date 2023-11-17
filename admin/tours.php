@@ -177,7 +177,7 @@ if(isset($_GET['search'])) {
                             <td>
                                 <div class="d-flex justify-content-evenly">
                                     <a href="./tours/tour.php?t_id=<?php echo $tour['tour_ID']?>">
-                                        <i class="fa-solid fa-pen"></i>
+                                        <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                     <a href="./process/delete.php?from=tours&t_id=<?php echo $tour['tour_ID']?>" class="delete">
                                         <i class="fa-solid fa-trash"></i>
