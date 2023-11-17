@@ -22,12 +22,12 @@ $login->checkAdminLogin();
         <div class="avatar-box d-flex align-items-center">
             <?php
             $account = new Account();
-            $data = [
+            $dataAcc = [
                 'id' => $_SESSION['account_ID']
             ];
-            $value = $account->getEachDataLeftJoin($data)['0'];
+            $acc = $account->getEachDataLeftJoin($dataAcc)['0'];
             ?>
-            <span><?php echo $value['staff_first_name'] . ' ' . $value['staff_last_name'] ?></span>
+            <span><?php echo $acc['staff_first_name'] . ' ' . $acc['staff_last_name'] ?></span>
             <img src="../../img/user-img.png" alt="" class="avatar">
         </div>
     </header>
@@ -101,7 +101,7 @@ $login->checkAdminLogin();
             </ul>
             <div class="sidebar__logout">
                 <hr>
-                <a href="#" class="nav-link">
+                <a href="../process/logout.php" class="nav-link">
                     Logout
                     <span><i class="fa-solid fa-right-from-bracket"></i></span>
                 </a>

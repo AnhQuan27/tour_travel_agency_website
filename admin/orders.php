@@ -115,7 +115,7 @@ if(isset($_GET['search'])) {
             </ul>
             <div class="sidebar__logout">
                 <hr>
-                <a href="#" class="nav-link">
+                <a href="./process/logout.php" class="nav-link">
                     Logout
                     <span><i class="fa-solid fa-right-from-bracket"></i></span>
                 </a>

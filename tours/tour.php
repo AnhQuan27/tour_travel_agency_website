@@ -353,7 +353,7 @@ $value = $tour->getEachData($data)['0'];
                         </div>
                     </div>
                 </div>
-                <div class="tour-detail-booking tour-ticket-box invoice-box ">
+                <div class="tour-detail-booking tour-ticket-box invoice-box disable">
                     <span class="number-count">3</span>
                     <span class="title">Your invoice</span>
                     <div class="detail-note grid__row">
