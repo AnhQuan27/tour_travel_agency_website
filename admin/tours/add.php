@@ -226,7 +226,7 @@ $login->checkAdminLogin();
                                         move_uploaded_file($fileNameTmp, '../../tours/img/'.$fileName);
                                         $image_data = [
                                             'images' => $fileName,
-                                            't_id' => $_POST['t_id']
+                                            'id' => $_POST['t_id']
                                         ];
                                     } else {
                                         $fileName = str_replace('.','-', basename($fileName, $ext));
@@ -234,7 +234,7 @@ $login->checkAdminLogin();
                                         move_uploaded_file($fileNameTmp, '../../tours/img/'.$newFileName);
                                         $image_data = [
                                             'images' => $newFileName,
-                                            't_id' => $_POST['t_id']
+                                            'id' => $_POST['t_id']
                                         ];
                                     }
                                     $tour_images->createNewData($image_data);
