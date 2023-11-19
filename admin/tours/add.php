@@ -33,21 +33,23 @@ $login->checkAdminLogin();
     </header>
     <div class="container-fluid">
         <div class="sidebar d-flex flex-column p-3 d-flex justify-content-between">
-            <ul class="nav nav-pills flex-column mb-auto">
-                
+           
+            <ul class="nav nav-pills flex-column mb-auto">   
                 <!-- <li class="nav__item">
                     <a href="" class="nav-link active">
                         <i class="fa-solid fa-house"></i>
                         <span>Home</span>
                     </a>
                 </li> -->
-                
+
+                <?php if($_SESSION['account_role'] < 3) : ?>
                 <li class="nav__item">
                     <a href="../dashboard.php" class="nav-link">
                         <i class="fa-solid fa-chart-simple"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <?php endif ?>
 
                 <li class="nav__item">
                     <a href="../tours.php" class="nav-link active">
@@ -63,12 +65,14 @@ $login->checkAdminLogin();
                     </a>
                 </li>
 
-                <li class="nav__item">
-                    <a href="../suppliers.php" class="nav-link">
-                        <i class="fa-solid fa-boxes-packing"></i>
-                        <span>Suppliers</span>
-                    </a>
-                </li>
+                <?php if($_SESSION['account_role'] < 3) : ?>
+                    <li class="nav__item">
+                        <a href="../suppliers.php" class="nav-link">
+                            <i class="fa-solid fa-boxes-packing"></i>
+                            <span>Suppliers</span>
+                        </a>
+                    </li>
+                <?php endif ?>
 
                 <li class="nav__item">
                     <a href="../orders.php" class="nav-link">
@@ -77,19 +81,21 @@ $login->checkAdminLogin();
                     </a>
                 </li>
 
+                <?php if($_SESSION['account_role'] < 3) : ?>
                 <li class="nav__item">
                     <a href="../support.php" class="nav-link">
                         <i class="fa-solid fa-headset"></i>
                         <span>Support Customers</span>
                     </a>
                 </li>
-
-                <li class="nav__item">
-                    <a href="../users.php" class="nav-link">
-                        <i class="fa-solid fa-user"></i>
-                        <span>Users</span>
-                    </a>
-                </li>
+                
+                    <li class="nav__item">
+                        <a href="../users.php" class="nav-link">
+                            <i class="fa-solid fa-user"></i>
+                            <span>Users</span>
+                        </a>
+                    </li>
+                <?php endif ?>
 
                 <li class="nav__item">
                     <a href="../account.php" class="nav-link">

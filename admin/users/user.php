@@ -5,6 +5,9 @@ require_once '../process/query.php';
 $login = new Login();
 $login->checkAdminLogin();
 
+if($_SESSION['account_role'] == 3){
+    header('Location: http://localhost/tour_travel_agency_website/admin/tours.php');
+}
 $account = new Account();
 $data = [
     'id' => $_GET['id']
@@ -134,15 +137,6 @@ $value = $account->getEachData($data)['0'];
                                 </div>
                             <?php endif ?>
 
-                            <?php if($value['account_role'] == 3) : ?>
-                                
-                                <div class="input">
-                                    <label for="s_name" class="readonly" >Supplier name</label>
-                                    <input type="text" readonly id="s_name" class="rounded w-8" name="s_name" value="<?php echo $value['supplier_name'] ?>">
-                                </div>
-                            <?php endif ?>
-
-
                             <div class="input">
                                 <label for="id" class="readonly">Account ID</label>
                                 <input type="text" readonly name="id" id="id" class="rounded w-4" value="<?php echo $value['account_ID'] ?>">
@@ -176,16 +170,13 @@ $value = $account->getEachData($data)['0'];
                         </form>
                         <?php
                         if(isset($_POST['submit'])) {
-                            $order = new Order();
+                            $account = new Account();
                             $data = [
-                                'id' => $_GET['id'],
-                                'o_time' => $_POST['o_time'],
-                                'phone' => $_POST['phone'],
-                                'email' => $_POST['email'],
-                                'o_number' => $_POST['number'],
-                                'note' => $_POST['note']
+                                'a_id' =>$value['account_ID'],
+                                'password' => $_POST['password'],
+                                'role' => $_POST['role']
                             ];
-                            $order->updateData($data);
+                            $account->updateData($data);
                         }
                         ?>
                     </div>

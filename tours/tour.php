@@ -73,7 +73,7 @@ $value = $tour->getEachData($data)['0'];
                     <li class="nav-item">
                         <a href="<?php
                         if($_SESSION['account_role'] > 3) {
-                            echo './user.php';
+                            echo '../user.php';
                         } else {
                             echo '../admin/tours.php';
                         }

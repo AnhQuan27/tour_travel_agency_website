@@ -1,14 +1,18 @@
 <?php
 require_once '../admin/process/query.php';
+
 $login = new Login();
 $login->checkAdminLogin();
+if($_SESSION['account_role'] == 3){
+    header('Location: http://localhost/tour_travel_agency_website/admin/tours.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Customers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
@@ -16,6 +20,7 @@ $login->checkAdminLogin();
     <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
+
     <header class="navbar sticky-top flex-md-nowrap p-0 border-bottom border-2">
         <a href="http://localhost/tour_travel_agency_website/home.php" class="navbar-brand px-3 me-0">Travel agency</a>
         <div class="avatar-box d-flex align-items-center">
@@ -100,14 +105,36 @@ $login->checkAdminLogin();
             </ul>
             <div class="sidebar__logout">
                 <hr>
-                <a href="#" class="nav-link">
+                <a href="./process/logout.php" class="nav-link">
                     Logout
                     <span><i class="fa-solid fa-right-from-bracket"></i></span>
                 </a>
             </div>
         </div>
-        <div class="content"></div>
+        <div class="content me-4">
+            <div class="content__heading">
+                <h1 class="heading-title mb-3">Dashboard</h1>
+                <div class="heading-action d-flex justify-content-between align-items-center">
+                    <!-- <div class="heading__button">
+                        <a href="#" class="button button--green rounded export-xlsx">
+                            <i class="fa-solid fa-file-excel"></i>
+                            <span>Export</span>
+                        </a>
+                    </div> -->
+                </div>
+            </div>
+            <div class="content__body mt-5">
+                
+            </div>
+        </div>
     </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        <?php echo 'get()'; ?>
+    </script>
 </body>
 </html>

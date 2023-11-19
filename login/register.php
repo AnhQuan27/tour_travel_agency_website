@@ -88,7 +88,7 @@ date_default_timezone_set("Asia/Ho_Chi_Minh");
                     ];
                     $customer->createData($dataCustomer);
                     echo '<script>alert("Success!")</script>';
-                    header('location:../home.html');
+                    header('location:../home.php');
                 }
                 ?>
             </div>

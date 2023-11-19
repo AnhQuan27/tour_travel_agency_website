@@ -41,21 +41,23 @@ $value = $tour->getEachData($data)['0'];
     </header>
     <div class="container-fluid">
         <div class="sidebar d-flex flex-column p-3 d-flex justify-content-between">
-            <ul class="nav nav-pills flex-column mb-auto">
-                
+            
+            <ul class="nav nav-pills flex-column mb-auto">   
                 <!-- <li class="nav__item">
                     <a href="" class="nav-link active">
                         <i class="fa-solid fa-house"></i>
                         <span>Home</span>
                     </a>
                 </li> -->
-                
+
+                <?php if($_SESSION['account_role'] < 3) : ?>
                 <li class="nav__item">
                     <a href="../dashboard.php" class="nav-link">
                         <i class="fa-solid fa-chart-simple"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <?php endif ?>
 
                 <li class="nav__item">
                     <a href="../tours.php" class="nav-link active">
@@ -71,12 +73,14 @@ $value = $tour->getEachData($data)['0'];
                     </a>
                 </li>
 
-                <li class="nav__item">
-                    <a href="../suppliers.php" class="nav-link">
-                        <i class="fa-solid fa-boxes-packing"></i>
-                        <span>Suppliers</span>
-                    </a>
-                </li>
+                <?php if($_SESSION['account_role'] < 3) : ?>
+                    <li class="nav__item">
+                        <a href="../suppliers.php" class="nav-link">
+                            <i class="fa-solid fa-boxes-packing"></i>
+                            <span>Suppliers</span>
+                        </a>
+                    </li>
+                <?php endif ?>
 
                 <li class="nav__item">
                     <a href="../orders.php" class="nav-link">
@@ -85,19 +89,21 @@ $value = $tour->getEachData($data)['0'];
                     </a>
                 </li>
 
+                <?php if($_SESSION['account_role'] < 3) : ?>
                 <li class="nav__item">
                     <a href="../support.php" class="nav-link">
                         <i class="fa-solid fa-headset"></i>
                         <span>Support Customers</span>
                     </a>
                 </li>
-
-                <li class="nav__item">
-                    <a href="../users.php" class="nav-link">
-                        <i class="fa-solid fa-user"></i>
-                        <span>Users</span>
-                    </a>
-                </li>
+                
+                    <li class="nav__item">
+                        <a href="../users.php" class="nav-link">
+                            <i class="fa-solid fa-user"></i>
+                            <span>Users</span>
+                        </a>
+                    </li>
+                <?php endif ?>
 
                 <li class="nav__item">
                     <a href="../account.php" class="nav-link">
@@ -171,7 +177,15 @@ $value = $tour->getEachData($data)['0'];
                             
                             <div class="input">
                                 <label for="supplier">Supplier ID</label>
-                                <input type="text" id="supplier" class="rounded w-4" name="supplier" value="<?php echo $value['supplier_ID']?>">
+                                <select name="supplier" id="supplier" class="rounded w-4 select-box">
+                                    <?php
+                                    $supplier = new Supplier();
+                                    $suppliers = $supplier->getData();
+                                    foreach($suppliers as $sup) :
+                                    ?>
+                                        <option value="<?php echo $sup['supplier_ID'] ?>"><?php echo $sup['supplier_ID'] . " - " . $sup['supplier_name']?></option>
+                                    <?php endforeach ?>
+                                </select>
                             </div>
 
                             <div class="input">

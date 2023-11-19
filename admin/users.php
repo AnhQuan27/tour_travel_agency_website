@@ -4,6 +4,10 @@ require_once '../admin/process/query.php';
 $login = new Login();
 $login->checkAdminLogin();
 
+if($_SESSION['account_role'] == 3){
+    header('Location: http://localhost/tour_travel_agency_website/admin/tours.php');
+}
+
 $search = '';
 if(isset($_GET['search'])) {
     $search = $_GET['search'];
@@ -70,7 +74,7 @@ if(isset($_GET['search'])) {
                         <span>Tours</span>
                     </a>
                 </li>
-
+            
                 <li class="nav__item">
                     <a href="./customers.php" class="nav-link">
                         <i class="fa-solid fa-users"></i>

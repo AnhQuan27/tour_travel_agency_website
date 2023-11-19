@@ -411,6 +411,15 @@ class Account extends Connection {
         return $select->fetchAll();
     }
 
+    public function updateData($data) {
+        $sql = "UPDATE account 
+                SET account_password = :password,
+                account_role = :role
+                WHERE account_ID = :a_id";
+        $select = $this->prepareSQL($sql);
+        $select->execute($data);
+    }
+
     public function deleteData($data) {
         $sql = "DELETE FROM account WHERE account_ID = :id";
         $delete = $this->prepareSQL($sql);

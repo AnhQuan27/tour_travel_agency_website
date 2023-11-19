@@ -20,14 +20,14 @@ if(!isset($_SESSION['account_role'])) {
     <div class="container container__wrap">
     <!-- Header -->
         <header class="header grid__row grid__full-width">
-            <a href="home.html" class="logo">
+            <a href="home.php" class="logo">
                 <span class="">T2A</span>
             </a>
       
             <ul class="nav grid__row">
 
                 <li class="nav-item">
-                    <a href="home.html" class="nav-link" aria-current="page">Home</a>
+                    <a href="home.php" class="nav-link" aria-current="page">Home</a>
                 </li>
 
                 <li class="nav-item">
@@ -55,7 +55,7 @@ if(!isset($_SESSION['account_role'])) {
                 </li> -->
 
                 <li class="nav-item">
-                    <a href="./user.html" class="nav-link active">
+                    <a href="./user.php" class="nav-link active">
                         <i class="fa-solid fa-circle-user"></i>
                         <span><?php echo $_SESSION['account_username'] ?></span>
                     </a>
@@ -95,8 +95,8 @@ if(!isset($_SESSION['account_role'])) {
                         </span></p>
                 </div>
                 
-                <form action="" class="user-data grid__row" id="user-setting-form">
-                    <?php if($role!=3) : ?>
+                <form method="post" class="user-data grid__row" id="user-setting-form">
+                    <?php if($role == 4) : ?>
                     <div class="input input-f-name">
                         <label for="first">Your first name</label>
                         <input type="text" name="f_name" class="f-name" id="first" value="<?php echo $value['customer_first_name']?>">
@@ -177,10 +177,37 @@ if(!isset($_SESSION['account_role'])) {
                     </div>
                     
                     <div class="user-form-btn grid__row">
-                        <button class="button button--black">Save change</button>
+                        <button class="button button--black" name="submit">Save change</button>
                         <a href="#" class="button button--red" id="delete-account">Delete account</a>
                     </div>
                 </form>
+                <?php
+                if(isset($_POST['submit'])) {
+                    if($role == 4) {
+                        $customer = new Customer();
+                        $account = new Account();
+                        $data = [
+                            'f_name' => $_POST['f_name'],
+                            'l_name' => $_POST['l_name'],
+                            'email' => $_POST['email'],
+                            'phone' => $_POST['phone'],
+                            'gender' => $_POST['gender'],
+                            'c_address' => $_POST['address'],
+                            'birthday' => $_POST['birthday'],
+                            'a_id' => $_SESSION['account_ID'],
+                            'id' => $value['customer_ID']
+                        ];
+                        $customer->updateData($data);
+
+                        $password = [
+                            'a_id' => $_SESSION['account_ID'],
+                            'role' => $role,
+                            'password' => $_POST['password']
+                        ];
+                        $account->updateData($password);
+                    }
+                }
+                ?>
             </div>
         </div>
         
@@ -191,9 +218,9 @@ if(!isset($_SESSION['account_role'])) {
                     <i class="fa-regular fa-copyright"></i>
                     <span>Travel Agency</span>
                 </p>
-                <a href="home.html" class="logo">LOGO</a>
+                <a href="home.php" class="logo">LOGO</a>
                 <ul class="nav grid__row">
-                    <a href="home.html">
+                    <a href="home.php">
                         <li>Home</li>
                     </a>
                     <a href="tours.php">
@@ -235,7 +262,7 @@ if(!isset($_SESSION['account_role'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
        deleteAccountUser();
-       validateUserInfo();
+    //    validateUserInfo();
     //    submitUserChange();
     </script>
 </body>
