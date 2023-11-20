@@ -183,7 +183,7 @@ $value = $tour->getEachData($data)['0'];
                                     $suppliers = $supplier->getData();
                                     foreach($suppliers as $sup) :
                                     ?>
-                                        <option value="<?php echo $sup['supplier_ID'] ?>"><?php echo $sup['supplier_ID'] . " - " . $sup['supplier_name']?></option>
+                                        <option <?php if($value['supplier_ID'] == $sup['supplier_ID']) {echo 'selected';} ?> value="<?php echo $sup['supplier_ID'] ?>"><?php echo $sup['supplier_ID'] . " - " . $sup['supplier_name']?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>

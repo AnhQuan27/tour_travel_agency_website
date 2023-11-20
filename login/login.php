@@ -55,7 +55,7 @@ if(isset($_SESSION['account_role'])) {
                 </form>
                 <?php
                 if(isset($_POST['submit'])) {
-                    session_start();
+                    // session_start(); 
                     $data = [
                         'account_username' => $_POST['account'],
                         'account_password' => $_POST['password'],
@@ -64,15 +64,20 @@ if(isset($_SESSION['account_role'])) {
                     $log = new Login();
                     $login = $log->login($data)['0'];
                     // var_dump($login);
-                    if(count($login) > 0) {
+                    
+                    if($login !== null && is_array($login) && count($login) > 0) {
                         $_SESSION['account_username'] = $login['account_username'];
                         $_SESSION['account_password'] = $login['account_password'];
                         $_SESSION['account_role'] = $login['account_role'];
                         $_SESSION['account_ID'] = $login['account_ID'];
-                        header('location:../home.php');
+                        echo '<script>alert("Login successful!");';
+                        echo 'window.location.href="../home.php";</script>';
+                        // header('location:../home.php');
                         // exit;
                     } else {
-                        echo '<script>alert("Login failed!");</script>';
+                        echo '<script>alert("Login failed! Username or password incorrect.");';
+                        echo 'window.location.href="./login.php";</script>';
+                        exit();
                     }
                 }
                 ?>

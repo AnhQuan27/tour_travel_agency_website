@@ -32,18 +32,6 @@ if(isset($_GET['search'])) {
     <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
-
-    <!-- <div class="modal disable">
-        <div class="modal__overlay d-flex justify-content-center align-items-center">
-            <div class="modal__body">
-
-                <i class="fa-solid fa-xmark" id="close-modal"></i>
-                <iframe src="./tours/tour.php" frameborder="0">
-                </iframe>
-            </div>
-        </div>
-    </div> -->
-
     <header class="navbar sticky-top flex-md-nowrap p-0 border-bottom border-2">
         <a href="http://localhost/tour_travel_agency_website/home.php" class="navbar-brand px-3 me-0">Travel agency</a>
         <div class="avatar-box d-flex align-items-center">
@@ -210,6 +198,7 @@ if(isset($_GET['search'])) {
            searching: false,
            info: false
         });
+        deleteConfirm();
         // $(document).ready(function () {
         //     // Khởi tạo Handsontable cho bảng
         //     // Xử lý sự kiện khi bấm vào nút xuất Excel

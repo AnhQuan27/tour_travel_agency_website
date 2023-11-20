@@ -194,6 +194,7 @@ if(isset($_GET['search'])) {
         new DataTable('#myTable', {
            info: false
         });
+        deleteConfirm();
     </script>
 </body>
 </html>

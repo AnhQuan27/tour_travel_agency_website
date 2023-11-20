@@ -110,7 +110,8 @@ $image = new TourImage();
 
                 <div class="card__detail">
                     <div class="card__transition">
-                        <?php if (strpos($tour['tour_transport'],"Plane") != false) : ?>
+                        <?php 
+                        if (strpos($tour['tour_transport'],"Plane") != false) : ?>
                             <i class="fa-solid fa-plane-up"></i>
                         <?php endif;
                         if (strpos($tour['tour_transport'],"Boat") != false) : ?>

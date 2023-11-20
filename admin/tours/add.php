@@ -169,7 +169,15 @@ $login->checkAdminLogin();
 
                             <div class="input">
                                 <label for="supplier">Supplier ID</label>
-                                <input type="text" id="supplier" class="rounded w-4" name="supplier">
+                                <select name="supplier" id="supplier" class="rounded w-4 select-box">
+                                    <?php
+                                    $supplier = new Supplier();
+                                    $suppliers = $supplier->getData();
+                                    foreach($suppliers as $sup) :
+                                    ?>
+                                        <option value="<?php echo $sup['supplier_ID'] ?>"><?php echo $sup['supplier_ID'] . " - " . $sup['supplier_name']?></option>
+                                    <?php endforeach ?>
+                                </select>
                             </div>
 
                             <div class="input">

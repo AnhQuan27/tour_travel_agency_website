@@ -192,6 +192,7 @@ if(isset($_GET['search'])) {
             searching:false,
             info: false
         });
+        deleteConfirm();
     </script>
 </body>
 </html>
