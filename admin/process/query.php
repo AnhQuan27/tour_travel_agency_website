@@ -181,6 +181,20 @@ class Supplier extends Connection {
         return $select->fetchAll();
     }
 
+    public function getUnlinkedAccountsByRole3() {
+        $sql = "SELECT * FROM account a
+                LEFT JOIN customer c ON a.account_ID = c.account_ID
+                LEFT JOIN staff st ON a.account_ID = st.account_ID
+                LEFT JOIN supplier s ON a.account_ID = s.account_ID
+                WHERE a.account_role = 3
+                AND c.account_ID IS NULL
+                AND st.account_ID IS NULL
+                AND s.account_ID IS NULL;";
+        $select = $this->prepareSQL($sql);
+        $select->execute();
+        return $select->fetchAll();
+    }
+
     // public function getDataJoinTourSupplierOrderImage($data) {
     //     $sql = "SELECT * FROM tour t
     //             JOIN supplier s ON s.supplier_ID = t.supplier_ID
@@ -327,6 +341,34 @@ class Invoice extends Connection {
     }
 }
 
+class Staff extends Connection {
+    public function createData($data) {
+        $sql = "INSERT INTO staff VALUES(:id, :first, :last, :bday, :email, :phone, :a_id)";
+        $create = $this->prepareSQL($sql);
+        $create->execute($data);
+    }
+    
+    public function updateData($data) {
+        $sql = "UPDATE staff SET
+                staff_first_name = :first,
+                staff_last_name = :last,
+                staff_birthday = :bday,
+                staff_email = :email,
+                staff_phone = :phone,
+                account_ID = :a_id
+                WHERE staff_ID = :id";
+        $update = $this->prepareSQL($sql);
+        $update->execute($data);
+    }
+
+    public function getEachData($data) {
+        $sql = "SELECT * FROM staff WHERE staff_ID = :id";
+        $select = $this->prepareSQL($sql);
+        $select->execute($data);
+        return $select->fetchAll();
+    }
+}
+
 class Account extends Connection {
 
     public function createData($data) {
@@ -386,14 +428,26 @@ class Account extends Connection {
         return $select->fetchAll();
     }
 
+    public function getAllData(){
+        $sql = "SELECT *, a.account_ID, 
+                        COALESCE(c.customer_email, st.staff_email, s.supplier_email) AS email,
+                        COALESCE(c.customer_email, st.staff_email, s.supplier_email) AS phone
+                FROM account a
+                        LEFT JOIN customer c ON a.account_ID = c.account_ID
+                        LEFT JOIN staff st ON a.account_ID = st.account_ID
+                        LEFT JOIN supplier s ON a.account_ID = s.account_ID";
+        $select = $this->prepareSQL($sql);
+        $select->execute();
+        return $select->fetchAll();
+    }
+
     public function getEachData($data){
         $sql = "SELECT 
                     a.*,
                     s.supplier_name,
                     c.customer_first_name,
                     c.customer_last_name,
-                    st.staff_first_name,
-                    st.staff_last_name
+                    st.*
                 FROM account a
                 LEFT JOIN supplier s ON a.account_ID = s.account_ID
                 LEFT JOIN customer c ON a.account_ID = c.account_ID

@@ -4,7 +4,7 @@ require_once '../admin/process/query.php';
 $login = new Login();
 $login->checkAdminLogin();
 
-if($_SESSION['account_role'] == 3){
+if($_SESSION['account_role'] > 1){
     header('Location: http://localhost/tour_travel_agency_website/admin/tours.php');
 }
 
@@ -18,7 +18,7 @@ if(isset($_GET['search'])) {
 } else {
     $account = new Account();
     // $accounts = $account->getData();
-    $accounts = array_merge($account->getDataJoinStaff(), $account->getDataJoinSupplier(), $account->getDataJoinCustomer());
+    $accounts = $account->getAllData();
 }
 ?>
 <!DOCTYPE html>
@@ -131,6 +131,7 @@ if(isset($_GET['search'])) {
                 <h1 class="heading-title mb-3">Users list</h1>
                 <div class="heading-action d-flex justify-content-between align-items-center">
                     <div class="heading__button">
+                        <a href="./users/add.php" class="button button--main rounded border-none me-4"><i class="fa-solid fa-plus"></i> New user</a>
                         <a href="#" class="button button--green rounded export-xlsx">
                             <i class="fa-solid fa-file-excel"></i>
                             <span>Export</span>
@@ -161,11 +162,19 @@ if(isset($_GET['search'])) {
                         <?php foreach($accounts as $account) : ?>
                         <tr>
                             <td><?php echo $account['account_ID']?></td>
-                            <td class="w-4"><?php echo $account['full_name']?></td>
-                            <td><?php echo $account['username']?></td>
+                            <td class="w-4"><?php
+                            if($account['account_role'] <=2) {
+                                echo $account['staff_first_name'] . ' ' .$account['staff_last_name'];
+                            } elseif($account['account_role'] == 4) {
+                                echo $account['customer_first_name'] . ' ' . $account['customer_last_name'];
+                            } elseif($account['account_role'] == 3) {
+                                echo $account['supplier_name'];
+                            }
+                            ?></td>
+                            <td><?php echo $account['account_username']?></td>
                             <td><?php echo $account['phone']?></td>
                             <td><?php echo $account['email']?></td>
-                            <td><?php echo $account['role']?></td>
+                            <td><?php echo $account['account_role']?></td>
                             <td>
                                 <div class="d-flex justify-content-evenly align-items-center">
                                     <a href="./users/user.php?id=<?php echo $account['account_ID']?>">
@@ -192,7 +201,8 @@ if(isset($_GET['search'])) {
     <script>
         // deleteConfirm('Order');
         new DataTable('#myTable', {
-           info: false
+           info: false,
+           order: [[5, 'asc']]
         });
         deleteConfirm();
     </script>

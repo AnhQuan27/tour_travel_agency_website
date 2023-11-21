@@ -3,13 +3,17 @@ require_once '../process/query.php';
     
 $login = new Login();
 $login->checkAdminLogin();
+if($_SESSION['account_role'] > 1){
+    header('Location: http://localhost/tour_travel_agency_website/admin/tours.php');
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New tour</title>
+    <title>New Account</title>
     <script src="../../js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -70,7 +74,7 @@ $login->checkAdminLogin();
 
                 <?php if($_SESSION['account_role'] < 3) : ?>
                     <li class="nav__item">
-                        <a href="../suppliers.php" class="nav-link active">
+                        <a href="../suppliers.php" class="nav-link">
                             <i class="fa-solid fa-boxes-packing"></i>
                             <span>Suppliers</span>
                         </a>
@@ -93,7 +97,7 @@ $login->checkAdminLogin();
                 </li>
                 
                     <li class="nav__item">
-                        <a href="../users.php" class="nav-link">
+                        <a href="../users.php" class="nav-link active">
                             <i class="fa-solid fa-user"></i>
                             <span>Users</span>
                         </a>
@@ -118,12 +122,12 @@ $login->checkAdminLogin();
         </div>
         <div class="content me-4">
             <div class="content__heading">
-                <h1 class="heading-title mb-3">Add new Supplier</h1>
+                <h1 class="heading-title mb-3">Create new Account</h1>
                 <div class="heading-action d-flex justify-content-between align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                          <li class="breadcrumb-item"><a href="../suppliers.php">Supplier list</a></li>
-                          <li class="breadcrumb-item active" aria-current="page">Add Supplier</li>
+                          <li class="breadcrumb-item"><a href="../users.php">User list</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Create account</li>
                         </ol>
                     </nav>
                 </div>
@@ -132,95 +136,60 @@ $login->checkAdminLogin();
                     <form method="post" enctype="multipart/form-data" class="d-flex flex-wrap justify-content-between">
                             
                             <div class="input">
-                                <label for="id">Supplier ID</label>
+                                <label for="id">Account ID</label>
                                 <input type="text" id="id " class="rounded w-4" name="id">
                             </div>
 
                             <div class="input">
-                                <label for="a_id ">Account ID</label>
-                                <input type="text" id="a_id " class="rounded w-4" name="a_id">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" class="rounded w-4" name="username">
                             </div>
 
                             <div class="input">
-                                <label for="name">Supplier name</label>
-                                <input type="text" id="name" class="rounded w-8" name="name">
+                                <label for="password ">Password</label>
+                                <input type="text" id="password " class="rounded w-4" name="password">
                             </div>
 
                             <div class="input">
-                                <label for="address ">Address</label>
-                                <input type="text" id="address " class="rounded w-8" name="address">
-                            </div>
-
-                            <div class="input">
-                                <label for="email">Email</label>
-                                <input type="text" id="email" class="rounded w-4" name="email">
-                            </div>
-                            
-                            <div class="input">
-                                <label for="phone">Phone</label>
-                                <input type="text" id="phone" class="rounded w-4" name="phone">
-                            </div>
-                             
-                            <div class="input">
-                                <label for="note" class="readonly">Note</label>
-                                <textarea id="note" class="rounded w-8" name="note"></textarea>
-                            </div> 
-
-                            <div class="input w-8">
-                                <label for="" class="readonly">Attach file</label>
-                                <label for="file" class="custom-file-upload readonly btn button--green w-25 d-flex align-items-center justify-content-center gap-3">
-                                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                                    Choose File
-                                </label>
-                                <input type="file" name="file" id="file">
+                                <label for="role">Role</label>
+                                <select name="role" class="form-select rounded w-4">
+                                <?php if($_SESSION['account_role'] == 0) :?>
+                                    <option value="0">0 - Super Admin</option>
+                                <?php endif ?>
+                                    <option value="1">1 - Admin</option>
+                                    <option value="2">2 - Staff</option>
+                                    <option value="3">3 - Supplier</option>
+                                    <option value="4">4 - Customer</option>
+                                </select>
                             </div>
                             
                             <div class="button-row">
                                 <button class="btn button--main border-none rounded" name="submit">Save</button>
-                                <a href="../suppliers.php" class="btn btn-secondary rounded border-none">Go back</a>
+                                <a href="../users.php" class="btn btn-secondary rounded border-none">Go back</a>
                             </div>
                         </form>
                         <?php
                         if(isset($_POST['submit'])){
-                            $supplier = new Supplier();
+                            $account = new Account();
                             $data = [
                                 'id' => $_POST['id'],
-                                'name' => $_POST['name'],
-                                'address' => $_POST['address'],
-                                'email' => $_POST['email'],
-                                'phone' => $_POST['phone'],
-                                'note' => $_POST['note'],
-                                's_file' => '',
-                                'a_id' =>  $_POST['a_id'],
+                                'account' => $_POST['username'],
+                                'password' => $_POST['password'],
+                                'role' => $_POST['role'],
                             ];
-
-                            if(isset($_FILES['file']) && !empty($_FILES['file']['name'])) {
-                                $extension = array('pdf'); 
-                                $fileName = $_FILES['file']['name'];
-                                $fileNameTmp = $_FILES['file']['tmp_name'];
-                                // $file_data = '';
-                                
-                                $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-                                if(in_array($ext, $extension)) {
-                                    if(!file_exists('./file/' .$fileName)) {
-                                        move_uploaded_file($fileNameTmp, './file/'.$fileName);
-                                        $file_data = $fileName;
-                                    } else {
-                                        $fileName = str_replace('.','-', basename($fileName, $ext));
-                                        $newFileName = $fileName.time().".".$ext;
-                                        move_uploaded_file($fileNameTmp, './file/'.$newFileName);
-                                        $file_data = $newFileName;
-                                    }
-                                }
-                                $data['s_file'] = $file_data;
-                            }
-                            // var_dump($data);
                             try {
-                                $supplier->createData($data);
-                                echo '<script>submitSuccess("New Supplier has been added!","../suppliers.php")</script>';
+                                $account->createData($data);
+                                // echo '<script>submitSuccess("New Account has been added!","../users.php")</script>';
                             } catch (PDOException $e) {
+                                // $error = $e->getTraceAsString();
                                 if($e->getCode() == 23000) {
-                                    echo '<script>swalError("This Supplier ID already exists. Please try again!","./add.php")</script>';
+                                    if(str_contains($e, 'account_username') == true) {
+                                        echo '<script>swalError("This Username already exists. Please try again!","./add.php")</script>';
+                                    }
+                                    if(str_contains($e, 'PRIMARY') == true) {
+                                        echo '<script>swalError("This Account ID already exists. Please try again!","./add.php")</script>';
+                                    }
+                                    exit();
                                 }
                             }
                         }
