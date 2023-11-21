@@ -55,7 +55,7 @@ $login->checkAdminLogin();
                 <?php endif ?>
 
                 <li class="nav__item">
-                    <a href="../tours.php" class="nav-link active">
+                    <a href="../tours.php" class="nav-link">
                         <i class="fa-solid fa-boxes-stacked"></i>
                         <span>Tours</span>
                     </a>
@@ -70,7 +70,7 @@ $login->checkAdminLogin();
 
                 <?php if($_SESSION['account_role'] < 3) : ?>
                     <li class="nav__item">
-                        <a href="../suppliers.php" class="nav-link">
+                        <a href="../suppliers.php" class="nav-link active">
                             <i class="fa-solid fa-boxes-packing"></i>
                             <span>Suppliers</span>
                         </a>
@@ -118,152 +118,109 @@ $login->checkAdminLogin();
         </div>
         <div class="content me-4">
             <div class="content__heading">
-                <h1 class="heading-title mb-3">Add new tour</h1>
+                <h1 class="heading-title mb-3">Add new Supplier</h1>
                 <div class="heading-action d-flex justify-content-between align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                          <li class="breadcrumb-item"><a href="../tours.php">Tours list</a></li>
-                          <li class="breadcrumb-item active" aria-current="page">Add tour</li>
+                          <li class="breadcrumb-item"><a href="../suppliers.php">Supplier list</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Add Supplier</li>
                         </ol>
                     </nav>
                 </div>
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="detail flex-column d-flex align-items-center">
-                        <form method="post" enctype="multipart/form-data" class="d-flex flex-wrap justify-content-between">
+                    <form method="post" enctype="multipart/form-data" class="d-flex flex-wrap justify-content-between">
+                            
                             <div class="input">
-                                <label for="t_name">Tour name</label>
-                                <input type="text" id="t_name" class="rounded w-8" name="t_name">
+                                <label for="id">Supplier ID</label>
+                                <input type="text" id="id " class="rounded w-4" name="id">
+                            </div>
+
+                            <div class="input">
+                                <label for="a_id ">Account ID</label>
+                                <input type="text" id="a_id " class="rounded w-4" name="a_id">
+                            </div>
+
+                            <div class="input">
+                                <label for="name">Supplier name</label>
+                                <input type="text" id="name" class="rounded w-8" name="name">
+                            </div>
+
+                            <div class="input">
+                                <label for="address ">Address</label>
+                                <input type="text" id="address " class="rounded w-8" name="address">
+                            </div>
+
+                            <div class="input">
+                                <label for="email">Email</label>
+                                <input type="text" id="email" class="rounded w-4" name="email">
                             </div>
                             
                             <div class="input">
-                                <label for="t_id">Tour ID</label>
-                                <input type="text" id="t_id" class="rounded w-4" name="t_id">
+                                <label for="phone">Phone</label>
+                                <input type="text" id="phone" class="rounded w-4" name="phone">
                             </div>
+                             
+                            <div class="input">
+                                <label for="note" class="readonly">Note</label>
+                                <textarea id="note" class="rounded w-8" name="note"></textarea>
+                            </div> 
 
-                            <div class="input">
-                                <label for="price">Price</label>
-                                <input type="text" id="price" class="rounded w-4" name="price">
-                            </div>
-
-                            <div class="input">
-                                <label for="transport">Transport</label>
-                                <input type="text" id="transport" class="rounded w-4" name="transport">
-                            </div>
-                            
-                            <div class="input">
-                                <label for="start">Start</label>
-                                <input type="date" id="start" class="rounded w-4" name="start">
-                            </div>
-                            
-                            <div class="input">
-                                <label for="end">End</label>
-                                <input type="date" id="end" class="rounded w-4" name="end">
-                            </div>
-
-                            <div class="input">
-                                <label for="length">Tour length</label>
-                                <input type="text" id="t_length" class="rounded w-4" name="length">
-                            </div>
-                            
-                            <div class="input">
-                                <label for="number">Number</label>
-                                <input type="text" id="number" class="rounded w-4" name="number">
-                            </div>
-
-                            <div class="input">
-                                <label for="supplier">Supplier ID</label>
-                                <select name="supplier" id="supplier" class="rounded w-4 select-box">
-                                    <?php
-                                    $supplier = new Supplier();
-                                    $suppliers = $supplier->getData();
-                                    foreach($suppliers as $sup) :
-                                    ?>
-                                        <option value="<?php echo $sup['supplier_ID'] ?>"><?php echo $sup['supplier_ID'] . " - " . $sup['supplier_name']?></option>
-                                    <?php endforeach ?>
-                                </select>
-                            </div>
-
-                            <div class="input">
-                                <label for="from">From</label>
-                                <input type="text" id="from" class="rounded w-4" name="from">
-                            </div>
-
-                            <div class="input">
-                                <label for="to">To</label>
-                                <input type="text" id="to" class="rounded w-4" name="to">
-                            </div>
-                            
-                            <div class="input w-4">
-                                <label for="" class="">Images</label>
-                                <label for="images" class="custom-file-upload readonly btn button--green w-50 d-flex align-items-center justify-content-center gap-3">
+                            <div class="input w-8">
+                                <label for="" class="readonly">Attach file</label>
+                                <label for="file" class="custom-file-upload readonly btn button--green w-25 d-flex align-items-center justify-content-center gap-3">
                                     <i class="fa-solid fa-cloud-arrow-up"></i>
                                     Choose File
                                 </label>
-                                <input type="file" name="images[]" id="images" accept="image/*" multiple>
+                                <input type="file" name="file" id="file">
                             </div>
                             
-                            <div class="input">
-                                <label>Itinerary</label>
-                                <textarea name="itinerary" id="itinerary" class="rounded w-8"></textarea>
-                            </div>
                             <div class="button-row">
-                                <button name="create_tour" type="submit" class="btn button--main border-none rounded">Save</button>
-                                <a href="../tours.php" class="btn btn-secondary rounded border-none">Go back</a>
+                                <button class="btn button--main border-none rounded" name="submit">Save</button>
+                                <a href="../suppliers.php" class="btn btn-secondary rounded border-none">Go back</a>
                             </div>
                         </form>
                         <?php
-                        if (isset($_POST['create_tour'])) {
-                            $tour = new Tour();
-                            $tour_images = new TourImage();
+                        if(isset($_POST['submit'])){
+                            $supplier = new Supplier();
                             $data = [
-                                't_id' => $_POST['t_id'],
-                                't_name' => $_POST['t_name'],
-                                'price' => $_POST['price'],
-                                'transport' => $_POST['transport'],
-                                'start' => $_POST['start'],
-                                'end' => $_POST['end'],
-                                'length' => $_POST['length'],
-                                'number' => $_POST['number'],
-                                'from' => $_POST['from'],
-                                'to' => $_POST['to'],
-                                'itinerary' => $_POST['itinerary'],
-                                'supplier' => $_POST['supplier'],
+                                'id' => $_POST['id'],
+                                'name' => $_POST['name'],
+                                'address' => $_POST['address'],
+                                'email' => $_POST['email'],
+                                'phone' => $_POST['phone'],
+                                'note' => $_POST['note'],
+                                's_file' => '',
+                                'a_id' =>  $_POST['a_id'],
                             ];
-                            try {
-                                $tour->createNewData($data);
-                                echo '<script>submitSuccess("New tour has been added!","../tours.php")</script>';
-                            } catch (PDOException $e) {
-                                if ($e->getCode() == 23000) {
-                                    // echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
-                                    // echo '<script src="../../js/main.js"></script>';
-                                    echo '<script>swalError("This Tour ID already exists. Please try again!","./add.php");</script>';
-                                }   
-                            }
 
-                            $extension = array('jpeg','jpg', 'png', 'gif'); 
-                            foreach($_FILES['images']['tmp_name'] as $key => $value) {
-                                $fileName = $_FILES['images']['name'][$key];
-                                $fileNameTmp = $_FILES['images']['tmp_name'][$key];
-
+                            if(isset($_FILES['file']) && !empty($_FILES['file']['name'])) {
+                                $extension = array('pdf'); 
+                                $fileName = $_FILES['file']['name'];
+                                $fileNameTmp = $_FILES['file']['tmp_name'];
+                                // $file_data = '';
+                                
                                 $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-                                // $image_data = '';
                                 if(in_array($ext, $extension)) {
-                                    if(!file_exists('../../tours/img/' .$fileName)) {
-                                        move_uploaded_file($fileNameTmp, '../../tours/img/'.$fileName);
-                                        $image_data = [
-                                            'images' => $fileName,
-                                            'id' => $_POST['t_id']
-                                        ];
+                                    if(!file_exists('./file/' .$fileName)) {
+                                        // move_uploaded_file($fileNameTmp, './file/'.$fileName);
+                                        $file_data = $fileName;
                                     } else {
                                         $fileName = str_replace('.','-', basename($fileName, $ext));
                                         $newFileName = $fileName.time().".".$ext;
-                                        move_uploaded_file($fileNameTmp, '../../tours/img/'.$newFileName);
-                                        $image_data = [
-                                            'images' => $newFileName,
-                                            'id' => $_POST['t_id']
-                                        ];
+                                        // move_uploaded_file($fileNameTmp, './file/'.$newFileName);
+                                        $file_data = $newFileName;
                                     }
-                                    $tour_images->createNewData($image_data);
+                                }
+                                $data['s_file'] = $file_data;
+                            }
+                            // var_dump($data);
+                            try {
+                                $supplier->createData($data);
+                                echo '<script>submitSuccess("New tour has been added!","../suppliers.php")</script>';
+                            } catch (PDOException $e) {
+                                if($e->getCode() == 23000) {
+                                    echo '<script>swalError("This Supplier ID already exists. Please try again!","./add.php")</script>';
                                 }
                             }
                         }

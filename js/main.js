@@ -122,59 +122,72 @@ function formConfirm() {
   });
 }
 
-function swalError(text) {
+function swalError(text,href) {
   Swal.fire({
     title: 'Error!',
     text: `${text}`,
     icon: 'error',
+  }).then(() => {
+    window.location.href = href;
   });
 }
 
-function submitSuccess(text,myForm) {
-  // note: event hasn't been declared
-    event.preventDefault();
-    Swal.fire({
+function deleteSuccess(text,href) {
+  Swal.fire({
+    title: 'Success!',
+    text: `${text} deleted successfully`,
+    icon: 'success',
+    confirmButtonColor: "#77dd77",
+  }).then(() => {
+    window.location.href = href;
+  });
+}
+
+function submitSuccess(text, href) {
+  Swal.fire({
       title: 'Success!',
       text: `${text}`,
       icon: 'success',
-    }).then(() => {
-      myForm.submit();
-    });
+      confirmButtonColor: "#77dd77",
+  }).then(() => {
+      window.location.href = href;
+  });
 }
 
-function detailSubmit(type) {
-  const myForm = document.querySelector('form');
-  const text = `Successfully updated ${type} information`;
-  myForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-    Swal.fire({
-      title: 'Do you want to save the changes?',
-      icon: 'info',
-      showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: 'Save',
-      denyButtonText: `Don't save`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        event.preventDefault();
-        Swal.fire({
-          title: 'Success!',
-          text: `${text}`,
-          icon: 'success',
-        }).then(() => {
-          myForm.submit();
-        });
-      } else if (result.isDenied) {
-        Swal.fire({
-          text: 'Changes are not saved',
-          icon: 'error'
-        })
-      }
-    })
+
+// function detailSubmit(type) {
+//   const myForm = document.querySelector('form');
+//   const text = `Successfully updated ${type} information`;
+//   myForm.addEventListener('submit', function(event) {
+//     event.preventDefault();
+//     Swal.fire({
+//       title: 'Do you want to save the changes?',
+//       icon: 'info',
+//       showDenyButton: true,
+//       showCancelButton: true,
+//       confirmButtonText: 'Save',
+//       denyButtonText: `Don't save`,
+//     }).then((result) => {
+//       if (result.isConfirmed) {
+//         event.preventDefault();
+//         Swal.fire({
+//           title: 'Success!',
+//           text: `${text}`,
+//           icon: 'success',
+//         }).then(() => {
+//           myForm.submit();
+//         });
+//       } else if (result.isDenied) {
+//         Swal.fire({
+//           text: 'Changes are not saved',
+//           icon: 'error'
+//         })
+//       }
+//     })
 
 
-  })
-}
+//   })
+// }
 
 function deleteAccountUser() {
   const buttonDelete = document.querySelector('#delete-account');
@@ -445,27 +458,29 @@ function getOrderStatus() {
 }
 
 function deleteConfirm() {
-  const deleteButton = document.querySelector('.delete');
-  deleteButton.addEventListener('click', function(event) {
-    event.preventDefault();
-    Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: "#f32013",
-    confirmButtonText: 'Yes, delete it!'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      // Swal.fire({
-      //   title: 'Deleted!',
-      //   text: `${text} has been deleted`,
-      //   icon: 'success',
-      // })
-      // window.open(`${deleteButton.href}`);
-      document.location.href = `${deleteButton.href}`;
-    }
-  });
+  const deleteButtons = document.querySelectorAll('.delete');
+  deleteButtons.forEach(deleteButton => {
+    deleteButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: "#f32013",
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Swal.fire({
+          //   title: 'Deleted!',
+          //   text: `${text} has been deleted`,
+          //   icon: 'success',
+          // })
+          // window.open(`${deleteButton.href}`);
+          document.location.href = `${deleteButton.href}`;
+        }
+      });
+    });
   });
 }
 

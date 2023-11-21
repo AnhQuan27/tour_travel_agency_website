@@ -68,7 +68,7 @@ date_default_timezone_set("Asia/Ho_Chi_Minh");
                     $account = new Account();
                     $customer = new Customer();
                     $account_id = 'acc' . count($account->getData())+1;
-                    $customer_id = 'cus' . count($account->getData())+1;
+                    $customer_id = 'cus' . count($customer->getData())+1;
                     $dataAccount = [
                         'id' => $account_id,
                         'account' => $_POST['account'],

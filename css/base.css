@@ -66,9 +66,9 @@ div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line] {
     background-color: var(--red-color) !important;
 }
 
-button.swal2-confirm {
+/* button.swal2-confirm {
     background-color: var(--green-color) !important;
-}
+} */
 
 button.swal2-confirm:focus {
     box-shadow: none !important;

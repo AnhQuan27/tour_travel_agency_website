@@ -131,6 +131,7 @@ if(isset($_GET['search'])) {
                 <h1 class="heading-title mb-3">Suppliers list</h1>
                 <div class="heading-action d-flex justify-content-between align-items-center">
                     <div class="heading__button">
+                        <a href="./suppliers/add.php" class="button button--main rounded border-none me-4"><i class="fa-solid fa-plus"></i> New supplier</a>
                         <a href="#" class="button button--green rounded export-xlsx">
                             <i class="fa-solid fa-file-excel"></i>
                             <span>Export</span>

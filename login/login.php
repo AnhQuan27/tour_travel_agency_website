@@ -47,10 +47,10 @@ if(isset($_SESSION['account_role'])) {
                     </div>
 
                     <button class="button button--black" name="submit">Login</button>
-                    <a href="../home.html" class="button button--main">Home page</a>
+                    <a href="../home.php" class="button button--main">Home page</a>
                     <div class="register-link">
                         <span>Don't have account?</span>
-                        <a href="./register.html">Register</a>
+                        <a href="./register.php">Register</a>
                     </div>
                 </form>
                 <?php
@@ -92,9 +92,9 @@ if(isset($_SESSION['account_role'])) {
                     <i class="fa-regular fa-copyright"></i>
                     <span>Travel Agency</span>
                 </p>
-                <a href="../home.html" class="logo">LOGO</a>
+                <a href="../home.php" class="logo">LOGO</a>
                 <ul class="nav grid__row">
-                    <a href="home.html">
+                    <a href="home.php">
                         <li>Home</li>
                     </a>
                     <a href="../tours.php">

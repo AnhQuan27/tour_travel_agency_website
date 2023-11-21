@@ -16,6 +16,9 @@ $value = $customer->getEachData($data)['0'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer ID: <?php echo $value['customer_ID']?></title>
+    <script src="../../js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -208,7 +211,12 @@ $value = $customer->getEachData($data)['0'];
                                 'c_address' => $_POST['c_address'],
                                 'a_id' => $_POST['a_id']
                             ];
-                            $customer->updateData($data);
+                            try {
+                                $customer->updateData($data);
+                                echo '<script>submitSuccess("Customer has been updated!","../customers.php");</script>';
+                            } catch (Exception $e) {
+                                echo $e;
+                            }
                         }
                         ?>
                     </div>

@@ -1,3 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>
 <?php
     require_once './query.php';
     // $check = new Login();
@@ -20,12 +33,15 @@
         try {
             $tour_image->deleteData($data);
             $tour->deleteData($data);
-            echo '<script>alert("Tour deleted successfully!");';
-            echo 'window.location.href="../tours.php";</script>';
+            // echo '<script>alert("Tour deleted successfully!");';
+            echo '<script>deleteSuccess("Tour","../tours.php");</script>';
+            // echo 'window.location.href="../tours.php";</>';
         } catch (PDOException $e) {
+            echo $e;
             if($e->getCode() == 23000) {
-                echo '<script>alert("Cannot delete the tour. There are related orders. Please delete the orders first!");';
-                echo 'window.location.href="../tours.php";</script>';
+                // echo '<script>alert("Cannot delete the tour. There are related orders. Please delete the orders first!");';
+                echo '<script>swalError("Cannot delete the tour. There are related orders. Please delete the orders first!","../tours.php");</script>';
+                // echo 'window.location.href="../tours.php";</>';
                 exit();
             }
         }
@@ -34,29 +50,18 @@
 
     if($_GET['from'] == 'customers') {
         $customer = new Customer();
-        // $order = new Order();
-        // $invoice = new Invoice();
+
         $data = [
             'id' => $_GET['id'],
         ];
 
-        // $orders = $order->getDataWhereCustomerID($data);
-        // foreach($orders as $order) {
-        //     $invoice_ID = $order['invoice_ID'];
-        //     $invoice->deleteData([
-        //         'id' => $invoice_ID
-        //     ]);
-        // }
-        // $order->deleteDataWhereCustomerID($data);
         try {
             $customer->deleteData($data);
-            echo '<script>alert("Customer deleted successfully!");';
-            echo 'window.location.href="../customers.php";</script>';
+            echo '<script>deleteSuccess("Customer","../customers.php");</script>';
         }
         catch (PDOException $e) {
             if($e->getCode() == 23000) {
-                echo '<script>alert("Cannot delete the customer. There are related orders. Please delete the orders first!");';
-                echo 'window.location.href="../customers.php";</script>';
+                echo '<script>swalError("Cannot delete the customer. There are related orders. Please delete the orders first!","../customers.php");</script>';
                 exit();
             }
         }
@@ -69,12 +74,10 @@
         ];
         try {
             $supplier->deleteData($data);
-            echo '<script>alert("Supplier deleted successfully!");';
-            echo 'window.location.href="../suppliers.php";</script>'; 
+            echo '<script>deleteSuccess("Supplier","../suppliers.php");</script>';
         } catch (PDOException $e) {
             if($e->getCode() == 23000) {
-                echo '<script>alert("Cannot delete the supplier. There are related tours. Please delete the tours first!");';
-                echo 'window.location.href="../suppliers.php";</script>';
+                echo '<script>swalError("Cannot delete the supplier. There are related tours. Please delete the tours first!","../suppliers.php");</script>';
                 exit();
             }
         }
@@ -89,8 +92,7 @@
         try {
             $invoice->deleteDataWhereOrderID($data);
             $order->deleteData($data);
-            echo '<script>alert("Order deleted successfully!");';
-            echo 'window.location.href="../orders.php";</script>'; 
+            echo '<script>deleteSuccess("Order","../orders.php");</script>';
         } catch (PDOException $e) {
             // if($e->getCode() == 23000) {
                 echo $e;

@@ -162,6 +162,11 @@ class Customer extends Connection {
 }
 
 class Supplier extends Connection {
+    public function createData($data) {
+        $sql = "INSERT INTO supplier VALUES (:id, :name, :address, :email, :phone, :note, :s_file, :a_id)";
+        $insert = $this->prepareSQL($sql);
+        $insert->execute($data);
+    }
     public function getData() {
         $sql = "SELECT * FROM supplier";
         $select = $this->prepareSQL($sql);
