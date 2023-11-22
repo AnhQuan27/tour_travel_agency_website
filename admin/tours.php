@@ -122,7 +122,7 @@ if(isset($_GET['search'])) {
             </ul>
             <div class="sidebar__logout">
                 <hr>
-                <a href="./process/logout.php" class="nav-link">
+                <a href="./process/logout.php" class="nav-link log-out">
                     Logout
                     <span><i class="fa-solid fa-right-from-bracket"></i></span>
                 </a>
@@ -193,23 +193,12 @@ if(isset($_GET['search'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // deleteConfirm('Tour');
         new DataTable('#myTable', {
            searching: false,
            info: false
         });
         deleteConfirm();
-        // $(document).ready(function () {
-        //     // Khởi tạo Handsontable cho bảng
-        //     // Xử lý sự kiện khi bấm vào nút xuất Excel
-        //     $('#exportExcel').on('click', function () {
-        //         // Lấy dữ liệu từ Handsontable
-        //         var exportData = hot.getData();
-
-        //         // Xuất dữ liệu ra một tệp Excel
-        //         handsontable.dom.triggerDownload('xlsx', 'exported_data');
-        //     });
-        // });
+        logoutConfirm();
 
     </script>
 </body>

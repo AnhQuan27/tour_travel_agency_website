@@ -11,6 +11,9 @@ if(isset($_SESSION['account_role'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <script src="../js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -70,13 +73,13 @@ if(isset($_SESSION['account_role'])) {
                         $_SESSION['account_password'] = $login['account_password'];
                         $_SESSION['account_role'] = $login['account_role'];
                         $_SESSION['account_ID'] = $login['account_ID'];
-                        echo '<script>alert("Login successful!");';
-                        echo 'window.location.href="../home.php";</script>';
+                        echo '<script>loginSuccess("Login successful!", "../home.php")</script>;';
+                        // echo 'window.location.href="../home.php";</script>';
                         // header('location:../home.php');
                         // exit;
                     } else {
-                        echo '<script>alert("Login failed! Username or password incorrect.");';
-                        echo 'window.location.href="./login.php";</script>';
+                        echo '<script>swalError("Login failed! Username or password incorrect.", window.location.href);</script>';
+                        // echo 'window.location.href="./login.php";</script>';
                         exit();
                     }
                 }

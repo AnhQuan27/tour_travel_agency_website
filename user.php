@@ -62,7 +62,7 @@ if(!isset($_SESSION['account_role'])) {
                 </li>
 
                 <li class="nav-item logout-item grid__row">
-                    <a href="./admin/process/logout.php" class="">
+                    <a href="./admin/process/logout.php" class="log-out">
                         Logout
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </a>
@@ -262,6 +262,7 @@ if(!isset($_SESSION['account_role'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
        deleteAccountUser();
+       logoutConfirm();
     //    validateUserInfo();
     //    submitUserChange();
     </script>

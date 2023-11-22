@@ -67,7 +67,7 @@
         }
     }
 
-    if ($_GET['from'] == 'suppliers') {
+    if($_GET['from'] == 'suppliers') {
         $supplier = new Supplier();
         $data = [
             'id' => $_GET['id']
@@ -83,7 +83,7 @@
         }
     }
     
-    if ($_GET['from'] == 'orders') {
+    if($_GET['from'] == 'orders') {
         $order = new Order();
         $invoice = new Invoice();
         $data = [
@@ -97,6 +97,38 @@
             // if($e->getCode() == 23000) {
                 echo $e;
             // }
+        }
+    }
+
+    if($_GET['from'] == 'accounts') {
+        $account = new Account();
+        $data = [
+            'id' => $_GET['id']
+        ];
+
+        try {
+            $account->deleteData($data);
+            echo '<script>deleteSuccess("Account","../users.php");</script>';
+        } catch (PDOException $e) {
+            if($e->getCode() == 23000) {
+                if(str_contains($e, 'supplier')) {
+                    echo '<script>swalError("Cannot delete this Account. There is related supplier. Please delete the supplier first!","../users.php");</script>';
+                }
+                if(str_contains($e, 'customer')) {
+                    echo '<script>swalError("Cannot delete this Account. There is related customer. Please delete the customer first!","../users.php");</script>';
+                }
+
+                if(str_contains($e, 'staff')) {
+                    $staff = new Staff();
+                    try {
+                        $staff->deleteDataByAccID($data);
+                        $account->deleteData($data);
+                        echo '<script>deleteSuccess("Account","../users.php");</script>';
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+                }
+            }
         }
     }
     

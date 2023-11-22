@@ -64,7 +64,7 @@ $image = new TourImage();
                 </li>
                 
                 <li class="nav-item logout-item grid__row">
-                    <a href="./admin/process/logout.php" class="">
+                    <a href="./admin/process/logout.php" class="log-out">
                         Logout
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </a>
@@ -202,6 +202,9 @@ $image = new TourImage();
         </div>
 
     </footer>
+    <script src="./js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>logoutConfirm();</script>
     <!-- End of Footer -->
 </body>
 </html>

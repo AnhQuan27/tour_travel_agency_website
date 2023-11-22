@@ -110,7 +110,7 @@ $login->checkAdminLogin();
             </ul>
             <div class="sidebar__logout">
                 <hr>
-                <a href="../process/logout.php" class="nav-link">
+                <a href="../process/logout.php" class="nav-link log-out">
                     Logout
                     <span><i class="fa-solid fa-right-from-bracket"></i></span>
                 </a>
@@ -280,6 +280,7 @@ $login->checkAdminLogin();
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // detailSubmit('tour');
+        logoutConfirm();
     </script>
 </body>
 </html>

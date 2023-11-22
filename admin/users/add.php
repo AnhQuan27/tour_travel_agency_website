@@ -114,7 +114,7 @@ if($_SESSION['account_role'] > 1){
             </ul>
             <div class="sidebar__logout">
                 <hr>
-                <a href="../process/logout.php" class="nav-link">
+                <a href="../process/logout.php" class="nav-link log-out">
                     Logout
                     <span><i class="fa-solid fa-right-from-bracket"></i></span>
                 </a>
@@ -179,7 +179,7 @@ if($_SESSION['account_role'] > 1){
                             ];
                             try {
                                 $account->createData($data);
-                                // echo '<script>submitSuccess("New Account has been added!","../users.php")</script>';
+                                echo '<script>submitSuccess("New Account has been added!","../users.php")</script>';
                             } catch (PDOException $e) {
                                 // $error = $e->getTraceAsString();
                                 if($e->getCode() == 23000) {
@@ -206,6 +206,7 @@ if($_SESSION['account_role'] > 1){
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // detailSubmit('tour');
+        logoutConfirm();
     </script>
 </body>
 </html>

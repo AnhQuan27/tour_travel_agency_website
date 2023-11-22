@@ -116,7 +116,7 @@ $value = $customer->getEachData($data)['0'];
             </ul>
             <div class="sidebar__logout">
                 <hr>
-                <a href="../process/logout.php" class="nav-link">
+                <a href="../process/logout.php" class="nav-link log-out">
                     Logout
                     <span><i class="fa-solid fa-right-from-bracket"></i></span>
                 </a>
@@ -268,6 +268,7 @@ $value = $customer->getEachData($data)['0'];
                 status.classList.add('unpaid');
             }
         })
+        logoutConfirm();
         // detailSubmit('customer');
     </script>
 </body>

@@ -367,6 +367,12 @@ class Staff extends Connection {
         $select->execute($data);
         return $select->fetchAll();
     }
+
+    public function deleteDataByAccID($data) {
+        $sql = "DELETE FROM staff WHERE account_ID = :id";
+        $delete = $this->prepareSQL($sql);
+        $delete->execute($data);
+    }
 }
 
 class Account extends Connection {

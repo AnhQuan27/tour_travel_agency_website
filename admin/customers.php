@@ -123,7 +123,7 @@ if(isset($_GET['search'])) {
             </ul>
             <div class="sidebar__logout">
                 <hr>
-                <a href="./process/logout.php" class="nav-link">
+                <a href="./process/logout.php" class="nav-link log-out">
                     Logout
                     <span><i class="fa-solid fa-right-from-bracket"></i></span>
                 </a>
@@ -199,7 +199,7 @@ if(isset($_GET['search'])) {
             info: false
         });
         deleteConfirm();
-
+        logoutConfirm();
     </script>
 </body>
 </html>

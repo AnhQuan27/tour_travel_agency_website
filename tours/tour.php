@@ -20,6 +20,9 @@ $value = $tour->getEachData($data)['0'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $value['tour_name']?></title>
+    <script src="../js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -84,7 +87,7 @@ $value = $tour->getEachData($data)['0'];
                 </li>
                 
                 <li class="nav-item logout-item grid__row">
-                    <a href="../admin/process/logout.php" class="">
+                    <a href="../admin/process/logout.php" class="log-out">
                         Logout
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </a>
@@ -444,67 +447,77 @@ $value = $tour->getEachData($data)['0'];
             </form>
             <?php
             if(isset($_POST['submit'])) {
-                $order = new Order();
-                $data = [
-                        'id' => $_POST['id'],
-                        'number' => $_POST['number'],
-                        'time' => $_POST['time'],
-                        'phone' => $_POST['phone'],
-                        'email' => $_POST['email'],
-                        't_id' => $_GET['id'],
-                        'c_id' => $value['customer_ID'],
-                        'note' => '',
-                ];
-                // var_dump($data);
-                $order->createData($data);
-                
-                if(isset($_FILES['image']) && !empty($_FILES['image']['name'])) {
-                    $image_id = [
-                        'id' => $_POST['id']
+                if(isset($_SESSION['account_role'])) {
+                    echo '<script>validateBooking();</script>';
+                    $order = new Order();
+                    $data = [
+                            'id' => $_POST['id'],
+                            'number' => $_POST['number'],
+                            'time' => $_POST['time'],
+                            'phone' => $_POST['phone'],
+                            'email' => $_POST['email'],
+                            't_id' => $_GET['id'],
+                            'c_id' => $value['customer_ID'],
+                            'note' => '',
                     ];
-                }
-                $invoice = new Invoice();
-                $invoice_ID = 'invoice' . count($invoice->getData()) +1;
-                if(isset($_FILES['image']) && !empty($_FILES['image']['name'])) {
-                    $extension = array('jpeg','jpg', 'png', 'gif'); 
-                    $fileName = $_FILES['image']['name'];
-                    $fileNameTmp = $_FILES['image']['tmp_name'] ;
-                    
-                    $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-                    if(in_array($ext, $extension)) {
-                        if(!file_exists('./img/' .$fileName)) {
-                            move_uploaded_file($fileNameTmp, '../admin/orders/img/'.$fileName);
-                            $file_data = $fileName;
-                        } else {
-                            $fileName = str_replace('.','-', basename($fileName, $ext));
-                            $newFileName = $fileName.time().".".$ext;
-                            move_uploaded_file($fileNameTmp, '../admin/orders/img/'.$newFileName);
-                            $file_data = $newFileName;
-                        }
+                    // var_dump($data);
+                    try {
+                        $order->createData($data);
+                        echo '<script>submitSuccess("Booking success!", "../tours.php")</script>';
+                    } catch(PDOException $e) {
+                        echo $e;
                     }
-                    $data_img = [
-                        'id' => $invoice_ID,
-                        'o_id' => $_POST['id'],
-                        'status' => 'Unpaid',
-                        'method' => 'Banking',
-                        'note' => '',
-                        'invoice_img_receive' => $file_data,
-                        'invoice_img_check' => '',
-                    ];
+                    
+                    if(isset($_FILES['image']) && !empty($_FILES['image']['name'])) {
+                        $image_id = [
+                            'id' => $_POST['id']
+                        ];
+                    }
+                    $invoice = new Invoice();
+                    $invoice_ID = 'invoice' . count($invoice->getData()) +1;
+                    if(isset($_FILES['image']) && !empty($_FILES['image']['name'])) {
+                        $extension = array('jpeg','jpg', 'png', 'gif'); 
+                        $fileName = $_FILES['image']['name'];
+                        $fileNameTmp = $_FILES['image']['tmp_name'] ;
+                        
+                        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+                        if(in_array($ext, $extension)) {
+                            if(!file_exists('./img/' .$fileName)) {
+                                move_uploaded_file($fileNameTmp, '../admin/orders/img/'.$fileName);
+                                $file_data = $fileName;
+                            } else {
+                                $fileName = str_replace('.','-', basename($fileName, $ext));
+                                $newFileName = $fileName.time().".".$ext;
+                                move_uploaded_file($fileNameTmp, '../admin/orders/img/'.$newFileName);
+                                $file_data = $newFileName;
+                            }
+                        }
+                        $data_img = [
+                            'id' => $invoice_ID,
+                            'o_id' => $_POST['id'],
+                            'status' => 'Unpaid',
+                            'method' => 'Banking',
+                            'note' => '',
+                            'invoice_img_receive' => $file_data,
+                            'invoice_img_check' => '',
+                        ];
+                        // var_dump($data_img);
+                    } else {
+                        $data_img = [
+                            'id' => $invoice_ID,
+                            'o_id' => $_POST['id'],
+                            'status' => 'Unpaid',
+                            'method' => 'Cash',
+                            'note' => '',
+                            'invoice_img_receive' => '',
+                            'invoice_img_check' => '',
+                        ];
+                    }
+                    $invoice->createData($data_img);
                     // var_dump($data_img);
                 } else {
-                    $data_img = [
-                        'id' => $invoice_ID,
-                        'o_id' => $_POST['id'],
-                        'status' => 'Unpaid',
-                        'method' => 'Cash',
-                        'note' => '',
-                        'invoice_img_receive' => '',
-                        'invoice_img_check' => '',
-                    ];
+                    echo '<script>swalError("You must log in before booking!", "../login/login.php")</script>';
                 }
-                $invoice->createData($data_img);
-                // var_dump($data_img);
             }
             ?>
         </div>
@@ -558,13 +571,14 @@ $value = $tour->getEachData($data)['0'];
 
     </footer>
     <!-- End of Footer -->
-    <script src="../js/main.js"></script>
     <script>
         countNumberOfTraveler();
         swiper();
-        validateBooking();
         closeToastMessage();
         showInvoice();
+        if(typeof logOut != 'undefined'){
+            logoutConfirm();
+        }
     </script>
     
 </body>

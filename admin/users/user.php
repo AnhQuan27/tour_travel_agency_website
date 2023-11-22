@@ -107,7 +107,7 @@ $value = $account->getEachData($data)['0'];
             </ul>
             <div class="sidebar__logout">
                 <hr>
-                <a href="#" class="nav-link">
+                <a href="../process/logout.php" class="nav-link log-out">
                     Logout
                     <span><i class="fa-solid fa-right-from-bracket"></i></span>
                 </a>
@@ -148,10 +148,9 @@ $value = $account->getEachData($data)['0'];
 
                                 <?php if($value['account_role'] <=2) { ?>
                                 <div class="input">
-                                    <label for="s_id" <?php if(isset($value['staff_ID'])) {echo 'class="readonly"';} ?> >Staff ID</label>
-                                    <input type="text" <?php if(isset($value['staff_ID'])) {echo 'readonly';} ?> id="s_id" class="rounded w-4" name="s_id" value="<?php echo $value['staff_ID'];?>">
+                                    <label for="s_id" <?php if(!empty($value['staff_ID'])) {echo 'class="readonly"';} ?> >Staff ID</label>
+                                    <input type="text" <?php if(!empty($value['staff_ID'])) {echo 'readonly';} ?> id="s_id" class="rounded w-4" name="s_id" value="<?php echo $value['staff_ID'];?>">
                                 </div>
-
                                 <div class="input">
                                     <label for="b_day">Staff birthday</label>
                                     <input type="date" id="b_day" class="rounded w-4" name="b_day" value="<?php echo $value['staff_birthday'];?>">
@@ -219,7 +218,7 @@ $value = $account->getEachData($data)['0'];
                                 'email' => $_POST['email'],
                                 'phone' => $_POST['phone'],
                             ];
-                            if(!isset($value['staff_ID'])) {
+                            if(empty($value['staff_ID'])) {
                                 try {
                                     $staff->createData($staffData);
                                     echo '<script>submitSuccess("Information has been updated!","../users.php")</script>';
@@ -228,7 +227,7 @@ $value = $account->getEachData($data)['0'];
                                         echo '<script>swalError("his Staff ID already exists. Please try again!",document.URL)</script>';
                                     };
                                 }
-                            } else {
+                            } elseif(!empty($value['staff_ID'])) {
                                 try {
                                     $staff->updateData($staffData);
                                     echo '<script>submitSuccess("Information has been updated!","../users.php")</script>';
@@ -250,6 +249,7 @@ $value = $account->getEachData($data)['0'];
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // detailSubmit('order');
+        logoutConfirm();
     </script>
 </body>
 </html>

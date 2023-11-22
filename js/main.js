@@ -154,7 +154,38 @@ function submitSuccess(text, href) {
   });
 }
 
+function loginSuccess(text, href) {
+  Swal.fire({
+    title: 'Success!',
+    text: `${text}`,
+    icon: 'success',
+    showConfirmButton: false,
+    timer: 1000
+  }).then(() => {
+      window.location.href = href;
+  });
+}
 
+function logoutConfirm() {
+  const logOut = document.querySelector('.log-out');
+  logOut.addEventListener('click', function (event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Confirm!',
+      text: 'Are you sure want to log out',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: "#f32013",
+      cancelButtonColor: "#77dd77",
+      confirmButtonText: "Yes, leave",
+      cancelButtonText: "No, stay",
+    }).then((result) => {
+      if(result.isConfirmed) {
+        document.location.href = logOut.href;
+      }
+    });
+  })
+}
 // function detailSubmit(type) {
 //   const myForm = document.querySelector('form');
 //   const text = `Successfully updated ${type} information`;
