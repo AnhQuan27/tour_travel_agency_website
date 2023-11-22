@@ -33,7 +33,12 @@ $value = $order->getEachDataWhereInvoiceID($data)['0'];
             ];
             $acc = $account->getEachDataLeftJoin($dataAcc)['0'];
             ?>
+            <?php if($_SESSION['account_role'] <=2) :?>
             <span><?php echo $acc['staff_first_name'] . ' ' . $acc['staff_last_name'] ?></span>
+            <?php endif ?>
+            <?php if($_SESSION['account_role'] == 3) :?>
+            <span><?php echo $acc['supplier_name']?></span>
+            <?php endif ?>
             <img src="../../img/user-img.png" alt="" class="avatar">
         </div>
     </header>

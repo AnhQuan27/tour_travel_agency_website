@@ -12,7 +12,15 @@ if(isset($_GET['search'])) {
     $tours = $searching->tourSearch($search);
 } else {
     $tour = new tour();
-    $tours = $tour->getData();
+    if($_SESSION['account_role'] <= '2') {
+        $tours = $tour->getData();
+    }
+    if($_SESSION['account_role'] == 3) {
+        $supID = [
+            'id' => $_SESSION['supplier_ID'],
+        ];
+        $tours = $tour->getDataBySupID($supID);
+    }
 }
 
 ?>
@@ -42,7 +50,12 @@ if(isset($_GET['search'])) {
             ];
             $value = $account->getEachDataLeftJoin($data)['0'];
             ?>
+            <?php if($_SESSION['account_role'] <=2) :?>
             <span><?php echo $value['staff_first_name'] . ' ' . $value['staff_last_name'] ?></span>
+            <?php endif ?>
+            <?php if($_SESSION['account_role'] == 3) :?>
+            <span><?php echo $value['supplier_name']?></span>
+            <?php endif ?>
             <img src="../img/user-img.png" alt="" class="avatar">
         </div>
     </header>

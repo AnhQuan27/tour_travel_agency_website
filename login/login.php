@@ -73,6 +73,9 @@ if(isset($_SESSION['account_role'])) {
                         $_SESSION['account_password'] = $login['account_password'];
                         $_SESSION['account_role'] = $login['account_role'];
                         $_SESSION['account_ID'] = $login['account_ID'];
+                        if($login['account_role'] ==3) {
+                            $_SESSION['supplier_ID'] = $login['supplier_ID'];
+                        }
                         echo '<script>loginSuccess("Login successful!", "../home.php")</script>;';
                         // echo 'window.location.href="../home.php";</script>';
                         // header('location:../home.php');

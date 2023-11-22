@@ -13,7 +13,16 @@ if(isset($_GET['search'])) {
     $orders = $searching->orderSearch($search);
 } else {
     $order = new Order();
-    $orders = $order->getData();
+    if($_SESSION['account_role'] <= '2') {
+        $orders = $order->getData();
+    }
+    if($_SESSION['account_role'] == 3) {
+
+        $supID = [
+            'id' => $_SESSION['supplier_ID'],
+        ];
+        $orders = $order->getDataBySupID($supID);
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -41,7 +50,12 @@ if(isset($_GET['search'])) {
             ];
             $value = $account->getEachDataLeftJoin($data)['0'];
             ?>
+            <?php if($_SESSION['account_role'] <=2) :?>
             <span><?php echo $value['staff_first_name'] . ' ' . $value['staff_last_name'] ?></span>
+            <?php endif ?>
+            <?php if($_SESSION['account_role'] == 3) :?>
+            <span><?php echo $value['supplier_name']?></span>
+            <?php endif ?>
             <img src="../img/user-img.png" alt="" class="avatar">
         </div>
     </header>
@@ -137,7 +151,7 @@ if(isset($_GET['search'])) {
                             <span>Export</span>
                         </a>
                     </div>
-                    <form method="get">
+                    <form method="get" class="disable">
                         <div class="search-box">
                             <i class="fa-solid fa-search"></i>
                             <input class="rounded" value="<?php echo $search ?>" type="search" name="search" id="search" placeholder="Search..." >
@@ -200,7 +214,7 @@ if(isset($_GET['search'])) {
         getOrderStatus()
         // deleteConfirm('Order');
         new DataTable('#myTable', {
-            searching:false,
+            searching: true,
             info: false
         });
         deleteConfirm();

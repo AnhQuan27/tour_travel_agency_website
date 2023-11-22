@@ -40,6 +40,13 @@ class Tour extends Connection {
         return $select->fetchAll();
     }
 
+    public function getDataBySupID($data) {
+        $sql = "SELECT * FROM tour WHERE supplier_ID = :id";
+        $select = $this->prepareSQL($sql);
+        $select->execute($data);
+        return $select->fetchAll();
+    }
+
     public function getEachData($data) {
         $sql = "SELECT * FROM tour WHERE tour_ID = :t_id";
         $select = $this->prepareSQL($sql);
@@ -132,6 +139,28 @@ class Customer extends Connection {
         return $select->fetchAll();
     }
     
+    public function getDataBySupID($data) {
+        $sql = "SELECT
+                    customer.customer_ID,
+                    customer.customer_first_name,
+                    customer.customer_last_name,
+                    customer.customer_gender,
+                    customer.customer_birthday,
+                    customer.customer_phone,
+                    customer.customer_email,
+                    customer.customer_address
+                FROM customer
+                JOIN `order` o ON customer.customer_ID = o.customer_ID
+                JOIN tour ON o.tour_ID = tour.tour_ID
+                JOIN supplier ON tour.supplier_ID = supplier.supplier_ID
+                WHERE supplier.supplier_ID = :id
+                GROUP BY customer.customer_ID";
+        $select = $this->prepareSQL($sql);
+        $select->execute($data);
+        return $select->fetchAll();
+    }
+
+
     public function getEachData($data) {
         $sql = "SELECT * FROM customer WHERE customer_ID = :id";
         $select = $this->prepareSQL($sql);
@@ -241,6 +270,19 @@ class Order extends Connection {
         $select = $this->prepareSQL($sql);
         $select->execute();
         return $select->fetchAll();
+    }
+
+    public function getDataBySupID($data) {
+        $sql = "SELECT * FROM `order` o
+                JOIN tour ON o.tour_ID = tour.tour_ID
+                JOIN supplier ON tour.supplier_ID = supplier.supplier_ID
+                JOIN invoice ON invoice.order_ID = o.order_ID
+                JOIN customer ON customer.customer_ID = o.customer_ID
+                WHERE supplier.supplier_ID = :id
+                GROUP BY o.order_ID";
+         $select = $this->prepareSQL($sql);
+         $select->execute($data);
+         return $select->fetchAll();
     }
 
     public function getEachData($data) {
