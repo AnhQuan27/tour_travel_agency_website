@@ -242,6 +242,7 @@ $login->checkAdminLogin();
                                     // echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
                                     // echo '<script src="../../js/main.js"></script>';
                                     echo '<script>swalError("This Tour ID already exists. Please try again!","./add.php");</script>';
+                                    exit();
                                 }   
                             }
 

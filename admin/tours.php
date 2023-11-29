@@ -152,7 +152,7 @@ if(isset($_GET['search'])) {
                             <span>Export</span>
                         </a>
                     </div>
-                    <form method="get">
+                    <form method="get" class="disable">
                         <div class="search-box">
                             <i class="fa-solid fa-search"></i>
                                 <input class="rounded" value="<?php echo $search ?>" type="search" name="search" id="search" placeholder="Search..." >
@@ -207,7 +207,7 @@ if(isset($_GET['search'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         new DataTable('#myTable', {
-           searching: false,
+           searching: true,
            info: false
         });
         deleteConfirm();

@@ -95,11 +95,11 @@ class TourImage extends Connection {
     // }
 
     public function getData($id) {
-        $sql = "SELECT * FROM tour_image WHERE tour_ID = $id";
+        $sql = "SELECT * FROM tour_image WHERE tour_ID = :id";
         $select = $this->prepareSQL($sql);
-        $select->execute();
+        $select->execute([':id' => $id]);
         return $select->fetchAll();
-    }
+    }    
 
     public function getDataLimit($id) {
         $sql = "SELECT * FROM tour_image WHERE tour_ID = $id LIMIT 1";

@@ -31,18 +31,22 @@
             'id' => $_GET['t_id'],
         ];
         try {
-            $tour_image->deleteData($data);
             $tour->deleteData($data);
-            // echo '<script>alert("Tour deleted successfully!");';
-            echo '<script>deleteSuccess("Tour","../tours.php");</script>';
-            // echo 'window.location.href="../tours.php";</>';
         } catch (PDOException $e) {
-            echo $e;
+            // echo $e;
             if($e->getCode() == 23000) {
-                // echo '<script>alert("Cannot delete the tour. There are related orders. Please delete the orders first!");';
-                echo '<script>swalError("Cannot delete the tour. There are related orders. Please delete the orders first!","../tours.php");</script>';
-                // echo 'window.location.href="../tours.php";</>';
-                exit();
+                if(str_contains($e, 'order')) {
+                    echo '<script>swalError("Cannot delete the tour. There are related orders. Please delete the orders first!","../tours.php");</script>';
+                    exit();
+                } else {
+                    try {
+                        $tour_image->deleteData($data);
+                        $tour->deleteData($data);
+                        echo '<script>deleteSuccess("Tour","../tours.php");</script>';
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+                }
             }
         }
         exit;
